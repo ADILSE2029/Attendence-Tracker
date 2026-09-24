@@ -6,6 +6,9 @@
 <meta name="theme-color" content="#4263eb">
 <title>Attendance Tracker</title>
 <link rel="icon" type="image/x-icon" href="/icons8-attendance-stickers-96.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -45,14 +48,14 @@ html[data-theme="dark"] {
   --text-soft: #7a8fa9;
   --border: #2b3b52;
   --border-light: #202e42;
-  --primary: #6f8cff;
+  --primary: #7d97ff;
   --primary-soft: #1e2b4a;
-  --primary-dim: #2a3d66;
-  --green: #2bcc8e;
+  --primary-dim: #33477a;
+  --green: #3dd99a;
   --green-soft: #103a2c;
-  --red: #f87171;
+  --red: #ff8a8a;
   --red-soft: #3a1c1c;
-  --orange: #fbbf24;
+  --orange: #fcc859;
   --orange-soft: #332812;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -65,7 +68,7 @@ html, body { overscroll-behavior-y: contain; }
 
 body {
   margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -73,6 +76,7 @@ body {
   transition: background 0.2s ease, color 0.2s ease;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
 }
 
 .app {
@@ -105,7 +109,7 @@ body {
 }
 
 .brand h1 {
-  font-size: 22px; font-weight: 700;
+  font-size: 22px; font-weight: 800;
   letter-spacing: -0.02em; margin: 0;
   background: linear-gradient(145deg, #4263eb, #7b4dff);
   -webkit-background-clip: text;
@@ -113,7 +117,7 @@ body {
   background-clip: text;
 }
 
-.brand p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+.brand p { font-size: 13px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
 
 .header-actions {
   display: flex; align-items: center;
@@ -238,7 +242,10 @@ body {
   transition: box-shadow var(--transition), border-color var(--transition);
 }
 
-.card:hover { box-shadow: var(--shadow); border-color: var(--border); }
+.card:hover {
+  box-shadow: var(--shadow), 0 0 0 1px rgba(66, 99, 235, 0.04);
+  border-color: var(--border);
+}
 
 .card-header {
   display: flex; justify-content: space-between;
@@ -248,20 +255,58 @@ body {
 }
 
 .card-header h2 {
-  font-size: 16px; font-weight: 700;
+  font-size: 16px; font-weight: 800;
   letter-spacing: -0.01em;
   color: var(--text);
   display: flex; align-items: center; gap: 8px;
 }
 
+.card-header-right {
+  display: flex; align-items: center; gap: 8px;
+}
+
 .card-header .hint {
-  font-size: 12px; font-weight: 500;
+  font-size: 12px; font-weight: 600;
   color: var(--text-soft);
   background: var(--card-soft);
   padding: 4px 12px;
   border-radius: 40px;
   border: 1px solid var(--border-light);
 }
+
+.section-toggle {
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  border: 1px solid var(--border-light);
+  background: var(--card-soft);
+  color: var(--text-muted);
+  font-size: 15px;
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: all var(--transition);
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.section-toggle:hover {
+  background: var(--card);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.section-toggle.collapsed {
+  transform: rotate(-90deg);
+}
+
+.section-body {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.section-body-inner { overflow: hidden; }
+
+.section-body.collapsed { grid-template-rows: 0fr; }
 
 /* ---------- form ---------- */
 .form-grid {
@@ -274,7 +319,7 @@ body {
 .field { display: flex; flex-direction: column; gap: 6px; }
 
 .field label {
-  font-size: 11px; font-weight: 700;
+  font-size: 11px; font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-muted);
@@ -292,6 +337,7 @@ input, select {
   outline: none;
   transition: border var(--transition), box-shadow var(--transition);
   font-family: inherit;
+  font-weight: 500;
 }
 
 input:focus, select:focus {
@@ -329,7 +375,7 @@ input:focus, select:focus {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-hover);
-  max-height: 200px;
+  max-height: 220px;
   overflow-y: auto;
   padding: 6px;
   display: none;
@@ -357,18 +403,41 @@ input:focus, select:focus {
   cursor: pointer;
   transition: background var(--transition);
   font-family: inherit;
+  font-weight: 500;
 }
 
 .suggestion-item:hover { background: var(--card-soft); color: var(--primary); }
 
-.suggestion-icon {
-  width: 22px; height: 22px;
-  border-radius: 6px;
-  background: var(--primary-soft);
-  color: var(--primary);
+.suggestion-emoji {
+  width: 26px; height: 26px;
+  border-radius: 8px;
   display: grid; place-items: center;
-  font-size: 12px; font-weight: 700;
+  font-size: 15px;
+  background: var(--primary-soft);
+  flex-shrink: 0;
 }
+
+.suggestion-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.suggestion-edit {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  color: var(--text-soft);
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.suggestion-item:hover .suggestion-edit { opacity: 1; }
 
 .no-suggestions {
   padding: 12px;
@@ -442,7 +511,7 @@ input:focus, select:focus {
   padding: 12px 18px;
   border-radius: var(--radius-sm);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   display: none;
 }
 
@@ -487,6 +556,7 @@ input:focus, select:focus {
   background: var(--card);
   border-color: var(--border);
   box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
 }
 
 .stat-icon {
@@ -502,7 +572,7 @@ input:focus, select:focus {
 .stat-content { display: flex; flex-direction: column; }
 
 .stat-label {
-  font-size: 12px; font-weight: 600;
+  font-size: 12px; font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   color: var(--text-soft);
@@ -513,107 +583,240 @@ input:focus, select:focus {
   letter-spacing: -0.03em;
   color: var(--text);
   line-height: 1.2;
+  font-variant-numeric: tabular-nums;
 }
 
-/* ---------- subject cards ---------- */
-.subject-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 14px;
+/* ---------- subject attendance ---------- */
+.subject-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.subject-card {
-  background: var(--card);
-  border: 1px solid var(--border-light);
+.subject-block {
   border-radius: var(--radius-sm);
-  padding: 18px;
-  transition: all var(--transition);
-  position: relative;
   overflow: hidden;
+  border: 1px solid var(--border-light);
+  background: var(--card-soft);
+  transition: border-color var(--transition);
 }
 
-.subject-card:hover {
-  border-color: var(--primary-dim);
-  box-shadow: var(--shadow-sm);
-  transform: translateY(-2px);
+.subject-block.expanded {
+  border-color: var(--border);
 }
 
-.subject-card::before {
+.subject-header {
+  display: grid;
+  grid-template-columns: 44px 1fr 220px 28px;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition);
+  position: relative;
+  min-height: 72px;
+}
+
+.subject-header:hover { background: var(--card); }
+
+.subject-header::before {
   content: '';
   position: absolute;
-  top: 0; left: 0;
-  width: 4px; height: 100%;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
   background: var(--accent, var(--primary));
-  border-radius: 0 4px 4px 0;
-  opacity: 0.6;
+  opacity: 0.8;
+}
+
+.subject-emoji {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 22px;
+  background: color-mix(in srgb, var(--accent, var(--primary)) 14%, transparent);
+  flex-shrink: 0;
 }
 
 .subject-name {
-  font-size: 15px; font-weight: 700;
+  font-size: 15px;
+  font-weight: 800;
   color: var(--text);
-  margin-bottom: 4px;
-  padding-left: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.subject-badge {
-  display: inline-block;
-  font-size: 10px; font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--primary);
-  background: var(--primary-soft);
-  padding: 2px 10px;
-  border-radius: 40px;
-  margin-bottom: 12px;
-  margin-left: 8px;
-}
-
-.subject-stats {
+.subject-bar {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 14px;
-  padding-left: 8px;
+  align-items: center;
+  gap: 10px;
 }
 
-.stat-item { text-align: center; }
-
-.stat-item-value {
-  font-size: 18px; font-weight: 800;
-  color: var(--text);
-  display: block;
-  line-height: 1.2;
-}
-
-.stat-item-label {
-  font-size: 10px; font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--text-soft);
-}
-
-.progress-wrap { padding-left: 8px; }
-
-.progress-label {
-  display: flex; justify-content: space-between;
-  font-size: 12px; font-weight: 600;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
-
-.progress-percent { font-weight: 800; color: var(--text); }
-
-.progress-bar {
+.subject-bar-track {
+  flex: 1;
   height: 8px;
   background: var(--border-light);
   border-radius: 20px;
   overflow: hidden;
+  position: relative;
 }
 
-.progress-fill {
+.subject-bar-fill {
   height: 100%;
+  background: var(--accent, var(--primary));
   border-radius: 20px;
-  background: linear-gradient(90deg, var(--accent, var(--primary)), var(--primary-dim));
-  transition: width 0.6s ease;
+  transition: width 0.8s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.subject-pct {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  min-width: 46px;
+  text-align: right;
+}
+
+.subject-pct.low { color: var(--red); }
+
+.subject-chevron {
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text-muted);
+  font-size: 16px;
+  transition: transform var(--transition), background var(--transition);
+  border: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.subject-block.expanded .subject-chevron {
+  transform: rotate(180deg);
+}
+
+.subject-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.subject-body-inner { overflow: hidden; }
+
+.subject-block.expanded .subject-body { grid-template-rows: 1fr; }
+
+.subject-detail-list {
+  padding: 12px 18px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--border-light);
+}
+
+.subject-detail-row {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--card);
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  font-size: 13px;
+  transition: border-color var(--transition);
+}
+
+.subject-detail-row:hover {
+  border-color: var(--accent, var(--primary));
+}
+
+.subject-detail-date {
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+
+.subject-detail-day {
+  font-size: 11px;
+  color: var(--text-soft);
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+.subject-detail-status {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 40px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.subject-detail-status.present {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.subject-detail-status.absent {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.subject-detail-status.unmarked {
+  background: var(--orange-soft);
+  color: var(--orange);
+}
+
+.subject-detail-status.cancelled {
+  background: var(--red-soft);
+  color: var(--red);
+  opacity: 0.7;
+}
+
+.subject-detail-empty {
+  padding: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+@media (max-width: 800px) {
+  .subject-header {
+    grid-template-columns: 44px 1fr 28px;
+    grid-template-rows: auto auto;
+    gap: 8px 12px;
+    padding: 14px 16px;
+  }
+  .subject-emoji { grid-row: 1 / 3; align-self: start; }
+  .subject-name { grid-column: 2; grid-row: 1; }
+  .subject-chevron { grid-column: 3; grid-row: 1; }
+  .subject-bar { grid-column: 2 / 4; grid-row: 2; }
+}
+
+@media (max-width: 500px) {
+  .subject-header {
+    grid-template-columns: 40px 1fr 28px;
+    gap: 8px 10px;
+    padding: 12px 14px;
+    min-height: 68px;
+  }
+  .subject-emoji {
+    width: 40px; height: 40px;
+    font-size: 20px;
+  }
+  .subject-name { font-size: 14px; }
+  .subject-pct { font-size: 13px; min-width: 40px; }
+  .subject-detail-row {
+    grid-template-columns: 1fr auto;
+    gap: 6px 10px;
+    padding: 10px 12px;
+  }
+  .subject-detail-date { font-size: 13px; }
+  .subject-detail-day { grid-column: 1 / -1; }
 }
 
 /* ---------- schedule ---------- */
@@ -657,14 +860,14 @@ input:focus, select:focus {
 }
 
 .week-title {
-  font-size: 14px; font-weight: 700;
+  font-size: 14px; font-weight: 800;
   color: var(--text);
 }
 
 .week-count {
   font-size: 12px;
   color: var(--text-soft);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .week-chevron {
@@ -681,7 +884,16 @@ input:focus, select:focus {
 }
 
 .week-block.collapsed .week-chevron { transform: rotate(-90deg); }
-.week-block.collapsed .class-grid { display: none; }
+
+.week-body {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.28s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.week-body-inner { overflow: hidden; }
+
+.week-block.collapsed .week-body { grid-template-rows: 0fr; }
 
 .class-grid {
   display: grid;
@@ -699,11 +911,17 @@ input:focus, select:focus {
   position: relative;
   overflow: hidden;
   touch-action: pan-y;
+  animation: fadeInUp 0.35s ease-out backwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .class-card:hover {
-  border-color: var(--primary-dim);
-  box-shadow: var(--shadow-sm);
+  border-color: var(--card-accent, var(--primary));
+  box-shadow: 0 6px 20px rgba(66, 99, 235, 0.08);
   transform: translateY(-2px);
 }
 
@@ -724,25 +942,28 @@ input:focus, select:focus {
   align-items: flex-start;
   margin-bottom: 12px;
   padding-left: 8px;
+  gap: 8px;
 }
 
 .class-date {
-  font-size: 13px; font-weight: 700;
+  font-size: 13px; font-weight: 800;
   color: var(--text);
 }
 
 .class-day {
   font-size: 11px;
   color: var(--text-soft);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .status-badge {
-  font-size: 10px; font-weight: 700;
+  font-size: 10px; font-weight: 800;
   padding: 4px 10px;
   border-radius: 40px;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .status-badge.held {
@@ -756,12 +977,16 @@ input:focus, select:focus {
 }
 
 .class-subject {
-  font-size: 14px; font-weight: 700;
+  font-size: 14px; font-weight: 800;
   color: var(--text);
   margin-bottom: 14px;
   padding-left: 8px;
   display: flex; align-items: center; gap: 8px;
   word-break: break-word;
+}
+
+.class-card.is-cancelled .class-subject {
+  margin-bottom: 0;
 }
 
 .subject-dot {
@@ -773,7 +998,7 @@ input:focus, select:focus {
 
 .attendance-pill {
   display: inline-block;
-  font-size: 12px; font-weight: 700;
+  font-size: 12px; font-weight: 800;
   padding: 6px 14px;
   border-radius: 40px;
   margin-bottom: 14px;
@@ -795,13 +1020,6 @@ input:focus, select:focus {
   color: var(--orange);
 }
 
-.cancelled-text {
-  font-size: 13px; font-weight: 600;
-  color: var(--red);
-  padding-left: 8px;
-  margin-bottom: 14px;
-}
-
 .class-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -815,7 +1033,7 @@ input:focus, select:focus {
   padding: 10px 12px;
   border: none;
   border-radius: 8px;
-  font-size: 12px; font-weight: 700;
+  font-size: 12px; font-weight: 800;
   cursor: pointer;
   transition: all var(--transition);
   display: flex; align-items: center; justify-content: center;
@@ -885,7 +1103,7 @@ input:focus, select:focus {
 }
 
 .empty-state .empty-title {
-  font-size: 15px; font-weight: 700;
+  font-size: 15px; font-weight: 800;
   color: var(--text-muted);
   margin-bottom: 6px;
 }
@@ -897,6 +1115,37 @@ input:focus, select:focus {
 }
 
 .empty-state .btn-ghost { margin-top: 8px; }
+
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-row {
+  height: 72px;
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-row::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--text) 4%, transparent) 50%,
+    transparent 100%);
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
 
 /* ---------- banners ---------- */
 .offline-banner, .queue-banner {
@@ -939,6 +1188,55 @@ input:focus, select:focus {
   border-color: var(--orange);
 }
 
+/* ---------- confetti ---------- */
+.confetti-piece {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 2px;
+  animation: confetti-fall 1.6s cubic-bezier(0.2, 0.6, 0.4, 1) forwards;
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ---------- emoji picker ---------- */
+.emoji-picker {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  padding: 8px;
+  margin-top: 6px;
+  background: var(--card-soft);
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+}
+
+.emoji-opt {
+  width: 32px; height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+  display: grid; place-items: center;
+}
+
+.emoji-opt:hover {
+  background: var(--card);
+  transform: scale(1.15);
+}
+
+.emoji-opt.active {
+  background: var(--primary-soft);
+  box-shadow: inset 0 0 0 2px var(--primary);
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .form-grid { grid-template-columns: 1fr 1fr; }
@@ -951,8 +1249,8 @@ input:focus, select:focus {
 
   .header {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: stretch;
+    gap: 10px;
     margin-bottom: 20px;
     position: sticky;
     top: 0;
@@ -966,13 +1264,29 @@ input:focus, select:focus {
     border-bottom: 1px solid var(--border-light);
   }
 
-  .header-actions { width: 100%; justify-content: space-between; gap: 8px; }
+  .brand { justify-content: flex-start; }
   .brand h1 { font-size: 20px; }
   .logo { width: 42px; height: 42px; font-size: 20px; }
-  .mode-switch { order: -1; flex: 1; }
+
+  .header-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 8px;
+    align-items: center;
+  }
+  .mode-switch { grid-column: 1; }
   .mode-btn { flex: 1; padding: 10px 12px; font-size: 13px; }
-  .icon-btn { width: 48px; height: 48px; font-size: 18px; }
-  .cloud-status { padding: 6px 12px; font-size: 11px; }
+
+  .cloud-status {
+    grid-column: 1 / -1;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 12px;
+    order: -1;
+  }
+
+  .icon-btn { width: 44px; height: 44px; font-size: 17px; }
 
   .form-grid { grid-template-columns: 1fr; gap: 14px; }
   input, select { height: 48px; font-size: 16px; }
@@ -981,8 +1295,6 @@ input:focus, select:focus {
   .stats-row { grid-template-columns: 1fr; gap: 10px; }
   .stat-tile { padding: 14px 16px; }
   .stat-value { font-size: 22px; }
-
-  .subject-grid { grid-template-columns: 1fr; }
 
   .class-grid {
     grid-template-columns: 1fr;
@@ -995,7 +1307,7 @@ input:focus, select:focus {
   .week-header { padding: 14px 16px; }
   .week-number { width: 40px; height: 40px; font-size: 15px; }
 
-  .card { padding: 18px; }
+  .card { padding: 16px; }
   .attendance-pill { font-size: 13px; padding: 7px 16px; }
 
   .form-actions { flex-direction: column-reverse; }
@@ -1007,16 +1319,17 @@ input:focus, select:focus {
   .mode-edit .class-card::after {
     content: '⇆ swipe';
     position: absolute;
-    top: 8px;
+    bottom: 8px;
     right: 8px;
     font-size: 9px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--text-soft);
     opacity: 0.35;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     pointer-events: none;
   }
+  .class-card.is-cancelled::after { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1024,6 +1337,7 @@ input:focus, select:focus {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+  .week-body, .subject-body, .section-body { transition: none; }
 }
 </style>
 </head>
@@ -1111,21 +1425,21 @@ input:focus, select:focus {
       <div class="stat-icon">📅</div>
       <div class="stat-content">
         <span class="stat-label">Total Weeks</span>
-        <span class="stat-value" id="weekCount">0</span>
+        <span class="stat-value" id="weekCount" data-count="0">0</span>
       </div>
     </div>
     <div class="stat-tile">
       <div class="stat-icon">📍</div>
       <div class="stat-content">
         <span class="stat-label">Classes Held</span>
-        <span class="stat-value" id="heldCount">0</span>
+        <span class="stat-value" id="heldCount" data-count="0">0</span>
       </div>
     </div>
     <div class="stat-tile">
       <div class="stat-icon">✖</div>
       <div class="stat-content">
         <span class="stat-label">Cancelled</span>
-        <span class="stat-value" id="cancelledCount">0</span>
+        <span class="stat-value" id="cancelledCount" data-count="0">0</span>
       </div>
     </div>
   </div>
@@ -1135,10 +1449,21 @@ input:focus, select:focus {
 <section class="card">
   <div class="card-header">
     <h2>📚 Subject Attendance</h2>
-    <span class="hint">Breakdown by subject</span>
+    <div class="card-header-right">
+      <span class="hint">Click a subject to expand</span>
+      <button class="section-toggle" id="subjectSectionToggle" aria-label="Collapse section" title="Collapse section">⌄</button>
+    </div>
   </div>
-  <div id="subjectStats" class="subject-grid">
-    <div class="loading-state">Loading…</div>
+  <div class="section-body" id="subjectSectionBody">
+    <div class="section-body-inner">
+      <div id="subjectStats" class="subject-blocks">
+        <div class="skeleton-list">
+          <div class="skeleton-row"></div>
+          <div class="skeleton-row"></div>
+          <div class="skeleton-row"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1161,6 +1486,9 @@ input:focus, select:focus {
 ------------------------------------------------------------------ */
 const API_URL = "https://script.google.com/macros/s/AKfycbxryV1UhZClPxP8m95HerdLGEZOV_T1Gp-YLy7-2KUBn_6H__LlMP-KgCzzoVB91aZIcA/exec";
 const QUEUE_KEY = "attendance_queue_v1";
+const EMOJI_KEY = "attendance_subject_emojis";
+const EXPANDED_SUBJECTS_KEY = "attendance_expanded_subjects";
+const SUBJECT_SECTION_COLLAPSED_KEY = "attendance_subject_section_collapsed";
 const REQUEST_TIMEOUT_MS = 8000;
 
 /* ------------------------------------------------------------------
@@ -1170,14 +1498,15 @@ let classes = [];
 let currentMode = localStorage.getItem("mode") || "view";
 let lastSyncTime = null;
 let queue = loadQueue();
+let subjectEmojis = loadEmojis();
+let expandedSubjects = loadExpandedSubjects();
 
-// Sync lock counter: only show "Syncing…" when no operations are in flight
 let syncLocks = 0;
 let lastFlushAt = 0;
-
-// Watchdog: if syncing > 15s with no progress, force-reset
 let syncingSince = 0;
 let lastQueueLength = 0;
+
+const EMOJI_OPTIONS = ["📚","🧪","📐","💻","🎨","🌍","⚗️","🧠","📖","🔬","🎵","💡","📊","🏛️","🧬","⚙️"];
 
 /* ------------------------------------------------------------------
    THEME
@@ -1203,6 +1532,52 @@ themeToggle.addEventListener("click", toggleTheme);
 initTheme();
 
 /* ------------------------------------------------------------------
+   EMOJI + EXPANDED STORE
+------------------------------------------------------------------ */
+function loadEmojis() {
+  try { return JSON.parse(localStorage.getItem(EMOJI_KEY) || "{}"); }
+  catch { return {}; }
+}
+function saveEmojis() {
+  try { localStorage.setItem(EMOJI_KEY, JSON.stringify(subjectEmojis)); } catch {}
+}
+function getEmoji(subject) { return subjectEmojis[subject] || "📚"; }
+function setEmoji(subject, emoji) { subjectEmojis[subject] = emoji; saveEmojis(); }
+
+function loadExpandedSubjects() {
+  try { return new Set(JSON.parse(localStorage.getItem(EXPANDED_SUBJECTS_KEY) || "[]")); }
+  catch { return new Set(); }
+}
+function saveExpandedSubjects() {
+  try { localStorage.setItem(EXPANDED_SUBJECTS_KEY, JSON.stringify([...expandedSubjects])); }
+  catch {}
+}
+function toggleExpandedSubject(subject) {
+  if (expandedSubjects.has(subject)) expandedSubjects.delete(subject);
+  else expandedSubjects.add(subject);
+  saveExpandedSubjects();
+}
+
+function initSubjectSection() {
+  const body = document.getElementById("subjectSectionBody");
+  const btn = document.getElementById("subjectSectionToggle");
+  const collapsed = localStorage.getItem(SUBJECT_SECTION_COLLAPSED_KEY) === "1";
+  body.classList.toggle("collapsed", collapsed);
+  btn.classList.toggle("collapsed", collapsed);
+  btn.setAttribute("aria-label", collapsed ? "Expand section" : "Collapse section");
+  btn.setAttribute("title", collapsed ? "Expand section" : "Collapse section");
+
+  btn.addEventListener("click", () => {
+    const nowCollapsed = !body.classList.contains("collapsed");
+    body.classList.toggle("collapsed", nowCollapsed);
+    btn.classList.toggle("collapsed", nowCollapsed);
+    localStorage.setItem(SUBJECT_SECTION_COLLAPSED_KEY, nowCollapsed ? "1" : "0");
+    btn.setAttribute("aria-label", nowCollapsed ? "Expand section" : "Collapse section");
+    btn.setAttribute("title", nowCollapsed ? "Expand section" : "Collapse section");
+  });
+}
+
+/* ------------------------------------------------------------------
    MODE SWITCH
 ------------------------------------------------------------------ */
 const app = document.getElementById("app");
@@ -1223,7 +1598,7 @@ modeViewBtn.addEventListener("click", () => setMode("view"));
 modeEditBtn.addEventListener("click", () => setMode("edit"));
 
 /* ------------------------------------------------------------------
-   SYNC LOCK (single source of truth)
+   SYNC LOCK
 ------------------------------------------------------------------ */
 function lockSync() {
   syncLocks++;
@@ -1233,27 +1608,18 @@ function lockSync() {
     setCloudStatus("syncing");
   }
 }
-
 function unlockSync() {
   syncLocks = Math.max(0, syncLocks - 1);
-  if (syncLocks === 0) {
-    syncingSince = 0;
-    updateOnlineState();
-  }
+  if (syncLocks === 0) { syncingSince = 0; updateOnlineState(); }
 }
 
-// Watchdog: kill stuck sync state after 15s of no progress
 setInterval(() => {
   if (syncLocks > 0 && syncingSince > 0) {
     const elapsed = Date.now() - syncingSince;
-    // if no queue progress in 15s, force-reset
     if (elapsed > 15000 && queue.length === lastQueueLength) {
       console.warn("Sync watchdog: forcing reset after 15s stall");
-      syncLocks = 0;
-      syncingSince = 0;
-      updateOnlineState();
+      syncLocks = 0; syncingSince = 0; updateOnlineState();
     } else if (queue.length !== lastQueueLength) {
-      // progress was made, reset the timer
       syncingSince = Date.now();
       lastQueueLength = queue.length;
     }
@@ -1273,7 +1639,6 @@ const queueText = document.getElementById("queueText");
 function setCloudStatus(state) {
   cloudStatus.classList.remove("synced", "syncing", "offline");
   cloudStatus.classList.add(state);
-
   if (state === "syncing") {
     cloudText.textContent = "Syncing…";
   } else if (state === "offline") {
@@ -1333,22 +1698,14 @@ function loadQueue() {
   try {
     const raw = localStorage.getItem(QUEUE_KEY);
     return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
+  } catch { return []; }
 }
-
 function saveQueue() {
-  try {
-    localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
-  } catch (e) {
-    console.warn("Could not save queue", e);
-  }
+  try { localStorage.setItem(QUEUE_KEY, JSON.stringify(queue)); }
+  catch (e) { console.warn("Could not save queue", e); }
   updatePendingBadge();
 }
-
 function enqueue(payload) {
-  // Coalesce updates for the same id (last write wins)
   if (payload.action === "update") {
     const idx = queue.findIndex(q => q.action === "update" && q.id === payload.id);
     if (idx >= 0) queue[idx] = payload;
@@ -1367,16 +1724,12 @@ function enqueue(payload) {
 }
 
 async function flushQueue() {
-  if (syncLocks > 0 && syncingSince > 0 && Date.now() - syncingSince < 1000) {
-    // already flushing, bail
-    return;
-  }
+  if (syncLocks > 0 && syncingSince > 0 && Date.now() - syncingSince < 1000) return;
   if (queue.length === 0 || !navigator.onLine) return;
 
   lockSync();
   const totalAtStart = queue.length;
   let processed = 0;
-
   try {
     while (queue.length > 0 && navigator.onLine) {
       const payload = queue[0];
@@ -1385,7 +1738,6 @@ async function flushQueue() {
         queue.shift();
         saveQueue();
         processed++;
-        // update progress in the banner
         if (queue.length > 0) {
           queueText.textContent = "⏳ Syncing " + processed + " of " + totalAtStart + "…";
         }
@@ -1400,18 +1752,12 @@ async function flushQueue() {
 
   if (processed > 0) {
     lastSyncTime = Date.now();
-
     if (queue.length === 0) {
       showMessage("Synced " + processed + " pending change" + (processed !== 1 ? "s" : "") + ".", "success");
-      // Only reload if the flush was substantial OR it's been a while
       const shouldReload = processed >= 5 || (Date.now() - lastFlushAt > 30000);
       lastFlushAt = Date.now();
-      if (shouldReload) {
-        // silent reload — doesn't touch the syncing pill
-        await loadData(true);
-      }
+      if (shouldReload) await loadData(true);
     } else {
-      // partial flush, some items still pending
       updateOnlineState();
     }
   }
@@ -1441,7 +1787,13 @@ function getDay(date) {
 
 function formatDate(date) {
   return new Date(date + "T00:00:00").toLocaleDateString("en-GB", {
-    day: "2-digit", month: "short", year: "numeric"
+    weekday: "short", day: "2-digit", month: "short"
+  });
+}
+
+function formatDateShort(date) {
+  return new Date(date + "T00:00:00").toLocaleDateString("en-GB", {
+    day: "2-digit", month: "short"
   });
 }
 
@@ -1474,12 +1826,8 @@ function subjectColor(name) {
    API
 ------------------------------------------------------------------ */
 async function loadData(silent = false) {
-  if (!navigator.onLine) {
-    setCloudStatus("offline");
-    return;
-  }
+  if (!navigator.onLine) { setCloudStatus("offline"); return; }
   if (!silent) lockSync();
-
   try {
     const res = await fetchWithTimeout(API_URL + "?t=" + Date.now(), { method: "GET" }, REQUEST_TIMEOUT_MS);
     const data = await res.json();
@@ -1496,7 +1844,6 @@ async function loadData(silent = false) {
   }
 }
 
-// Fetch with timeout + abort support
 async function fetchWithTimeout(url, options = {}, timeoutMs = REQUEST_TIMEOUT_MS) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -1507,11 +1854,9 @@ async function fetchWithTimeout(url, options = {}, timeoutMs = REQUEST_TIMEOUT_M
   }
 }
 
-// Returns true on success, throws on network failure or timeout
 async function sendToSheet(payload) {
   await fetchWithTimeout(API_URL, {
-    method: "POST",
-    mode: "no-cors",
+    method: "POST", mode: "no-cors",
     body: JSON.stringify(payload)
   }, REQUEST_TIMEOUT_MS);
 }
@@ -1521,10 +1866,7 @@ async function sendToSheet(payload) {
 ------------------------------------------------------------------ */
 const refreshBtn = document.getElementById("refreshBtn");
 refreshBtn.addEventListener("click", async () => {
-  if (queue.length > 0) {
-    flushQueue();
-    return;
-  }
+  if (queue.length > 0) { flushQueue(); return; }
   refreshBtn.classList.add("spinning");
   await loadData();
   refreshBtn.classList.remove("spinning");
@@ -1551,11 +1893,7 @@ async function addClass() {
 
   const item = {
     id: Date.now().toString() + Math.random().toString(36).slice(2, 7),
-    date,
-    day: getDay(date),
-    subject,
-    status,
-    attendance: ""
+    date, day: getDay(date), subject, status, attendance: ""
   };
 
   const addBtn = document.getElementById("addBtn");
@@ -1572,8 +1910,7 @@ async function addClass() {
   if (!navigator.onLine) {
     enqueue(payload);
     showMessage("Offline — will sync when back online.", "info");
-    addBtn.disabled = false;
-    addBtn.textContent = "+ Add Class";
+    addBtn.disabled = false; addBtn.textContent = "+ Add Class";
     updateOnlineState();
     return;
   }
@@ -1588,8 +1925,7 @@ async function addClass() {
     showMessage("Saved locally, will retry sync.", "info");
   } finally {
     unlockSync();
-    addBtn.disabled = false;
-    addBtn.textContent = "+ Add Class";
+    addBtn.disabled = false; addBtn.textContent = "+ Add Class";
   }
 }
 
@@ -1601,11 +1937,7 @@ async function markAttendance(id, attendance, btn) {
   if (!item) return;
 
   if (navigator.vibrate) navigator.vibrate(6);
-
-  if (btn) {
-    btn.disabled = true;
-    btn.textContent = "…";
-  }
+  if (btn) { btn.disabled = true; btn.textContent = "…"; }
 
   item.attendance = attendance;
   render();
@@ -1613,19 +1945,42 @@ async function markAttendance(id, attendance, btn) {
   const payload = { action: "update", id, attendance };
 
   if (!navigator.onLine) {
-    enqueue(payload);
-    updateOnlineState();
-    return;
+    enqueue(payload); updateOnlineState(); return;
   }
 
   lockSync();
   try {
     await sendToSheet(payload);
     lastSyncTime = Date.now();
+    checkPerfectAttendance(item.subject);
   } catch (err) {
     enqueue(payload);
   } finally {
     unlockSync();
+  }
+}
+
+function checkPerfectAttendance(subject) {
+  const items = classes.filter(c => c.subject === subject && c.status === "HELD");
+  if (items.length < 5) return;
+  const marked = items.filter(c => c.attendance);
+  if (marked.length !== items.length) return;
+  const allPresent = items.every(c => c.attendance === "PRESENT");
+  if (allPresent) fireConfetti();
+}
+
+function fireConfetti() {
+  const colors = ["#4263eb", "#7b4dff", "#d946ef", "#06b6d4", "#0e9f6e", "#f59e0b"];
+  for (let i = 0; i < 40; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    piece.style.left = Math.random() * 100 + "vw";
+    piece.style.top = "-20px";
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = Math.random() * 0.3 + "s";
+    piece.style.animationDuration = (1.2 + Math.random() * 0.8) + "s";
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 2500);
   }
 }
 
@@ -1635,9 +1990,7 @@ async function markAttendance(id, attendance, btn) {
 async function deleteClass(id) {
   const item = classes.find(x => x.id === id);
   if (!item) return;
-
   if (!confirm("Delete " + item.subject + " on " + formatDate(item.date) + "?")) return;
-
   if (navigator.vibrate) navigator.vibrate([10, 30, 10]);
 
   classes = classes.filter(x => x.id !== id);
@@ -1645,11 +1998,7 @@ async function deleteClass(id) {
 
   const payload = { action: "delete", id };
 
-  if (!navigator.onLine) {
-    enqueue(payload);
-    updateOnlineState();
-    return;
-  }
+  if (!navigator.onLine) { enqueue(payload); updateOnlineState(); return; }
 
   lockSync();
   try {
@@ -1676,20 +2025,14 @@ async function resetAll() {
     if (answer !== null) showMessage("Reset cancelled.", "info");
     return;
   }
-
-  classes = [];
-  queue = [];
-  saveQueue();
-  render();
+  classes = []; queue = []; saveQueue(); render();
 
   const payload = { action: "reset" };
-
   if (!navigator.onLine) {
     enqueue(payload);
     showMessage("Offline — reset will sync later.", "info");
     return;
   }
-
   lockSync();
   try {
     await sendToSheet(payload);
@@ -1698,9 +2041,7 @@ async function resetAll() {
   } catch (err) {
     enqueue(payload);
     showMessage("Reset queued, will retry sync.", "info");
-  } finally {
-    unlockSync();
-  }
+  } finally { unlockSync(); }
 }
 
 /* ------------------------------------------------------------------
@@ -1717,10 +2058,8 @@ function clearForm() {
 ------------------------------------------------------------------ */
 function exportCSV() {
   if (!classes.length) { showMessage("No data to export.", "error"); return; }
-
   const headers = ["id", "date", "day", "subject", "status", "attendance"];
   const rows = [headers.join(",")];
-
   [...classes]
     .sort((a, b) => a.date.localeCompare(b.date))
     .forEach(item => {
@@ -1730,7 +2069,6 @@ function exportCSV() {
       });
       rows.push(row.join(","));
     });
-
   const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -1744,6 +2082,26 @@ function exportCSV() {
 }
 
 /* ------------------------------------------------------------------
+   COUNT-UP
+------------------------------------------------------------------ */
+function animateCount(el, target) {
+  const current = parseInt(el.getAttribute("data-count") || "0", 10);
+  if (current === target) { el.textContent = target; return; }
+  el.setAttribute("data-count", target);
+  const duration = 500;
+  const start = performance.now();
+  const from = current;
+  function step(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(from + (target - from) * eased);
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  }
+  requestAnimationFrame(step);
+}
+
+/* ------------------------------------------------------------------
    OVERVIEW
 ------------------------------------------------------------------ */
 function renderOverview() {
@@ -1751,9 +2109,9 @@ function renderOverview() {
   const held = classes.filter(item => item.status === "HELD").length;
   const cancelled = classes.filter(item => item.status === "CANCELLED").length;
 
-  document.getElementById("weekCount").textContent = weeks.size;
-  document.getElementById("heldCount").textContent = held;
-  document.getElementById("cancelledCount").textContent = cancelled;
+  animateCount(document.getElementById("weekCount"), weeks.size);
+  animateCount(document.getElementById("heldCount"), held);
+  animateCount(document.getElementById("cancelledCount"), cancelled);
 }
 
 /* ------------------------------------------------------------------
@@ -1762,60 +2120,106 @@ function renderOverview() {
 function renderSubjects() {
   const container = document.getElementById("subjectStats");
   container.innerHTML = "";
+  container.className = "subject-blocks";
 
-  const subjects = {};
+  const bySubject = {};
   classes.forEach(item => {
-    if (item.status !== "HELD") return;
-    if (!subjects[item.subject]) subjects[item.subject] = { present: 0, absent: 0 };
-    if (item.attendance === "PRESENT") subjects[item.subject].present++;
-    if (item.attendance === "ABSENT") subjects[item.subject].absent++;
+    if (!bySubject[item.subject]) bySubject[item.subject] = [];
+    bySubject[item.subject].push(item);
   });
 
-  const names = Object.keys(subjects).sort();
+  const names = Object.keys(bySubject).sort();
   if (!names.length) {
     container.innerHTML = `
       <div class="empty-state">
         <span class="empty-icon">📚</span>
-        <div class="empty-title">No attendance yet</div>
-        <div class="empty-desc">Mark some classes present or absent to see your breakdown.</div>
+        <div class="empty-title">No subjects yet</div>
+        <div class="empty-desc">Add a class to start tracking attendance.</div>
       </div>
     `;
     return;
   }
 
   names.forEach((subject, index) => {
-    const data = subjects[subject];
-    const total = data.present + data.absent;
-    const pct = total ? Math.round((data.present / total) * 100) : 0;
+    const items = bySubject[subject];
+    const held = items.filter(c => c.status === "HELD");
+    const present = held.filter(c => c.attendance === "PRESENT").length;
+    const absent = held.filter(c => c.attendance === "ABSENT").length;
+    const total = present + absent;
+    const pct = total ? Math.round((present / total) * 100) : 0;
+    const emoji = getEmoji(subject);
+    const lowClass = pct < 75 && total > 0 ? "low" : "";
+    const isExpanded = expandedSubjects.has(subject);
 
-    const card = document.createElement("div");
-    card.className = "subject-card";
-    card.style.setProperty("--accent", subjectColor(subject));
-    card.style.animationDelay = (index * 0.05) + "s";
-    card.innerHTML = `
-      <div class="subject-name">${escapeHTML(subject)}</div>
-      <div class="subject-badge">Subject</div>
-      <div class="subject-stats">
-        <div class="stat-item"><span class="stat-item-value">${total}</span><span class="stat-item-label">Total</span></div>
-        <div class="stat-item"><span class="stat-item-value">${data.present}</span><span class="stat-item-label">Present</span></div>
-        <div class="stat-item"><span class="stat-item-value">${data.absent}</span><span class="stat-item-label">Absent</span></div>
+    const block = document.createElement("div");
+    block.className = "subject-block" + (isExpanded ? " expanded" : "");
+    block.style.setProperty("--accent", subjectColor(subject));
+    block.style.animationDelay = (index * 0.04) + "s";
+
+    const sortedItems = [...items].sort((a, b) => b.date.localeCompare(a.date));
+    const detailRows = sortedItems.map(c => {
+      let statusClass = "unmarked";
+      let statusText = "Unmarked";
+      if (c.status === "CANCELLED") {
+        statusClass = "cancelled";
+        statusText = "Cancelled";
+      } else if (c.attendance === "PRESENT") {
+        statusClass = "present";
+        statusText = "Present";
+      } else if (c.attendance === "ABSENT") {
+        statusClass = "absent";
+        statusText = "Absent";
+      }
+      return `
+        <div class="subject-detail-row">
+          <div>
+            <div class="subject-detail-date">${formatDateShort(c.date)}</div>
+            <div class="subject-detail-day">${c.day}</div>
+          </div>
+          <div></div>
+          <div class="subject-detail-status ${statusClass}">${statusText}</div>
+        </div>
+      `;
+    }).join("");
+
+    block.innerHTML = `
+      <div class="subject-header">
+        <div class="subject-emoji">${emoji}</div>
+        <div>
+          <div class="subject-name">${escapeHTML(subject)}</div>
+        </div>
+        <div class="subject-bar">
+          <div class="subject-bar-track">
+            <div class="subject-bar-fill" style="width:${pct}%"></div>
+          </div>
+          <div class="subject-pct ${lowClass}">${pct}%</div>
+        </div>
+        <div class="subject-chevron">⌄</div>
       </div>
-      <div class="progress-wrap">
-        <div class="progress-label"><span>Attendance</span><span class="progress-percent">${pct}%</span></div>
-        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div class="subject-body">
+        <div class="subject-body-inner">
+          <div class="subject-detail-list">
+            ${detailRows || '<div class="subject-detail-empty">No classes yet.</div>'}
+          </div>
+        </div>
       </div>
     `;
-    container.appendChild(card);
+
+    block.querySelector(".subject-header").addEventListener("click", () => {
+      const nowExpanded = !expandedSubjects.has(subject);
+      toggleExpandedSubject(subject);
+      block.classList.toggle("expanded", nowExpanded);
+    });
+
+    container.appendChild(block);
   });
 }
 
 /* ------------------------------------------------------------------
-   SWIPE GESTURES
+   SWIPE
 ------------------------------------------------------------------ */
-let touchStartX = 0;
-let touchStartY = 0;
-let touchCurrentCard = null;
-let touchStartTime = 0;
+let touchStartX = 0, touchStartY = 0;
+let touchCurrentCard = null, touchStartTime = 0;
 
 function attachSwipe(card, item) {
   if (currentMode !== "edit") return;
@@ -1831,8 +2235,7 @@ function attachSwipe(card, item) {
   }, { passive: true });
 
   card.addEventListener("touchmove", (e) => {
-    if (!touchCurrentCard) return;
-    if (e.touches.length !== 1) return;
+    if (!touchCurrentCard || e.touches.length !== 1) return;
     const dx = e.touches[0].clientX - touchStartX;
     const dy = e.touches[0].clientY - touchStartY;
     if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) {
@@ -1848,7 +2251,6 @@ function attachSwipe(card, item) {
     const dt = Date.now() - touchStartTime;
     touchCurrentCard.classList.remove("swiping");
     touchCurrentCard.style.transform = "";
-
     if (dx > 80 && Math.abs(dy) < 50 && dt < 600) {
       if (item.status === "HELD") markAttendance(item.id, "PRESENT");
     } else if (dx < -80 && Math.abs(dy) < 50 && dt < 600) {
@@ -1893,7 +2295,6 @@ function renderSchedule() {
     weeks[week].push(item);
   });
 
-  // preserve expansion state
   const expandedWeeks = new Set(
     [...container.querySelectorAll(".week-block:not(.collapsed)")]
       .map(el => el.getAttribute("data-week"))
@@ -1920,13 +2321,20 @@ function renderSchedule() {
       header.addEventListener("click", () => weekBlock.classList.toggle("collapsed"));
       weekBlock.appendChild(header);
 
+      const body = document.createElement("div");
+      body.className = "week-body";
+      const bodyInner = document.createElement("div");
+      bodyInner.className = "week-body-inner";
+
       const grid = document.createElement("div");
       grid.className = "class-grid";
 
-      weeks[week].forEach(item => {
+      weeks[week].forEach((item, idx) => {
+        const isCancelled = item.status === "CANCELLED";
         const card = document.createElement("div");
-        card.className = "class-card";
+        card.className = "class-card" + (isCancelled ? " is-cancelled" : "");
         card.style.setProperty("--card-accent", subjectColor(item.subject));
+        card.style.animationDelay = (idx * 0.04) + "s";
 
         let attendanceText = "Unmarked";
         let attendanceClass = "unmarked";
@@ -1947,7 +2355,7 @@ function renderSchedule() {
 
         const attendanceBlock = item.status === "HELD"
           ? `<div class="attendance-pill ${attendanceClass}">${attendanceText}</div>`
-          : `<div class="cancelled-text">Class Cancelled</div>`;
+          : '';
 
         card.innerHTML = `
           <div class="class-top">
@@ -1984,7 +2392,9 @@ function renderSchedule() {
         grid.appendChild(card);
       });
 
-      weekBlock.appendChild(grid);
+      bodyInner.appendChild(grid);
+      body.appendChild(bodyInner);
+      weekBlock.appendChild(body);
       container.appendChild(weekBlock);
     });
 }
@@ -2027,23 +2437,55 @@ function renderSubjectSuggestions(filter = "") {
 
   box.innerHTML = subjects.map(name => `
     <button type="button" class="suggestion-item" data-subject="${escapeHTML(name)}">
-      <span class="suggestion-icon">•</span>
-      <span>${escapeHTML(name)}</span>
+      <span class="suggestion-emoji">${getEmoji(name)}</span>
+      <span class="suggestion-text">${escapeHTML(name)}</span>
+      <span class="suggestion-edit" data-edit="${escapeHTML(name)}" title="Change emoji">✎</span>
     </button>
   `).join("");
 
   box.querySelectorAll(".suggestion-item").forEach(btn => {
-    btn.addEventListener("mousedown", e => {
+    const pick = (e) => {
       e.preventDefault();
       document.getElementById("subject").value = btn.getAttribute("data-subject");
       closeSubjectSuggestions();
-    });
-    btn.addEventListener("touchstart", e => {
-      e.preventDefault();
-      document.getElementById("subject").value = btn.getAttribute("data-subject");
-      closeSubjectSuggestions();
-    }, { passive: false });
+    };
+    btn.addEventListener("mousedown", pick);
+    btn.addEventListener("touchstart", pick, { passive: false });
   });
+
+  box.querySelectorAll(".suggestion-edit").forEach(edit => {
+    const openEmoji = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openEmojiPicker(edit.getAttribute("data-edit"));
+    };
+    edit.addEventListener("mousedown", openEmoji);
+    edit.addEventListener("touchstart", openEmoji, { passive: false });
+  });
+}
+
+function openEmojiPicker(subject) {
+  const box = document.getElementById("subjectSuggestions");
+  if (!box) return;
+  box.innerHTML = `
+    <div style="padding: 10px 12px 4px; font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">
+      Pick emoji for "${escapeHTML(subject)}"
+    </div>
+    <div class="emoji-picker">
+      ${EMOJI_OPTIONS.map(e => `
+        <button type="button" class="emoji-opt${getEmoji(subject) === e ? ' active' : ''}" data-emoji="${e}">${e}</button>
+      `).join("")}
+    </div>
+  `;
+  box.querySelectorAll(".emoji-opt").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      setEmoji(subject, btn.getAttribute("data-emoji"));
+      renderSubjects();
+      renderSubjectSuggestions(document.getElementById("subject").value);
+    });
+  });
+  box.classList.add("show");
 }
 
 function openSubjectSuggestions() {
@@ -2102,7 +2544,6 @@ document.getElementById("exportBtn").addEventListener("click", exportCSV);
 document.addEventListener("keydown", (e) => {
   const tag = (e.target.tagName || "").toLowerCase();
   if (tag === "input" || tag === "textarea" || tag === "select") return;
-
   if (e.key === "v" || e.key === "V") setMode("view");
   else if (e.key === "e" || e.key === "E") setMode("edit");
   else if (e.key === "Escape") closeSubjectSuggestions();
@@ -2112,6 +2553,7 @@ document.addEventListener("keydown", (e) => {
    INIT
 ------------------------------------------------------------------ */
 initSubjectPicker();
+initSubjectSection();
 setMode(currentMode, false);
 updatePendingBadge();
 loadData(true).then(() => {
