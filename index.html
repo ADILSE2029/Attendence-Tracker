@@ -2,1989 +2,2121 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#4263eb">
 <title>Attendance Tracker</title>
-<link rel="icon"  type="image/x-icon" href="/icons8-attendance-stickers-96.png">
+<link rel="icon" type="image/x-icon" href="/icons8-attendance-stickers-96.png">
 
 <style>
 :root {
-    --bg: #f5f7fa;
-    --bg-secondary: #eef2f7;
-    --card: #ffffff;
-    --card-alt: #f9fafb;
-    --text: #1a202c;
-    --text-secondary: #718096;
-    --border: #e2e8f0;
-    --primary: #6366f1;
-    --primary-light: #818cf8;
-    --primary-dark: #4f46e5;
-    --green: #10b981;
-    --green-light: #d1fae5;
-    --green-dark: #047857;
-    --red: #ef4444;
-    --red-light: #fee2e2;
-    --red-dark: #991b1b;
-    --orange: #f97316;
-    --orange-light: #fed7aa;
-    --blue: #3b82f6;
-    --blue-light: #dbeafe;
-    --purple: #a855f7;
-    --purple-light: #f3e8ff;
-    --pink: #ec4899;
-    --pink-light: #fce7f3;
-    --cyan: #06b6d4;
-    --cyan-light: #cffafe;
-    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
-    --shadow: 0 4px 12px 0 rgba(0,0,0,0.08);
-    --shadow-lg: 0 10px 25px 0 rgba(0,0,0,0.1);
+  --bg: #f2f5f9;
+  --bg-elevated: #ffffff;
+  --card: #ffffff;
+  --card-soft: #f8fafc;
+  --text: #0b1b2f;
+  --text-muted: #4b5e77;
+  --text-soft: #6b7c94;
+  --border: #dce4ec;
+  --border-light: #eaf0f6;
+  --primary: #4263eb;
+  --primary-soft: #e1e9ff;
+  --primary-dim: #cdd9fc;
+  --green: #0e9f6e;
+  --green-soft: #e0f5ea;
+  --red: #e13d3d;
+  --red-soft: #ffe3e3;
+  --orange: #d97706;
+  --orange-soft: #fff3e0;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
 html[data-theme="dark"] {
-    --bg: #0f172a;
-    --bg-secondary: #1e293b;
-    --card: #1e293b;
-    --card-alt: #334155;
-    --text: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --border: #475569;
-    --primary: #818cf8;
-    --primary-light: #a5b4fc;
-    --primary-dark: #6366f1;
-    --green: #10b981;
-    --green-light: #86efac;
-    --green-dark: #16a34a;
-    --red: #ef4444;
-    --red-light: #fca5a5;
-    --red-dark: #dc2626;
-    --orange: #fb923c;
-    --orange-light: #fed7aa;
-    --blue: #60a5fa;
-    --blue-light: #93c5fd;
-    --purple: #d8b4fe;
-    --purple-light: #e9d5ff;
-    --pink: #f472b6;
-    --pink-light: #fbcfe8;
-    --cyan: #22d3ee;
-    --cyan-light: #a5f3fc;
-    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.3);
-    --shadow: 0 4px 12px 0 rgba(0,0,0,0.3);
-    --shadow-lg: 0 10px 25px 0 rgba(0,0,0,0.4);
+  --bg: #0d1421;
+  --bg-elevated: #141e2e;
+  --card: #141e2e;
+  --card-soft: #1b2638;
+  --text: #eef4ff;
+  --text-muted: #a2b6d0;
+  --text-soft: #7a8fa9;
+  --border: #2b3b52;
+  --border-light: #202e42;
+  --primary: #6f8cff;
+  --primary-soft: #1e2b4a;
+  --primary-dim: #2a3d66;
+  --green: #2bcc8e;
+  --green-soft: #103a2c;
+  --red: #f87171;
+  --red-soft: #3a1c1c;
+  --orange: #fbbf24;
+  --orange-soft: #332812;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { overscroll-behavior-y: contain; }
 
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: linear-gradient(135deg, var(--bg) 0%, var(--bg-secondary) 100%);
-    color: var(--text);
-    min-height: 100vh;
-    transition: background 0.4s ease, color 0.4s ease;
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+  transition: background 0.2s ease, color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
 }
 
-button, input, select {
-    font: inherit;
+.app {
+  width: min(1240px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 32px 0 64px;
 }
 
-button {
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.container {
-    width: min(1200px, calc(100% - 32px));
-    margin: 0 auto;
-    padding: 40px 0 60px;
-}
-
-/* HEADER */
-
+/* ---------- header ---------- */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 35px;
-    animation: slideDown 0.6s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
+.brand { display: flex; align-items: center; gap: 12px; }
 
 .logo {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    display: grid;
-    place-items: center;
-    color: white;
-    font-size: 26px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  display: grid; place-items: center;
+  font-size: 22px; font-weight: 700;
+  color: #fff;
+  background: linear-gradient(145deg, #4263eb, #7b4dff);
+  box-shadow: 0 6px 16px rgba(66, 99, 235, 0.25);
+  flex-shrink: 0;
 }
 
 .brand h1 {
-    margin: 0;
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #6366f1, #a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: fadeInLeft 0.6s ease 0.2s both;
+  font-size: 22px; font-weight: 700;
+  letter-spacing: -0.02em; margin: 0;
+  background: linear-gradient(145deg, #4263eb, #7b4dff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.brand p {
-    margin: 4px 0 0;
-    color: var(--text-secondary);
-    font-size: 14px;
-    animation: fadeInLeft 0.6s ease 0.3s both;
+.brand p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+.header-actions {
+  display: flex; align-items: center;
+  gap: 12px; flex-wrap: wrap;
 }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+.cloud-status {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600;
+  color: var(--green);
+  background: var(--green-soft);
+  padding: 8px 14px;
+  border-radius: 40px;
+  border: 1px solid rgba(14, 159, 110, 0.2);
+  transition: all var(--transition);
+  cursor: default;
 }
 
-.connection {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--green-dark);
-    font-size: 13px;
-    font-weight: 600;
-    background: linear-gradient(135deg, var(--green-light), #d1fae5);
-    padding: 9px 14px;
-    border-radius: 20px;
-    animation: fadeInRight 0.6s ease both;
-    border: 1px solid var(--green);
+.cloud-status.syncing {
+  color: var(--orange);
+  background: var(--orange-soft);
+  border-color: rgba(217, 119, 6, 0.2);
 }
 
-.dot {
-    width: 8px;
-    height: 8px;
-    background: var(--green);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
+.cloud-status.offline {
+  color: var(--red);
+  background: var(--red-soft);
+  border-color: rgba(225, 61, 61, 0.2);
 }
 
-.theme-toggle {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: linear-gradient(135deg, var(--blue), var(--purple));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    animation: fadeInRight 0.6s ease 0.1s both;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+.cloud-dot {
+  width: 6px; height: 6px;
+  background: currentColor;
+  border-radius: 50%;
+  animation: soft-pulse 2s infinite;
 }
 
-.theme-toggle:hover {
-    transform: scale(1.05) rotate(20deg);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+.cloud-status.offline .cloud-dot { animation: none; }
+
+@keyframes soft-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
-.theme-toggle:active {
-    transform: scale(0.95);
+.mode-switch {
+  display: flex;
+  background: var(--card-soft);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  padding: 4px;
+  gap: 2px;
+  box-shadow: var(--shadow-sm);
 }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.mode-btn {
+  padding: 8px 20px;
+  border-radius: 40px;
+  border: none;
+  background: transparent;
+  font-size: 13px; font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+  letter-spacing: 0.01em;
 }
 
-@keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.mode-btn.active {
+  background: var(--card);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+  font-weight: 700;
 }
 
-@keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translateX(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.icon-btn {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  display: grid; place-items: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-muted);
+  font-family: inherit;
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+.icon-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: scale(1.02);
 }
 
-/* CARDS */
+.icon-btn:active { transform: scale(0.98); }
 
+.icon-btn.spinning { animation: spin 0.8s linear infinite; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.pending-badge {
+  display: none;
+  background: var(--orange);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 40px;
+  margin-left: 2px;
+}
+
+.cloud-status.has-pending .pending-badge { display: inline-block; }
+
+/* ---------- cards ---------- */
 .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    padding: 28px;
-    margin-bottom: 24px;
-    transition: all 0.3s ease;
-    animation: fadeInUp 0.6s ease;
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition), border-color var(--transition);
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.card:hover { box-shadow: var(--shadow); border-color: var(--border); }
+
+.card-header {
+  display: flex; justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap; gap: 8px;
 }
 
-.card:nth-child(2) {
-    animation-delay: 0.1s;
+.card-header h2 {
+  font-size: 16px; font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  display: flex; align-items: center; gap: 8px;
 }
 
-.card:nth-child(3) {
-    animation-delay: 0.2s;
+.card-header .hint {
+  font-size: 12px; font-weight: 500;
+  color: var(--text-soft);
+  background: var(--card-soft);
+  padding: 4px 12px;
+  border-radius: 40px;
+  border: 1px solid var(--border-light);
 }
 
-.card:nth-child(4) {
-    animation-delay: 0.3s;
-}
-
-.card:nth-child(5) {
-    animation-delay: 0.4s;
-}
-
-.card:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-4px);
-}
-
-.card-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid var(--border);
-    transition: border-color 0.3s ease;
-}
-
-.card:hover .card-title {
-    border-bottom-color: var(--primary);
-}
-
-.card-title h2 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 700;
-    background: linear-gradient(135deg, #6366f1, #a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.card-title span {
-    color: var(--text-secondary);
-    font-size: 13px;
-    font-weight: 500;
-}
-
-/* FORM */
-
-.form-section {
-    margin-bottom: 24px;
-}
-
+/* ---------- form ---------- */
 .form-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1.5fr 1fr auto;
-    gap: 12px;
+  display: grid;
+  grid-template-columns: 1.1fr 1.6fr 1fr auto;
+  gap: 12px;
+  align-items: end;
 }
 
-.field {
-    display: flex;
-    flex-direction: column;
-    animation: fadeInUp 0.6s ease;
-}
+.field { display: flex; flex-direction: column; gap: 6px; }
 
 .field label {
-    display: block;
-    color: var(--text);
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 7px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
 }
 
 input, select {
-    width: 100%;
-    height: 45px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--card);
-    padding: 0 13px;
-    outline: none;
-    color: var(--text);
-    font-size: 14px;
-    transition: all 0.3s ease;
+  width: 100%;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  padding: 0 14px;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border var(--transition), box-shadow var(--transition);
+  font-family: inherit;
 }
 
 input:focus, select:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-    transform: translateY(-2px);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(66, 99, 235, 0.12);
 }
 
-input::placeholder {
-    color: var(--text-secondary);
-}
-
-.add-button {
-    align-self: end;
-    height: 45px;
-    border: 0;
-    border-radius: 10px;
-    padding: 0 24px;
-    background: linear-gradient(135deg, #6366f1, #a855f7);
-    color: white;
-    font-weight: 700;
-    font-size: 14px;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-    position: relative;
-    overflow: hidden;
-}
-
-.add-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    transition: left 0.3s ease;
-}
-
-.add-button:hover::before {
-    left: 100%;
-}
-
-.add-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
-}
-
-.add-button:active {
-    transform: translateY(-1px);
-    animation: click 0.3s ease;
-}
-
-@keyframes click {
-    0%, 100% { transform: translateY(-1px); }
-    50% { transform: translateY(2px); }
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 16px;
-}
-
-.form-actions button {
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--text-secondary);
-    padding: 9px 16px;
-    border-radius: 9px;
-    font-size: 13px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.form-actions button:hover {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
-    border-color: var(--primary);
-    color: var(--primary);
-    transform: translateY(-2px);
-}
-
-.form-actions .danger {
-    color: var(--red);
-}
-
-.form-actions .danger:hover {
-    background: linear-gradient(135deg, var(--red-light), var(--red-light));
-    border-color: var(--red);
-}
-
-.message {
-    display: none;
-    margin-top: 14px;
-    padding: 12px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 500;
-    animation: slideInMessage 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes slideInMessage {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.message.success {
-    display: block;
-    background: linear-gradient(135deg, var(--green-light), #d1fae5);
-    color: var(--green-dark);
-    border: 1px solid var(--green);
-}
-
-.message.error {
-    display: block;
-    background: linear-gradient(135deg, var(--red-light), var(--red-light));
-    color: var(--red-dark);
-    border: 1px solid var(--red);
-}
-
-/* STATS GRID */
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-}
-
-.stat {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
-    border: 1px solid var(--border);
-    border-radius: 13px;
-    padding: 20px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    animation: scaleIn 0.6s ease;
-}
-
-@keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.stat:nth-child(1) { animation-delay: 0.1s; }
-.stat:nth-child(2) { animation-delay: 0.2s; }
-.stat:nth-child(3) { animation-delay: 0.3s; }
-.stat:nth-child(4) { animation-delay: 0.4s; }
-
-.stat::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #6366f1, #a855f7);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-}
-
-.stat::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.stat:hover {
-    border-color: var(--primary);
-    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.15);
-    transform: translateY(-4px);
-}
-
-.stat:hover::before {
-    transform: scaleX(1);
-}
-
-.stat:hover::after {
-    opacity: 1;
-}
-
-.stat-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: grid;
-    place-items: center;
-    font-size: 18px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
-    color: var(--primary);
-    margin-bottom: 12px;
-    animation: none;
-}
-
-.stat:hover .stat-icon {
-    animation: none;
-}
-
-.stat-label {
-    color: var(--text-secondary);
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    margin-bottom: 8px;
-}
-
-.stat-number {
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--text);
-    letter-spacing: -1px;
-    margin-bottom: 8px;
-    animation: countUp 0.8s ease-out;
-}
-
-@keyframes countUp {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.stat-sub {
-    font-size: 12px;
-    color: var(--text-secondary);
-    display: none;
-}
-
-/* SUBJECT ATTENDANCE CARDS */
-
-.subject-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 18px;
-}
-
-.subject-card {
-    background: linear-gradient(135deg, var(--card), var(--card-alt));
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-    transition: all 0.3s ease;
-    animation: slideIn 0.4s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.subject-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--color-accent, var(--primary));
-    transition: transform 0.3s ease;
-    transform: scaleX(0);
-    transform-origin: left;
-}
-
-.subject-card:hover::before {
-    transform: scaleX(1);
-}
-
-.subject-card:hover {
-    border-color: var(--color-accent, var(--primary));
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15);
-}
-
-.subject-header-card {
-    margin-bottom: 16px;
-}
-
-.subject-name-card {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 6px;
-}
-
-.subject-badge-card {
-    display: inline-block;
-    background: var(--color-light, var(--primary-light));
-    color: white;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.subject-stats-card {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 14px;
-}
-
-.stat-item {
-    flex: 1;
-    text-align: center;
-}
-
-.stat-item-number {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--text);
-    display: block;
-}
-
-.stat-item-label {
-    font-size: 11px;
-    color: var(--text-secondary);
-    margin-top: 4px;
-    text-transform: uppercase;
-    font-weight: 600;
-}
-
-.progress-card {
-    margin-bottom: 12px;
-}
-
-.progress-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-    font-size: 12px;
-}
-
-.progress-label-text {
-    color: var(--text-secondary);
-    font-weight: 600;
-}
-
-.progress-percentage {
-    background: var(--color-light, var(--blue-light));
-    color: var(--text);
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 11px;
-}
-
-.progress {
-    height: 10px;
-    background: var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-}
-
-.progress-bar {
-    height: 100%;
-    border-radius: 20px;
-    background: linear-gradient(90deg, var(--color-accent, var(--primary)), var(--color-light, var(--primary-light)));
-    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: expandWidth 0.8s ease-out;
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
-}
-
-@keyframes expandWidth {
-    from { width: 0%; }
-}
-
-.subject-colors {
-    display: none;
-}
-
-.subject-card:nth-child(1) { --color-accent: #6366f1; --color-light: #818cf8; }
-.subject-card:nth-child(2) { --color-accent: #a855f7; --color-light: #d8b4fe; }
-.subject-card:nth-child(3) { --color-accent: #ec4899; --color-light: #f472b6; }
-.subject-card:nth-child(4) { --color-accent: #06b6d4; --color-light: #22d3ee; }
-.subject-card:nth-child(5) { --color-accent: #10b981; --color-light: #6ee7b7; }
-.subject-card:nth-child(6) { --color-accent: #f59e0b; --color-light: #fbbf24; }
-.subject-card:nth-child(7) { --color-accent: #ef4444; --color-light: #f87171; }
-.subject-card:nth-child(8) { --color-accent: #3b82f6; --color-light: #60a5fa; }
-
-/* SCHEDULE IMPROVED */
-
-.week-section {
-    margin-bottom: 32px;
-    animation: fadeInUp 0.6s ease;
-}
-
-.week-header {
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 18px;
-    padding: 16px 20px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
-    border-radius: 12px;
-    border-left: 5px solid var(--primary);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-}
-
-.week-header:hover {
-    transform: translateX(3px);
-    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.12);
-}
-
-.week-header::after {
-    content: "⌄";
-    width: 30px;
-    height: 30px;
-    margin-left: 4px;
-    display: grid;
-    place-items: center;
-    border-radius: 9px;
-    background: var(--card);
-    color: var(--primary);
-    font-size: 19px;
-    font-weight: 800;
-    flex-shrink: 0;
-    transition: transform 0.3s ease, background 0.25s ease;
-}
-
-.week-section.collapsed .week-header::after {
-    transform: rotate(-90deg);
-}
-
-.week-section.collapsed .class-grid {
-    display: none;
-}
-
-.week-section.collapsed .week-header {
-    margin-bottom: 0;
-}
+.subject-picker { position: relative; }
 
-.week-section.collapsed {
-    margin-bottom: 12px;
-}
-
-.week-number {
-    font-size: 24px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #6366f1, #a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.week-label {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.week-label-text {
-    font-size: 12px;
-    color: var(--text-secondary);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.week-label-days {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text);
-}
-
-.week-divider {
-    flex: 1;
-    height: 2px;
-    background: linear-gradient(90deg, var(--primary), transparent);
-    border-radius: 1px;
-}
-
-.class-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 14px;
-}
-
-.class-card {
-    background: linear-gradient(135deg, var(--card), var(--card-alt));
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    padding: 18px;
-    transition: all 0.3s ease;
-    animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    position: relative;
-    overflow: hidden;
-}
-
-@keyframes popIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.class-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, var(--card-color, #6366f1), rgba(99, 102, 241, 0));
-    transition: width 0.3s ease;
-}
-
-.class-card:hover::before {
-    width: 100%;
-    opacity: 0.05;
-}
-
-.class-card:hover {
-    border-color: var(--card-color, #6366f1);
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15);
-}
-
-.class-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 14px;
-}
-
-.class-date-day {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.class-date {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text);
-}
-
-.class-day {
-    font-size: 11px;
-    color: var(--text-secondary);
-    font-weight: 600;
-}
-
-.class-status-badge {
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
-    border: 1px solid;
-    display: inline-block;
-}
-
-.class-status-badge.held {
-    background: linear-gradient(135deg, var(--green-light), #d1fae5);
-    color: var(--green-dark);
-    border-color: var(--green);
-}
-
-.class-status-badge.cancelled {
-    background: linear-gradient(135deg, var(--red-light), var(--red-light));
-    color: var(--red-dark);
-    border-color: var(--red);
-}
-
-.class-subject {
-    margin-bottom: 14px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-}
-
-.class-subject-name {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.class-subject-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--card-color, #6366f1);
-}
-
-.class-attendance {
-    margin-bottom: 14px;
-    text-align: center;
-}
-
-.class-attendance-label {
-    font-size: 11px;
-    color: var(--text-secondary);
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    display: block;
-}
-
-.class-attendance-status {
-    font-size: 16px;
-    font-weight: 800;
-    padding: 8px 12px;
-    border-radius: 10px;
-    display: inline-block;
-}
-
-.class-attendance-status.present {
-    color: var(--green);
-    background: linear-gradient(135deg, var(--green-light), rgba(16, 185, 129, 0.1));
-    border: 1px solid var(--green);
-}
-
-.class-attendance-status.absent {
-    color: var(--red);
-    background: linear-gradient(135deg, var(--red-light), rgba(239, 68, 68, 0.1));
-    border: 1px solid var(--red);
-}
-
-.class-attendance-status.unmarked {
-    color: var(--orange);
-    background: linear-gradient(135deg, var(--orange-light), rgba(249, 115, 22, 0.1));
-    border: 1px solid var(--orange);
-}
-
-.class-cancelled-text {
-    color: var(--red);
-    font-size: 14px;
-    font-weight: 700;
-    text-align: center;
-}
-
-.class-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-}
+.subject-picker input { padding-right: 44px; }
 
-.class-actions-full {
-    grid-column: 1 / -1;
+.picker-arrow {
+  position: absolute;
+  top: 50%; right: 6px;
+  transform: translateY(-50%);
+  width: 32px; height: 32px;
+  border: none; background: transparent;
+  border-radius: 8px;
+  font-size: 18px;
+  color: var(--text-soft);
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: background var(--transition);
+  font-family: inherit;
 }
 
-.class-action-btn {
-    padding: 10px 14px;
-    border: 0;
-    border-radius: 10px;
-    color: white;
-    font-size: 12px;
-    font-weight: 700;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.class-action-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.2);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease;
-}
-
-.class-action-btn:hover::before {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
-.class-action-btn.present {
-    background: linear-gradient(135deg, #10b981, #059669);
-}
-
-.class-action-btn.present:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-}
-
-.class-action-btn.absent {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-}
-
-.class-action-btn.absent:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
-}
-
-.class-action-btn.delete {
-    background: linear-gradient(135deg, #9ca3af, #6b7280);
-    grid-column: 1 / -1;
-}
-
-.class-action-btn.delete:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(107, 114, 128, 0.4);
-}
-
-.empty, .loading {
-    text-align: center;
-    color: var(--text-secondary);
-    padding: 40px 20px;
-    font-size: 14px;
-    animation: fadeInUp 0.6s ease;
-}
-
-.loading::after {
-    content: '';
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    margin-left: 4px;
-    border-radius: 50%;
-    background: var(--primary);
-    animation: blink 1.4s infinite;
-}
-
-@keyframes blink {
-    0%, 60%, 100% { opacity: 0; }
-    30% { opacity: 1; }
-}
-
-/* Color coding for cards */
-.class-card:nth-child(1) { --card-color: #6366f1; }
-.class-card:nth-child(2) { --card-color: #a855f7; }
-.class-card:nth-child(3) { --card-color: #ec4899; }
-.class-card:nth-child(4) { --card-color: #06b6d4; }
-.class-card:nth-child(5) { --card-color: #10b981; }
-.class-card:nth-child(6) { --card-color: #f59e0b; }
-.class-card:nth-child(7) { --card-color: #ef4444; }
-.class-card:nth-child(8) { --card-color: #3b82f6; }
-
-/* MOBILE */
-
-@media (max-width: 1000px) {
-    .stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .add-button {
-        width: 100%;
-    }
-
-    .subject-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-
-    .class-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 700px) {
-    .container {
-        width: calc(100% - 20px);
-        padding-top: 20px;
-    }
-
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-        margin-bottom: 28px;
-    }
-
-    .header-right {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .brand h1 {
-        font-size: 24px;
-    }
-
-    .connection {
-        align-self: flex-start;
-    }
-
-    .card {
-        padding: 20px;
-        border-radius: 14px;
-    }
-
-    .card-title {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .stats {
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-    }
-
-    .stat {
-        padding: 16px;
-    }
-
-    .stat-number {
-        font-size: 26px;
-    }
-
-    .stat-label {
-        font-size: 11px;
-    }
-
-    .subject-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .week-header {
-        padding: 12px 16px;
-    }
-
-    .week-number {
-        font-size: 18px;
-    }
-
-    .week-label-text {
-        font-size: 10px;
-    }
-
-    .week-label-days {
-        font-size: 12px;
-    }
-
-    .class-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .class-actions {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* SAVED SUBJECT PICKER */
-
-.subject-picker {
-    position: relative;
-}
-
-.subject-picker input {
-    padding-right: 48px;
-}
-
-.subject-picker-arrow {
-    position: absolute;
-    top: 50%;
-    right: 8px;
-    transform: translateY(-50%);
-    width: 34px;
-    height: 34px;
-    border: 0;
-    border-radius: 9px;
-    background: transparent;
-    color: var(--text-secondary);
-    font-size: 20px;
-    line-height: 1;
-    cursor: pointer;
-    z-index: 3;
-}
-
-.subject-picker-arrow:hover {
-    background: var(--bg-secondary);
-    color: var(--primary);
-}
+.picker-arrow:hover { background: var(--card-soft); color: var(--primary); }
 
 .subject-suggestions {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: calc(100% + 7px);
-    z-index: 100;
-    display: none;
-    max-height: 220px;
-    overflow-y: auto;
-    padding: 7px;
-    border: 1px solid var(--border);
-    border-radius: 13px;
-    background: var(--card);
-    box-shadow: var(--shadow-lg);
+  position: absolute;
+  left: 0; right: 0;
+  top: calc(100% + 6px);
+  z-index: 50;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-hover);
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 6px;
+  display: none;
 }
 
 .subject-suggestions.show {
-    display: block;
-    animation: subjectDrop 0.16s ease-out;
+  display: block;
+  animation: fadeSlide 0.12s ease-out;
 }
 
-@keyframes subjectDrop {
-    from {
-        opacity: 0;
-        transform: translateY(-5px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.subject-suggestion {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 11px 12px;
-    border: 0;
-    border-radius: 9px;
-    background: transparent;
-    color: var(--text);
-    text-align: left;
-    font-size: 14px;
-    cursor: pointer;
+.suggestion-item {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none; background: transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition);
+  font-family: inherit;
 }
 
-.subject-suggestion:hover {
-    background: var(--bg-secondary);
-    color: var(--primary);
+.suggestion-item:hover { background: var(--card-soft); color: var(--primary); }
+
+.suggestion-icon {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  display: grid; place-items: center;
+  font-size: 12px; font-weight: 700;
 }
 
-.subject-suggestion-icon {
-    width: 24px;
-    height: 24px;
-    display: grid;
-    place-items: center;
-    border-radius: 7px;
-    background: var(--primary);
-    color: white;
-    font-size: 16px;
-    line-height: 1;
+.no-suggestions {
+  padding: 12px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-soft);
 }
 
-.subject-no-results {
-    padding: 13px 12px;
-    color: var(--text-secondary);
-    font-size: 13px;
-    text-align: center;
+.btn-primary {
+  height: 44px;
+  padding: 0 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: 0 4px 12px rgba(66, 99, 235, 0.25);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  font-family: inherit;
 }
 
+.btn-primary:hover:not(:disabled) {
+  background: #3451d1;
+  box-shadow: 0 6px 16px rgba(66, 99, 235, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) { transform: translateY(0); }
+.btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.form-actions {
+  display: flex; justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-ghost {
+  padding: 8px 18px;
+  border-radius: 40px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+
+.btn-ghost:hover {
+  background: var(--card-soft);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-ghost.danger:hover {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* ---------- message ---------- */
+.message {
+  margin-top: 16px;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  display: none;
+}
+
+.message.success {
+  display: block;
+  background: var(--green-soft);
+  color: var(--green);
+  border: 1px solid rgba(14, 159, 110, 0.25);
+}
+
+.message.error {
+  display: block;
+  background: var(--red-soft);
+  color: var(--red);
+  border: 1px solid rgba(225, 61, 61, 0.25);
+}
+
+.message.info {
+  display: block;
+  background: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid rgba(66, 99, 235, 0.25);
+}
+
+/* ---------- stats ---------- */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.stat-tile {
+  background: var(--card-soft);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  display: flex; align-items: center; gap: 14px;
+  transition: all var(--transition);
+}
+
+.stat-tile:hover {
+  background: var(--card);
+  border-color: var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: var(--primary-soft);
+  display: grid; place-items: center;
+  font-size: 20px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.stat-content { display: flex; flex-direction: column; }
+
+.stat-label {
+  font-size: 12px; font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-soft);
+}
+
+.stat-value {
+  font-size: 26px; font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+/* ---------- subject cards ---------- */
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.subject-card {
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 18px;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.subject-card:hover {
+  border-color: var(--primary-dim);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.subject-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: var(--accent, var(--primary));
+  border-radius: 0 4px 4px 0;
+  opacity: 0.6;
+}
+
+.subject-name {
+  font-size: 15px; font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  padding-left: 8px;
+}
+
+.subject-badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--primary);
+  background: var(--primary-soft);
+  padding: 2px 10px;
+  border-radius: 40px;
+  margin-bottom: 12px;
+  margin-left: 8px;
+}
+
+.subject-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-left: 8px;
+}
+
+.stat-item { text-align: center; }
+
+.stat-item-value {
+  font-size: 18px; font-weight: 800;
+  color: var(--text);
+  display: block;
+  line-height: 1.2;
+}
+
+.stat-item-label {
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-soft);
+}
+
+.progress-wrap { padding-left: 8px; }
+
+.progress-label {
+  display: flex; justify-content: space-between;
+  font-size: 12px; font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.progress-percent { font-weight: 800; color: var(--text); }
+
+.progress-bar {
+  height: 8px;
+  background: var(--border-light);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--accent, var(--primary)), var(--primary-dim));
+  transition: width 0.6s ease;
+}
+
+/* ---------- schedule ---------- */
+.week-block {
+  margin-bottom: 24px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  background: var(--card-soft);
+}
+
+.week-block:last-child { margin-bottom: 0; }
+
+.week-header {
+  display: flex; align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: var(--card-soft);
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition);
+  min-height: 56px;
+}
+
+.week-header:hover { background: var(--card); }
+
+.week-number {
+  font-size: 16px; font-weight: 800;
+  color: var(--primary);
+  background: var(--primary-soft);
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+
+.week-meta {
+  display: flex; flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.week-title {
+  font-size: 14px; font-weight: 700;
+  color: var(--text);
+}
+
+.week-count {
+  font-size: 12px;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+
+.week-chevron {
+  margin-left: auto;
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text-muted);
+  font-size: 16px;
+  transition: transform var(--transition), background var(--transition);
+  border: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.week-block.collapsed .week-chevron { transform: rotate(-90deg); }
+.week-block.collapsed .class-grid { display: none; }
+
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  padding: 0 16px 16px 16px;
+}
+
+.class-card {
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.class-card:hover {
+  border-color: var(--primary-dim);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.class-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--card-accent, var(--primary));
+  border-radius: 0 3px 3px 0;
+  opacity: 0.7;
+}
+
+.class-card.swiping { transition: transform 0.1s ease-out; }
+
+.class-top {
+  display: flex; justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  padding-left: 8px;
+}
+
+.class-date {
+  font-size: 13px; font-weight: 700;
+  color: var(--text);
+}
+
+.class-day {
+  font-size: 11px;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+
+.status-badge {
+  font-size: 10px; font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 40px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.status-badge.held {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.status-badge.cancelled {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.class-subject {
+  font-size: 14px; font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  padding-left: 8px;
+  display: flex; align-items: center; gap: 8px;
+  word-break: break-word;
+}
+
+.subject-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--card-accent, var(--primary));
+  flex-shrink: 0;
+}
+
+.attendance-pill {
+  display: inline-block;
+  font-size: 12px; font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 40px;
+  margin-bottom: 14px;
+  margin-left: 8px;
+}
+
+.attendance-pill.present {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.attendance-pill.absent {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.attendance-pill.unmarked {
+  background: var(--orange-soft);
+  color: var(--orange);
+}
+
+.cancelled-text {
+  font-size: 13px; font-weight: 600;
+  color: var(--red);
+  padding-left: 8px;
+  margin-bottom: 14px;
+}
+
+.class-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-left: 8px;
+}
+
+.class-actions .full-width { grid-column: 1 / -1; }
+
+.action-btn {
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px; font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex; align-items: center; justify-content: center;
+  gap: 4px;
+  background: var(--card-soft);
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+  font-family: inherit;
+  min-height: 40px;
+}
+
+.action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.action-btn.present {
+  background: var(--green-soft);
+  color: var(--green);
+  border-color: transparent;
+}
+
+.action-btn.present:hover:not(:disabled) { background: var(--green); color: #fff; }
+
+.action-btn.absent {
+  background: var(--red-soft);
+  color: var(--red);
+  border-color: transparent;
+}
+
+.action-btn.absent:hover:not(:disabled) { background: var(--red); color: #fff; }
+
+.action-btn.delete {
+  background: transparent;
+  color: var(--text-soft);
+  border: 1px solid var(--border-light);
+}
+
+.action-btn.delete:hover:not(:disabled) {
+  background: var(--red-soft);
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.mode-view .class-actions,
+.mode-view .form-section,
+.mode-view .form-actions {
+  display: none !important;
+}
+
+.mode-view .attendance-pill { margin-bottom: 0; }
+.mode-view .class-card { padding-bottom: 16px; }
+
+/* ---------- empty / loading ---------- */
+.empty-state, .loading-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-soft);
+  font-size: 14px;
+  background: var(--card-soft);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border);
+}
+
+.empty-state .empty-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+  display: block;
+  opacity: 0.6;
+}
+
+.empty-state .empty-title {
+  font-size: 15px; font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.empty-state .empty-desc {
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-bottom: 16px;
+}
+
+.empty-state .btn-ghost { margin-top: 8px; }
+
+/* ---------- banners ---------- */
+.offline-banner, .queue-banner {
+  display: none;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600;
+  margin-bottom: 20px;
+  align-items: center;
+  gap: 10px;
+}
+
+.offline-banner {
+  background: var(--red-soft);
+  color: var(--red);
+  border: 1px solid rgba(225, 61, 61, 0.25);
+}
+
+.offline-banner.show { display: flex; }
+
+.queue-banner {
+  background: var(--orange-soft);
+  color: var(--orange);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+}
+
+.queue-banner.show { display: flex; }
+
+.queue-banner .btn-ghost {
+  margin-left: auto;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--orange);
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+.queue-banner .btn-ghost:hover {
+  background: var(--orange);
+  color: #fff;
+  border-color: var(--orange);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .form-grid { grid-template-columns: 1fr 1fr; }
+  .btn-primary { width: 100%; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .app { width: calc(100% - 24px); padding: 16px 0 40px; }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 20;
+    padding: 12px 0 14px;
+    margin-left: -12px;
+    margin-right: -12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .header-actions { width: 100%; justify-content: space-between; gap: 8px; }
+  .brand h1 { font-size: 20px; }
+  .logo { width: 42px; height: 42px; font-size: 20px; }
+  .mode-switch { order: -1; flex: 1; }
+  .mode-btn { flex: 1; padding: 10px 12px; font-size: 13px; }
+  .icon-btn { width: 48px; height: 48px; font-size: 18px; }
+  .cloud-status { padding: 6px 12px; font-size: 11px; }
+
+  .form-grid { grid-template-columns: 1fr; gap: 14px; }
+  input, select { height: 48px; font-size: 16px; }
+  .btn-primary { height: 48px; font-size: 15px; width: 100%; }
+
+  .stats-row { grid-template-columns: 1fr; gap: 10px; }
+  .stat-tile { padding: 14px 16px; }
+  .stat-value { font-size: 22px; }
+
+  .subject-grid { grid-template-columns: 1fr; }
+
+  .class-grid {
+    grid-template-columns: 1fr;
+    padding: 0 12px 12px 12px;
+  }
+
+  .action-btn { min-height: 44px; padding: 12px 14px; font-size: 13px; }
+  .class-actions { gap: 10px; padding-left: 6px; }
+
+  .week-header { padding: 14px 16px; }
+  .week-number { width: 40px; height: 40px; font-size: 15px; }
+
+  .card { padding: 18px; }
+  .attendance-pill { font-size: 13px; padding: 7px 16px; }
+
+  .form-actions { flex-direction: column-reverse; }
+  .form-actions .btn-ghost { width: 100%; padding: 12px; font-size: 14px; }
+  .card-header .hint { font-size: 11px; padding: 3px 10px; }
+}
+
+@media (max-width: 640px) and (hover: none) {
+  .mode-edit .class-card::after {
+    content: '⇆ swipe';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text-soft);
+    opacity: 0.35;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app" id="app">
 
 <header class="header">
-    <div class="brand">
-        <div class="logo">✓</div>
-        <div>
-            <h1>Attendance</h1>
-            <p>Track your classes effortlessly</p>
-        </div>
+  <div class="brand">
+    <div class="logo">✓</div>
+    <div>
+      <h1>Attendance</h1>
+      <p>Track your classes effortlessly</p>
     </div>
-    <div class="header-right">
-        <div class="connection">
-            <span class="dot"></span>
-            Cloud synced
-        </div>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+  </div>
+  <div class="header-actions">
+    <div class="mode-switch" role="group" aria-label="View or Edit mode">
+      <button class="mode-btn active" id="modeViewBtn" data-mode="view">👁️ View</button>
+      <button class="mode-btn" id="modeEditBtn" data-mode="edit">✏️ Edit</button>
     </div>
+    <div class="cloud-status" id="cloudStatus" title="Sync status">
+      <span class="cloud-dot"></span>
+      <span id="cloudText">Cloud synced</span>
+      <span class="pending-badge" id="pendingBadge">0</span>
+    </div>
+    <button class="icon-btn" id="refreshBtn" aria-label="Refresh from sheet" title="Refresh from sheet">🔄</button>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">🌙</button>
+  </div>
 </header>
 
-<!-- ADD CLASS -->
+<div class="offline-banner" id="offlineBanner">
+  ⚠️ You are offline. Changes are being queued and will sync automatically.
+</div>
 
-<section class="card">
-    <div class="card-title">
-        <h2>Add New Class</h2>
-        <span>Record a class session</span>
+<div class="queue-banner" id="queueBanner">
+  <span id="queueText">⏳ 3 changes waiting to sync</span>
+  <button class="btn-ghost" id="flushQueueBtn">Sync now</button>
+</div>
+
+<!-- ADD CLASS (edit mode only) -->
+<section class="card form-section" id="addClassSection">
+  <div class="card-header">
+    <h2>➕ Add New Class</h2>
+    <span class="hint">Record a session</span>
+  </div>
+  <div class="form-grid">
+    <div class="field">
+      <label>Date</label>
+      <input type="date" id="date">
     </div>
-
-    <div class="form-section">
-        <div class="form-grid">
-            <div class="field">
-                <label>Date</label>
-                <input type="date" id="date">
-            </div>
-
-            <div class="field subject-field">
-                <label>Subject</label>
-                <div class="subject-picker">
-                    <input type="text" id="subject" placeholder="e.g. Data Structures" autocomplete="off">
-                    <button type="button" class="subject-picker-arrow" id="subjectPickerArrow" aria-label="Show saved subjects">⌄</button>
-                    <div class="subject-suggestions" id="subjectSuggestions"></div>
-                </div>
-            </div>
-
-            <div class="field">
-                <label>Status</label>
-                <select id="classStatus">
-                    <option value="HELD">Class Held</option>
-                    <option value="CANCELLED">Class Cancelled</option>
-                </select>
-            </div>
-
-            <button class="add-button" id="addBtn">+ Add Class</button>
-        </div>
+    <div class="field">
+      <label>Subject</label>
+      <div class="subject-picker">
+        <input type="text" id="subject" placeholder="e.g. Data Structures" autocomplete="off">
+        <button type="button" class="picker-arrow" id="subjectPickerArrow" aria-label="Show saved subjects">⌄</button>
+        <div class="subject-suggestions" id="subjectSuggestions"></div>
+      </div>
     </div>
-
-    <div class="form-actions">
-        <button id="clearBtn">Clear Form</button>
-        <button id="resetBtn" class="danger">Reset All</button>
+    <div class="field">
+      <label>Status</label>
+      <select id="classStatus">
+        <option value="HELD">Class Held</option>
+        <option value="CANCELLED">Class Cancelled</option>
+      </select>
     </div>
-
-    <div id="message" class="message"></div>
+    <button class="btn-primary" id="addBtn">+ Add Class</button>
+  </div>
+  <div class="form-actions">
+    <button class="btn-ghost" id="exportBtn">⬇️ Export CSV</button>
+    <button class="btn-ghost" id="clearBtn">Clear Form</button>
+    <button class="btn-ghost danger" id="resetBtn">Reset All</button>
+  </div>
+  <div id="message" class="message"></div>
 </section>
 
 <!-- OVERVIEW -->
-
 <section class="card">
-    <div class="card-title">
-        <h2>Overview</h2>
-        <span>Your attendance summary</span>
+  <div class="card-header">
+    <h2>📊 Overview</h2>
+    <span class="hint">Summary</span>
+  </div>
+  <div class="stats-row">
+    <div class="stat-tile">
+      <div class="stat-icon">📅</div>
+      <div class="stat-content">
+        <span class="stat-label">Total Weeks</span>
+        <span class="stat-value" id="weekCount">0</span>
+      </div>
     </div>
-
-    <div class="stats">
-        <div class="stat">
-            <div class="stat-icon">📅</div>
-            <div class="stat-label">Total Weeks</div>
-            <div class="stat-number" id="weekCount">0</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-icon">📍</div>
-            <div class="stat-label">Classes Held</div>
-            <div class="stat-number" id="heldCount">0</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-icon">✖</div>
-            <div class="stat-label">Classes Cancelled</div>
-            <div class="stat-number" id="cancelledCount">0</div>
-        </div>
+    <div class="stat-tile">
+      <div class="stat-icon">📍</div>
+      <div class="stat-content">
+        <span class="stat-label">Classes Held</span>
+        <span class="stat-value" id="heldCount">0</span>
+      </div>
     </div>
+    <div class="stat-tile">
+      <div class="stat-icon">✖</div>
+      <div class="stat-content">
+        <span class="stat-label">Cancelled</span>
+        <span class="stat-value" id="cancelledCount">0</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- SUBJECT ATTENDANCE -->
-
 <section class="card">
-    <div class="card-title">
-        <h2>Subject Attendance</h2>
-        <span>Attendance breakdown by subject</span>
-    </div>
-
-    <div id="subjectStats" class="subject-grid">
-        <div class="loading">Loading</div>
-    </div>
+  <div class="card-header">
+    <h2>📚 Subject Attendance</h2>
+    <span class="hint">Breakdown by subject</span>
+  </div>
+  <div id="subjectStats" class="subject-grid">
+    <div class="loading-state">Loading…</div>
+  </div>
 </section>
 
 <!-- SCHEDULE -->
-
 <section class="card">
-    <div class="card-title">
-        <h2>Class Schedule</h2>
-        <span>Mark your attendance</span>
-    </div>
-
-    <div id="schedule">
-        <div class="loading">Loading</div>
-    </div>
+  <div class="card-header">
+    <h2>🗓️ Class Schedule</h2>
+    <span class="hint">Weekly view</span>
+  </div>
+  <div id="schedule">
+    <div class="loading-state">Loading…</div>
+  </div>
 </section>
 
 </div>
 
 <script>
-
+/* ------------------------------------------------------------------
+   CONFIG
+------------------------------------------------------------------ */
 const API_URL = "https://script.google.com/macros/s/AKfycbxryV1UhZClPxP8m95HerdLGEZOV_T1Gp-YLy7-2KUBn_6H__LlMP-KgCzzoVB91aZIcA/exec";
+const QUEUE_KEY = "attendance_queue_v1";
+const REQUEST_TIMEOUT_MS = 8000;
 
+/* ------------------------------------------------------------------
+   STATE
+------------------------------------------------------------------ */
 let classes = [];
+let currentMode = localStorage.getItem("mode") || "view";
+let lastSyncTime = null;
+let queue = loadQueue();
 
-/* THEME TOGGLE */
+// Sync lock counter: only show "Syncing…" when no operations are in flight
+let syncLocks = 0;
+let lastFlushAt = 0;
 
+// Watchdog: if syncing > 15s with no progress, force-reset
+let syncingSince = 0;
+let lastQueueLength = 0;
+
+/* ------------------------------------------------------------------
+   THEME
+------------------------------------------------------------------ */
 const themeToggle = document.getElementById("themeToggle");
 const htmlElement = document.documentElement;
 
 function initTheme() {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    htmlElement.setAttribute("data-theme", savedTheme);
-    updateThemeIcon(savedTheme);
-}
-
-function updateThemeIcon(theme) {
-    themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+  const saved = localStorage.getItem("theme") || "light";
+  htmlElement.setAttribute("data-theme", saved);
+  themeToggle.textContent = saved === "dark" ? "☀️" : "🌙";
 }
 
 function toggleTheme() {
-    const currentTheme = htmlElement.getAttribute("data-theme");
-    const newTheme = currentTheme === "dark" ? "light" : "dark";
-    htmlElement.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-    updateThemeIcon(newTheme);
+  const current = htmlElement.getAttribute("data-theme");
+  const next = current === "dark" ? "light" : "dark";
+  htmlElement.setAttribute("data-theme", next);
+  localStorage.setItem("theme", next);
+  themeToggle.textContent = next === "dark" ? "☀️" : "🌙";
 }
 
 themeToggle.addEventListener("click", toggleTheme);
 initTheme();
-initSubjectPicker();
 
-/* MESSAGE */
+/* ------------------------------------------------------------------
+   MODE SWITCH
+------------------------------------------------------------------ */
+const app = document.getElementById("app");
+const modeViewBtn = document.getElementById("modeViewBtn");
+const modeEditBtn = document.getElementById("modeEditBtn");
 
+function setMode(mode, persist = true) {
+  currentMode = mode;
+  modeViewBtn.classList.toggle("active", mode === "view");
+  modeEditBtn.classList.toggle("active", mode === "edit");
+  app.classList.toggle("mode-view", mode === "view");
+  app.classList.toggle("mode-edit", mode === "edit");
+  if (persist) localStorage.setItem("mode", mode);
+  renderSchedule();
+}
+
+modeViewBtn.addEventListener("click", () => setMode("view"));
+modeEditBtn.addEventListener("click", () => setMode("edit"));
+
+/* ------------------------------------------------------------------
+   SYNC LOCK (single source of truth)
+------------------------------------------------------------------ */
+function lockSync() {
+  syncLocks++;
+  if (syncLocks === 1) {
+    syncingSince = Date.now();
+    lastQueueLength = queue.length;
+    setCloudStatus("syncing");
+  }
+}
+
+function unlockSync() {
+  syncLocks = Math.max(0, syncLocks - 1);
+  if (syncLocks === 0) {
+    syncingSince = 0;
+    updateOnlineState();
+  }
+}
+
+// Watchdog: kill stuck sync state after 15s of no progress
+setInterval(() => {
+  if (syncLocks > 0 && syncingSince > 0) {
+    const elapsed = Date.now() - syncingSince;
+    // if no queue progress in 15s, force-reset
+    if (elapsed > 15000 && queue.length === lastQueueLength) {
+      console.warn("Sync watchdog: forcing reset after 15s stall");
+      syncLocks = 0;
+      syncingSince = 0;
+      updateOnlineState();
+    } else if (queue.length !== lastQueueLength) {
+      // progress was made, reset the timer
+      syncingSince = Date.now();
+      lastQueueLength = queue.length;
+    }
+  }
+}, 3000);
+
+/* ------------------------------------------------------------------
+   CLOUD STATUS
+------------------------------------------------------------------ */
+const cloudStatus = document.getElementById("cloudStatus");
+const cloudText = document.getElementById("cloudText");
+const pendingBadge = document.getElementById("pendingBadge");
+const offlineBanner = document.getElementById("offlineBanner");
+const queueBanner = document.getElementById("queueBanner");
+const queueText = document.getElementById("queueText");
+
+function setCloudStatus(state) {
+  cloudStatus.classList.remove("synced", "syncing", "offline");
+  cloudStatus.classList.add(state);
+
+  if (state === "syncing") {
+    cloudText.textContent = "Syncing…";
+  } else if (state === "offline") {
+    cloudText.textContent = navigator.onLine ? "Retrying…" : "Offline";
+  } else {
+    if (lastSyncTime) {
+      const sec = Math.floor((Date.now() - lastSyncTime) / 1000);
+      let label = "just now";
+      if (sec >= 60) label = Math.floor(sec / 60) + " min ago";
+      else if (sec > 5) label = sec + "s ago";
+      cloudText.textContent = "Synced · " + label;
+    } else {
+      cloudText.textContent = "Cloud synced";
+    }
+  }
+}
+
+function updatePendingBadge() {
+  if (queue.length > 0) {
+    cloudStatus.classList.add("has-pending");
+    pendingBadge.textContent = queue.length;
+    queueBanner.classList.add("show");
+    queueText.textContent = "⏳ " + queue.length + " change" + (queue.length !== 1 ? "s" : "") + " waiting to sync";
+  } else {
+    cloudStatus.classList.remove("has-pending");
+    queueBanner.classList.remove("show");
+  }
+}
+
+function updateOnlineState() {
+  if (!navigator.onLine) {
+    setCloudStatus("offline");
+    offlineBanner.classList.add("show");
+  } else {
+    offlineBanner.classList.remove("show");
+    if (syncLocks === 0) setCloudStatus("synced");
+  }
+}
+
+window.addEventListener("online", () => {
+  updateOnlineState();
+  if (queue.length > 0) flushQueue();
+  else loadData(true);
+});
+
+window.addEventListener("offline", updateOnlineState);
+updateOnlineState();
+
+setInterval(() => {
+  if (syncLocks === 0 && navigator.onLine && lastSyncTime) setCloudStatus("synced");
+}, 30000);
+
+/* ------------------------------------------------------------------
+   OFFLINE QUEUE
+------------------------------------------------------------------ */
+function loadQueue() {
+  try {
+    const raw = localStorage.getItem(QUEUE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveQueue() {
+  try {
+    localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
+  } catch (e) {
+    console.warn("Could not save queue", e);
+  }
+  updatePendingBadge();
+}
+
+function enqueue(payload) {
+  // Coalesce updates for the same id (last write wins)
+  if (payload.action === "update") {
+    const idx = queue.findIndex(q => q.action === "update" && q.id === payload.id);
+    if (idx >= 0) queue[idx] = payload;
+    else queue.push(payload);
+  } else if (payload.action === "delete") {
+    queue = queue.filter(q => q.id !== payload.id);
+    queue.push(payload);
+  } else if (payload.action === "add") {
+    const idx = queue.findIndex(q => q.action === "add" && q.id === payload.id);
+    if (idx >= 0) queue[idx] = payload;
+    else queue.push(payload);
+  } else {
+    queue.push(payload);
+  }
+  saveQueue();
+}
+
+async function flushQueue() {
+  if (syncLocks > 0 && syncingSince > 0 && Date.now() - syncingSince < 1000) {
+    // already flushing, bail
+    return;
+  }
+  if (queue.length === 0 || !navigator.onLine) return;
+
+  lockSync();
+  const totalAtStart = queue.length;
+  let processed = 0;
+
+  try {
+    while (queue.length > 0 && navigator.onLine) {
+      const payload = queue[0];
+      try {
+        await sendToSheet(payload);
+        queue.shift();
+        saveQueue();
+        processed++;
+        // update progress in the banner
+        if (queue.length > 0) {
+          queueText.textContent = "⏳ Syncing " + processed + " of " + totalAtStart + "…";
+        }
+      } catch (err) {
+        console.warn("Queue flush failed, stopping", err);
+        break;
+      }
+    }
+  } finally {
+    unlockSync();
+  }
+
+  if (processed > 0) {
+    lastSyncTime = Date.now();
+
+    if (queue.length === 0) {
+      showMessage("Synced " + processed + " pending change" + (processed !== 1 ? "s" : "") + ".", "success");
+      // Only reload if the flush was substantial OR it's been a while
+      const shouldReload = processed >= 5 || (Date.now() - lastFlushAt > 30000);
+      lastFlushAt = Date.now();
+      if (shouldReload) {
+        // silent reload — doesn't touch the syncing pill
+        await loadData(true);
+      }
+    } else {
+      // partial flush, some items still pending
+      updateOnlineState();
+    }
+  }
+  updatePendingBadge();
+}
+
+document.getElementById("flushQueueBtn").addEventListener("click", flushQueue);
+
+/* ------------------------------------------------------------------
+   MESSAGE
+------------------------------------------------------------------ */
+let messageTimer = null;
 function showMessage(text, type) {
-    const box = document.getElementById("message");
-    box.textContent = text;
-    box.className = "message " + type;
-
-    setTimeout(() => {
-        box.className = "message";
-    }, 3000);
+  const box = document.getElementById("message");
+  box.textContent = text;
+  box.className = "message " + type;
+  clearTimeout(messageTimer);
+  messageTimer = setTimeout(() => { box.className = "message"; }, 3500);
 }
 
-/* DAY */
-
+/* ------------------------------------------------------------------
+   DATE HELPERS
+------------------------------------------------------------------ */
 function getDay(date) {
-    return new Date(date + "T00:00:00").toLocaleDateString("en-US", { weekday: "long" });
+  return new Date(date + "T00:00:00").toLocaleDateString("en-US", { weekday: "long" });
 }
-
-/* DATE */
 
 function formatDate(date) {
-    return new Date(date + "T00:00:00").toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric"
-    });
+  return new Date(date + "T00:00:00").toLocaleDateString("en-GB", {
+    day: "2-digit", month: "short", year: "numeric"
+  });
 }
-
-/* WEEK */
 
 function getWeek(date) {
-    const start = new Date("2026-09-07T00:00:00");
-    const current = new Date(date + "T00:00:00");
-    const difference = Math.floor((current - start) / (1000 * 60 * 60 * 24));
-
-    if (difference < 0) return 0;
-    return Math.floor(difference / 7) + 1;
+  const start = new Date("2026-09-07T00:00:00");
+  const current = new Date(date + "T00:00:00");
+  const diff = Math.floor((current - start) / (1000 * 60 * 60 * 24));
+  if (diff < 0) return 0;
+  return Math.floor(diff / 7) + 1;
 }
 
-/* LOAD */
+/* ------------------------------------------------------------------
+   SUBJECT COLOR
+------------------------------------------------------------------ */
+const SUBJECT_PALETTE = [
+  "#4263eb", "#7b4dff", "#d946ef", "#06b6d4",
+  "#0e9f6e", "#f59e0b", "#e13d3d", "#3b82f6"
+];
 
-async function loadData() {
-    try {
-        const response = await fetch(API_URL + "?t=" + Date.now());
-        classes = await response.json();
-
-        if (!Array.isArray(classes)) {
-            classes = [];
-        }
-
-        render();
-    } catch (error) {
-        console.error(error);
-        showMessage("Unable to connect to Google Sheets.", "error");
-    }
+function subjectColor(name) {
+  let h = 0;
+  const s = String(name || "");
+  for (let i = 0; i < s.length; i++) {
+    h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  }
+  return SUBJECT_PALETTE[h % SUBJECT_PALETTE.length];
 }
 
-/* SEND */
+/* ------------------------------------------------------------------
+   API
+------------------------------------------------------------------ */
+async function loadData(silent = false) {
+  if (!navigator.onLine) {
+    setCloudStatus("offline");
+    return;
+  }
+  if (!silent) lockSync();
 
-async function sendToSheet(data) {
-    await fetch(API_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify(data)
-    });
+  try {
+    const res = await fetchWithTimeout(API_URL + "?t=" + Date.now(), { method: "GET" }, REQUEST_TIMEOUT_MS);
+    const data = await res.json();
+    classes = Array.isArray(data) ? data : [];
+    lastSyncTime = Date.now();
+    if (!silent) unlockSync();
+    updateOnlineState();
+    render();
+  } catch (err) {
+    console.error(err);
+    if (!silent) unlockSync();
+    setCloudStatus("offline");
+    if (!silent) showMessage("Unable to connect to Google Sheets.", "error");
+  }
 }
 
-/* ADD CLASS */
+// Fetch with timeout + abort support
+async function fetchWithTimeout(url, options = {}, timeoutMs = REQUEST_TIMEOUT_MS) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
+// Returns true on success, throws on network failure or timeout
+async function sendToSheet(payload) {
+  await fetchWithTimeout(API_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(payload)
+  }, REQUEST_TIMEOUT_MS);
+}
+
+/* ------------------------------------------------------------------
+   REFRESH
+------------------------------------------------------------------ */
+const refreshBtn = document.getElementById("refreshBtn");
+refreshBtn.addEventListener("click", async () => {
+  if (queue.length > 0) {
+    flushQueue();
+    return;
+  }
+  refreshBtn.classList.add("spinning");
+  await loadData();
+  refreshBtn.classList.remove("spinning");
+  showMessage("Refreshed from sheet.", "info");
+});
+
+/* ------------------------------------------------------------------
+   ADD CLASS
+------------------------------------------------------------------ */
 async function addClass() {
-    const date = document.getElementById("date").value;
-    const subject = document.getElementById("subject").value.trim();
-    const status = document.getElementById("classStatus").value;
+  if (currentMode !== "edit") return;
 
-    if (!date) {
-        showMessage("Please select a date.", "error");
-        return;
-    }
+  const date = document.getElementById("date").value;
+  const subject = document.getElementById("subject").value.trim();
+  const status = document.getElementById("classStatus").value;
 
-    if (!subject) {
-        showMessage("Please enter a subject.", "error");
-        return;
-    }
+  if (!date) { showMessage("Please select a date.", "error"); return; }
+  if (!subject) { showMessage("Please enter a subject.", "error"); return; }
 
-    const duplicate = classes.some(
-        item => item.date === date && item.subject.toLowerCase() === subject.toLowerCase()
-    );
+  const duplicate = classes.some(
+    item => item.date === date && item.subject.toLowerCase() === subject.toLowerCase()
+  );
+  if (duplicate) { showMessage("This class already exists.", "error"); return; }
 
-    if (duplicate) {
-        showMessage("This class already exists.", "error");
-        return;
-    }
+  const item = {
+    id: Date.now().toString() + Math.random().toString(36).slice(2, 7),
+    date,
+    day: getDay(date),
+    subject,
+    status,
+    attendance: ""
+  };
 
-    const item = {
-        id: Date.now().toString(),
-        date,
-        day: getDay(date),
-        subject,
-        status,
-        attendance: ""
-    };
+  const addBtn = document.getElementById("addBtn");
+  addBtn.disabled = true;
+  addBtn.textContent = "Saving…";
 
-    try {
-        await sendToSheet({ action: "add", ...item });
-        classes.push(item);
-        render();
-        clearForm();
-        showMessage("Class added successfully.", "success");
-    } catch (error) {
-        showMessage("Could not save class.", "error");
-    }
+  classes.push(item);
+  render();
+  clearForm();
+  if (navigator.vibrate) navigator.vibrate(8);
+
+  const payload = { action: "add", ...item };
+
+  if (!navigator.onLine) {
+    enqueue(payload);
+    showMessage("Offline — will sync when back online.", "info");
+    addBtn.disabled = false;
+    addBtn.textContent = "+ Add Class";
+    updateOnlineState();
+    return;
+  }
+
+  lockSync();
+  try {
+    await sendToSheet(payload);
+    lastSyncTime = Date.now();
+    showMessage("Class added.", "success");
+  } catch (err) {
+    enqueue(payload);
+    showMessage("Saved locally, will retry sync.", "info");
+  } finally {
+    unlockSync();
+    addBtn.disabled = false;
+    addBtn.textContent = "+ Add Class";
+  }
 }
 
-/* ATTENDANCE */
+/* ------------------------------------------------------------------
+   MARK ATTENDANCE
+------------------------------------------------------------------ */
+async function markAttendance(id, attendance, btn) {
+  const item = classes.find(x => x.id === id);
+  if (!item) return;
 
-async function markAttendance(id, attendance) {
-    const item = classes.find(x => x.id === id);
+  if (navigator.vibrate) navigator.vibrate(6);
 
-    if (!item) return;
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = "…";
+  }
 
-    try {
-        await sendToSheet({ action: "update", id, attendance });
-        item.attendance = attendance;
-        render();
-    } catch (error) {
-        showMessage("Could not update attendance.", "error");
-    }
+  item.attendance = attendance;
+  render();
+
+  const payload = { action: "update", id, attendance };
+
+  if (!navigator.onLine) {
+    enqueue(payload);
+    updateOnlineState();
+    return;
+  }
+
+  lockSync();
+  try {
+    await sendToSheet(payload);
+    lastSyncTime = Date.now();
+  } catch (err) {
+    enqueue(payload);
+  } finally {
+    unlockSync();
+  }
 }
 
-/* DELETE */
-
+/* ------------------------------------------------------------------
+   DELETE
+------------------------------------------------------------------ */
 async function deleteClass(id) {
-    const item = classes.find(x => x.id === id);
+  const item = classes.find(x => x.id === id);
+  if (!item) return;
 
-    if (!item) return;
+  if (!confirm("Delete " + item.subject + " on " + formatDate(item.date) + "?")) return;
 
-    if (!confirm("Delete " + item.subject + " on " + formatDate(item.date) + "?")) {
-        return;
-    }
+  if (navigator.vibrate) navigator.vibrate([10, 30, 10]);
 
-    await sendToSheet({ action: "delete", id });
-    classes = classes.filter(x => x.id !== id);
-    render();
+  classes = classes.filter(x => x.id !== id);
+  render();
+
+  const payload = { action: "delete", id };
+
+  if (!navigator.onLine) {
+    enqueue(payload);
+    updateOnlineState();
+    return;
+  }
+
+  lockSync();
+  try {
+    await sendToSheet(payload);
+    lastSyncTime = Date.now();
+    showMessage("Class deleted.", "success");
+  } catch (err) {
+    enqueue(payload);
+    showMessage("Deleted locally, will sync later.", "info");
+  } finally {
+    unlockSync();
+  }
 }
 
-/* RESET */
-
+/* ------------------------------------------------------------------
+   RESET ALL
+------------------------------------------------------------------ */
 async function resetAll() {
-    if (!classes.length) {
-        showMessage("Nothing to reset.", "error");
-        return;
-    }
+  if (!classes.length) { showMessage("Nothing to reset.", "error"); return; }
+  const answer = prompt(
+    "This will delete ALL " + classes.length + " records from the sheet.\n\nType DELETE to confirm:"
+  );
+  if (answer !== "DELETE") {
+    if (answer !== null) showMessage("Reset cancelled.", "info");
+    return;
+  }
 
-    if (!confirm("Delete all attendance records? This cannot be undone.")) {
-        return;
-    }
+  classes = [];
+  queue = [];
+  saveQueue();
+  render();
 
-    await sendToSheet({ action: "reset" });
-    classes = [];
-    render();
+  const payload = { action: "reset" };
+
+  if (!navigator.onLine) {
+    enqueue(payload);
+    showMessage("Offline — reset will sync later.", "info");
+    return;
+  }
+
+  lockSync();
+  try {
+    await sendToSheet(payload);
+    lastSyncTime = Date.now();
     showMessage("All records deleted.", "success");
+  } catch (err) {
+    enqueue(payload);
+    showMessage("Reset queued, will retry sync.", "info");
+  } finally {
+    unlockSync();
+  }
 }
 
-/* CLEAR */
-
+/* ------------------------------------------------------------------
+   CLEAR FORM
+------------------------------------------------------------------ */
 function clearForm() {
-    document.getElementById("date").value = "";
-    document.getElementById("subject").value = "";
-    document.getElementById("classStatus").value = "HELD";
+  document.getElementById("date").value = "";
+  document.getElementById("subject").value = "";
+  document.getElementById("classStatus").value = "HELD";
 }
 
-/* OVERVIEW */
+/* ------------------------------------------------------------------
+   EXPORT CSV
+------------------------------------------------------------------ */
+function exportCSV() {
+  if (!classes.length) { showMessage("No data to export.", "error"); return; }
 
+  const headers = ["id", "date", "day", "subject", "status", "attendance"];
+  const rows = [headers.join(",")];
+
+  [...classes]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .forEach(item => {
+      const row = headers.map(h => {
+        const val = String(item[h] ?? "");
+        return /[",\n]/.test(val) ? '"' + val.replace(/"/g, '""') + '"' : val;
+      });
+      rows.push(row.join(","));
+    });
+
+  const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "attendance-" + new Date().toISOString().slice(0, 10) + ".csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showMessage("Exported " + classes.length + " records.", "success");
+}
+
+/* ------------------------------------------------------------------
+   OVERVIEW
+------------------------------------------------------------------ */
 function renderOverview() {
-    const weeks = new Set(classes.map(item => getWeek(item.date)));
-    const held = classes.filter(item => item.status === "HELD").length;
-    const cancelled = classes.filter(item => item.status === "CANCELLED").length;
+  const weeks = new Set(classes.map(item => getWeek(item.date)));
+  const held = classes.filter(item => item.status === "HELD").length;
+  const cancelled = classes.filter(item => item.status === "CANCELLED").length;
 
-    document.getElementById("weekCount").textContent = weeks.size;
-    document.getElementById("heldCount").textContent = held;
-    document.getElementById("cancelledCount").textContent = cancelled;
+  document.getElementById("weekCount").textContent = weeks.size;
+  document.getElementById("heldCount").textContent = held;
+  document.getElementById("cancelledCount").textContent = cancelled;
 }
 
-/* SUBJECTS */
-
+/* ------------------------------------------------------------------
+   SUBJECTS
+------------------------------------------------------------------ */
 function renderSubjects() {
-    const container = document.getElementById("subjectStats");
-    container.innerHTML = "";
+  const container = document.getElementById("subjectStats");
+  container.innerHTML = "";
 
-    const subjects = {};
+  const subjects = {};
+  classes.forEach(item => {
+    if (item.status !== "HELD") return;
+    if (!subjects[item.subject]) subjects[item.subject] = { present: 0, absent: 0 };
+    if (item.attendance === "PRESENT") subjects[item.subject].present++;
+    if (item.attendance === "ABSENT") subjects[item.subject].absent++;
+  });
 
-    classes.forEach(item => {
-        if (item.status !== "HELD") return;
+  const names = Object.keys(subjects).sort();
+  if (!names.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">📚</span>
+        <div class="empty-title">No attendance yet</div>
+        <div class="empty-desc">Mark some classes present or absent to see your breakdown.</div>
+      </div>
+    `;
+    return;
+  }
 
-        if (!subjects[item.subject]) {
-            subjects[item.subject] = { present: 0, absent: 0 };
-        }
+  names.forEach((subject, index) => {
+    const data = subjects[subject];
+    const total = data.present + data.absent;
+    const pct = total ? Math.round((data.present / total) * 100) : 0;
 
-        if (item.attendance === "PRESENT") {
-            subjects[item.subject].present++;
-        }
-
-        if (item.attendance === "ABSENT") {
-            subjects[item.subject].absent++;
-        }
-    });
-
-    const names = Object.keys(subjects);
-
-    if (!names.length) {
-        container.innerHTML = '<div class="empty">No attendance marked yet.</div>';
-        return;
-    }
-
-    names.sort();
-
-    container.className = "subject-grid";
-
-    names.forEach((subject, index) => {
-        const data = subjects[subject];
-        const total = data.present + data.absent;
-        const percentage = total ? Math.round((data.present / total) * 100) : 0;
-
-        const card = document.createElement("div");
-        card.className = "subject-card";
-        card.style.animationDelay = (index * 0.1) + "s";
-        card.innerHTML = `
-            <div class="subject-header-card">
-                <div class="subject-name-card">${escapeHTML(subject)}</div>
-                <span class="subject-badge-card">Subject</span>
-            </div>
-            <div class="subject-stats-card">
-                <div class="stat-item">
-                    <span class="stat-item-number">${total}</span>
-                    <span class="stat-item-label">Total</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-item-number">${data.present}</span>
-                    <span class="stat-item-label">Present</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-item-number">${data.absent}</span>
-                    <span class="stat-item-label">Absent</span>
-                </div>
-            </div>
-            <div class="progress-card">
-                <div class="progress-label">
-                    <span class="progress-label-text">Attendance Rate</span>
-                    <span class="progress-percentage">${percentage}%</span>
-                </div>
-                <div class="progress">
-                    <div class="progress-bar" style="width:${percentage}%"></div>
-                </div>
-            </div>
-        `;
-        container.appendChild(card);
-    });
+    const card = document.createElement("div");
+    card.className = "subject-card";
+    card.style.setProperty("--accent", subjectColor(subject));
+    card.style.animationDelay = (index * 0.05) + "s";
+    card.innerHTML = `
+      <div class="subject-name">${escapeHTML(subject)}</div>
+      <div class="subject-badge">Subject</div>
+      <div class="subject-stats">
+        <div class="stat-item"><span class="stat-item-value">${total}</span><span class="stat-item-label">Total</span></div>
+        <div class="stat-item"><span class="stat-item-value">${data.present}</span><span class="stat-item-label">Present</span></div>
+        <div class="stat-item"><span class="stat-item-value">${data.absent}</span><span class="stat-item-label">Absent</span></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Attendance</span><span class="progress-percent">${pct}%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
 }
 
-/* SCHEDULE */
+/* ------------------------------------------------------------------
+   SWIPE GESTURES
+------------------------------------------------------------------ */
+let touchStartX = 0;
+let touchStartY = 0;
+let touchCurrentCard = null;
+let touchStartTime = 0;
 
+function attachSwipe(card, item) {
+  if (currentMode !== "edit") return;
+  if (!("ontouchstart" in window)) return;
+
+  card.addEventListener("touchstart", (e) => {
+    if (e.touches.length !== 1) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchStartTime = Date.now();
+    touchCurrentCard = card;
+    card.classList.add("swiping");
+  }, { passive: true });
+
+  card.addEventListener("touchmove", (e) => {
+    if (!touchCurrentCard) return;
+    if (e.touches.length !== 1) return;
+    const dx = e.touches[0].clientX - touchStartX;
+    const dy = e.touches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) {
+      const translate = Math.max(-120, Math.min(120, dx));
+      touchCurrentCard.style.transform = `translateX(${translate}px)`;
+    }
+  }, { passive: true });
+
+  card.addEventListener("touchend", (e) => {
+    if (!touchCurrentCard) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    const dt = Date.now() - touchStartTime;
+    touchCurrentCard.classList.remove("swiping");
+    touchCurrentCard.style.transform = "";
+
+    if (dx > 80 && Math.abs(dy) < 50 && dt < 600) {
+      if (item.status === "HELD") markAttendance(item.id, "PRESENT");
+    } else if (dx < -80 && Math.abs(dy) < 50 && dt < 600) {
+      deleteClass(item.id);
+    }
+    touchCurrentCard = null;
+  }, { passive: true });
+
+  card.addEventListener("touchcancel", () => {
+    if (touchCurrentCard) {
+      touchCurrentCard.classList.remove("swiping");
+      touchCurrentCard.style.transform = "";
+    }
+    touchCurrentCard = null;
+  }, { passive: true });
+}
+
+/* ------------------------------------------------------------------
+   SCHEDULE
+------------------------------------------------------------------ */
 function renderSchedule() {
-    const container = document.getElementById("schedule");
-    container.innerHTML = "";
+  const container = document.getElementById("schedule");
+  container.innerHTML = "";
 
-    if (!classes.length) {
-        container.innerHTML = '<div class="empty">No classes added yet.</div>';
-        return;
-    }
+  if (!classes.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">🗓️</span>
+        <div class="empty-title">No classes yet</div>
+        <div class="empty-desc">Switch to Edit mode to add your first class.</div>
+        ${currentMode === "view" ? '<button class="btn-ghost" onclick="document.getElementById(\'modeEditBtn\').click()">Switch to Edit mode</button>' : ''}
+      </div>
+    `;
+    return;
+  }
 
-    const sorted = [...classes].sort((a, b) => a.date.localeCompare(b.date));
+  const sorted = [...classes].sort((a, b) => a.date.localeCompare(b.date));
+  const weeks = {};
+  sorted.forEach(item => {
+    const week = getWeek(item.date);
+    if (!weeks[week]) weeks[week] = [];
+    weeks[week].push(item);
+  });
 
-    const weeks = {};
+  // preserve expansion state
+  const expandedWeeks = new Set(
+    [...container.querySelectorAll(".week-block:not(.collapsed)")]
+      .map(el => el.getAttribute("data-week"))
+  );
 
-    sorted.forEach(item => {
-        const week = getWeek(item.date);
-        if (!weeks[week]) {
-            weeks[week] = [];
+  Object.keys(weeks)
+    .sort((a, b) => Number(a) - Number(b))
+    .forEach(week => {
+      const weekBlock = document.createElement("div");
+      const wasExpanded = expandedWeeks.has(week);
+      weekBlock.className = "week-block" + (wasExpanded ? "" : " collapsed");
+      weekBlock.setAttribute("data-week", week);
+
+      const header = document.createElement("div");
+      header.className = "week-header";
+      header.innerHTML = `
+        <div class="week-number">${week}</div>
+        <div class="week-meta">
+          <span class="week-title">Week ${week}</span>
+          <span class="week-count">${weeks[week].length} class${weeks[week].length !== 1 ? 'es' : ''}</span>
+        </div>
+        <div class="week-chevron">⌄</div>
+      `;
+      header.addEventListener("click", () => weekBlock.classList.toggle("collapsed"));
+      weekBlock.appendChild(header);
+
+      const grid = document.createElement("div");
+      grid.className = "class-grid";
+
+      weeks[week].forEach(item => {
+        const card = document.createElement("div");
+        card.className = "class-card";
+        card.style.setProperty("--card-accent", subjectColor(item.subject));
+
+        let attendanceText = "Unmarked";
+        let attendanceClass = "unmarked";
+        if (item.attendance === "PRESENT") { attendanceText = "Present"; attendanceClass = "present"; }
+        if (item.attendance === "ABSENT") { attendanceText = "Absent"; attendanceClass = "absent"; }
+
+        const actionsHTML = currentMode === "edit" ? `
+          <div class="class-actions">
+            ${item.status === "HELD" ? `
+              <button class="action-btn present" data-action="present" data-id="${item.id}">Present</button>
+              <button class="action-btn absent" data-action="absent" data-id="${item.id}">Absent</button>
+              <button class="action-btn delete full-width" data-action="delete" data-id="${item.id}">Delete</button>
+            ` : `
+              <button class="action-btn delete full-width" data-action="delete" data-id="${item.id}">Delete</button>
+            `}
+          </div>
+        ` : '';
+
+        const attendanceBlock = item.status === "HELD"
+          ? `<div class="attendance-pill ${attendanceClass}">${attendanceText}</div>`
+          : `<div class="cancelled-text">Class Cancelled</div>`;
+
+        card.innerHTML = `
+          <div class="class-top">
+            <div>
+              <div class="class-date">${formatDate(item.date)}</div>
+              <div class="class-day">${item.day}</div>
+            </div>
+            <span class="status-badge ${item.status === "HELD" ? "held" : "cancelled"}">
+              ${item.status === "HELD" ? "HELD" : "CANCELLED"}
+            </span>
+          </div>
+          <div class="class-subject">
+            <span class="subject-dot"></span>
+            ${escapeHTML(item.subject)}
+          </div>
+          ${attendanceBlock}
+          ${actionsHTML}
+        `;
+
+        if (currentMode === "edit") {
+          card.querySelectorAll(".action-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              const action = btn.getAttribute("data-action");
+              const id = btn.getAttribute("data-id");
+              if (action === "present") markAttendance(id, "PRESENT", btn);
+              else if (action === "absent") markAttendance(id, "ABSENT", btn);
+              else if (action === "delete") deleteClass(id);
+            });
+          });
+          attachSwipe(card, item);
         }
-        weeks[week].push(item);
+
+        grid.appendChild(card);
+      });
+
+      weekBlock.appendChild(grid);
+      container.appendChild(weekBlock);
     });
-
-    let rowIndex = 0;
-
-    Object.keys(weeks)
-        .sort((a, b) => Number(a) - Number(b))
-        .forEach(week => {
-            const weekSection = document.createElement("div");
-            weekSection.className = "week-section collapsed";
-            weekSection.style.animationDelay = (rowIndex * 0.1) + "s";
-
-            const weekHeader = document.createElement("div");
-            weekHeader.className = "week-header";
-            weekHeader.innerHTML = `
-                <div class="week-number">${week}</div>
-                <div class="week-label">
-                    <div class="week-label-text">Week</div>
-                    <div class="week-label-days">${weeks[week].length} class${weeks[week].length !== 1 ? 'es' : ''}</div>
-                </div>
-                <div class="week-divider"></div>
-            `;
-            weekHeader.addEventListener("click", () => {
-                weekSection.classList.toggle("collapsed");
-            });
-
-            weekSection.appendChild(weekHeader);
-
-            const classGrid = document.createElement("div");
-            classGrid.className = "class-grid";
-
-            weeks[week].forEach((item, classIndex) => {
-                let attendance = "Unmarked";
-                let attendanceClass = "unmarked";
-
-                if (item.attendance === "PRESENT") {
-                    attendance = "Present";
-                    attendanceClass = "present";
-                }
-
-                if (item.attendance === "ABSENT") {
-                    attendance = "Absent";
-                    attendanceClass = "absent";
-                }
-
-                const card = document.createElement("div");
-                card.className = "class-card";
-                card.style.animationDelay = (classIndex * 0.08) + "s";
-
-                let attendanceSection = '';
-                let actionsHtml = '';
-
-                if (item.status === "HELD") {
-                    attendanceSection = `
-                        <div class="class-attendance">
-                            <label class="class-attendance-label">Attendance</label>
-                            <div class="class-attendance-status ${attendanceClass}">${attendance}</div>
-                        </div>
-                    `;
-                    actionsHtml = `
-                        <button class="class-action-btn present" onclick="markAttendance('${item.id}', 'PRESENT')">Present</button>
-                        <button class="class-action-btn absent" onclick="markAttendance('${item.id}', 'ABSENT')">Absent</button>
-                        <button class="class-action-btn delete class-actions-full" onclick="deleteClass('${item.id}')">Delete Class</button>
-                    `;
-                } else {
-                    attendanceSection = `
-                        <div class="class-attendance">
-                            <div class="class-cancelled-text">Class Cancelled</div>
-                        </div>
-                    `;
-                    actionsHtml = `
-                        <button class="class-action-btn delete class-actions-full" onclick="deleteClass('${item.id}')">Delete Class</button>
-                    `;
-                }
-
-                card.innerHTML = `
-                    <div class="class-card-header">
-                        <div class="class-date-day">
-                            <div class="class-date">${formatDate(item.date)}</div>
-                            <div class="class-day">${item.day}</div>
-                        </div>
-                        <span class="class-status-badge ${item.status === "HELD" ? "held" : "cancelled"}">
-                            ${item.status === "HELD" ? "HELD" : "CANCELLED"}
-                        </span>
-                    </div>
-
-                    <div class="class-subject">
-                        <div class="class-subject-name">
-                            <span class="class-subject-dot"></span>
-                            ${escapeHTML(item.subject)}
-                        </div>
-                    </div>
-
-                    ${attendanceSection}
-
-                    <div class="class-actions">
-                        ${actionsHtml}
-                    </div>
-                `;
-                classGrid.appendChild(card);
-            });
-
-            weekSection.appendChild(classGrid);
-            container.appendChild(weekSection);
-        });
 }
 
-/* ESCAPE */
-
+/* ------------------------------------------------------------------
+   ESCAPE
+------------------------------------------------------------------ */
 function escapeHTML(value) {
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
-/* RENDER */
-
-
+/* ------------------------------------------------------------------
+   SUBJECT PICKER
+------------------------------------------------------------------ */
 function getSavedSubjects() {
-    return [...new Set(
-        classes
-            .map(item => String(item.subject || "").trim())
-            .filter(Boolean)
-    )].sort((a, b) => a.localeCompare(b));
+  return [...new Set(
+    classes.map(item => String(item.subject || "").trim()).filter(Boolean)
+  )].sort((a, b) => a.localeCompare(b));
 }
 
 function renderSubjectSuggestions(filter = "") {
-    const box = document.getElementById("subjectSuggestions");
-    if (!box) return;
+  const box = document.getElementById("subjectSuggestions");
+  if (!box) return;
+  const query = filter.trim().toLowerCase();
+  const subjects = getSavedSubjects().filter(
+    name => !query || name.toLowerCase().includes(query)
+  );
 
-    const query = filter.trim().toLowerCase();
-    const subjects = getSavedSubjects().filter(
-        name => !query || name.toLowerCase().includes(query)
-    );
+  if (!subjects.length) {
+    box.innerHTML = query
+      ? '<div class="no-suggestions">No saved subject found</div>'
+      : '<div class="no-suggestions">No saved subjects yet</div>';
+    return;
+  }
 
-    if (!subjects.length) {
-        box.innerHTML = query
-            ? '<div class="subject-no-results">No saved subject found</div>'
-            : '<div class="subject-no-results">No saved subjects yet</div>';
-        return;
-    }
+  box.innerHTML = subjects.map(name => `
+    <button type="button" class="suggestion-item" data-subject="${escapeHTML(name)}">
+      <span class="suggestion-icon">•</span>
+      <span>${escapeHTML(name)}</span>
+    </button>
+  `).join("");
 
-    box.innerHTML = subjects.map(name => `
-        <button type="button" class="subject-suggestion" data-subject="${escapeHTML(name)}">
-            <span class="subject-suggestion-icon">•</span>
-            <span>${escapeHTML(name)}</span>
-        </button>
-    `).join("");
-
-    box.querySelectorAll(".subject-suggestion").forEach(button => {
-        button.addEventListener("mousedown", event => {
-            event.preventDefault();
-            document.getElementById("subject").value =
-                button.getAttribute("data-subject");
-            closeSubjectSuggestions();
-        });
+  box.querySelectorAll(".suggestion-item").forEach(btn => {
+    btn.addEventListener("mousedown", e => {
+      e.preventDefault();
+      document.getElementById("subject").value = btn.getAttribute("data-subject");
+      closeSubjectSuggestions();
     });
+    btn.addEventListener("touchstart", e => {
+      e.preventDefault();
+      document.getElementById("subject").value = btn.getAttribute("data-subject");
+      closeSubjectSuggestions();
+    }, { passive: false });
+  });
 }
 
 function openSubjectSuggestions() {
-    const box = document.getElementById("subjectSuggestions");
-    if (!box) return;
-
-    renderSubjectSuggestions(document.getElementById("subject").value);
-    box.classList.add("show");
+  const box = document.getElementById("subjectSuggestions");
+  if (!box) return;
+  renderSubjectSuggestions(document.getElementById("subject").value);
+  box.classList.add("show");
 }
 
 function closeSubjectSuggestions() {
-    const box = document.getElementById("subjectSuggestions");
-    if (box) box.classList.remove("show");
+  const box = document.getElementById("subjectSuggestions");
+  if (box) box.classList.remove("show");
 }
 
 function initSubjectPicker() {
-    const input = document.getElementById("subject");
-    const arrow = document.getElementById("subjectPickerArrow");
+  const input = document.getElementById("subject");
+  const arrow = document.getElementById("subjectPickerArrow");
+  if (!input || !arrow) return;
 
-    if (!input || !arrow) return;
+  input.addEventListener("focus", openSubjectSuggestions);
+  input.addEventListener("input", openSubjectSuggestions);
 
-    input.addEventListener("focus", openSubjectSuggestions);
+  arrow.addEventListener("mousedown", e => {
+    e.preventDefault();
+    const box = document.getElementById("subjectSuggestions");
+    if (box.classList.contains("show")) closeSubjectSuggestions();
+    else { input.focus(); openSubjectSuggestions(); }
+  });
 
-    input.addEventListener("input", () => {
-        openSubjectSuggestions();
-    });
-
-    arrow.addEventListener("mousedown", event => {
-        event.preventDefault();
-        const box = document.getElementById("subjectSuggestions");
-
-        if (box.classList.contains("show")) {
-            closeSubjectSuggestions();
-        } else {
-            input.focus();
-            openSubjectSuggestions();
-        }
-    });
-
-    document.addEventListener("mousedown", event => {
-        const picker = document.querySelector(".subject-picker");
-
-        if (picker && !picker.contains(event.target)) {
-            closeSubjectSuggestions();
-        }
-    });
+  document.addEventListener("mousedown", e => {
+    const picker = document.querySelector(".subject-picker");
+    if (picker && !picker.contains(e.target)) closeSubjectSuggestions();
+  });
 }
 
+/* ------------------------------------------------------------------
+   MASTER RENDER
+------------------------------------------------------------------ */
 function render() {
-    renderOverview();
-    renderSubjects();
-    renderSchedule();
+  renderOverview();
+  renderSubjects();
+  renderSchedule();
 }
 
-/* BUTTONS */
-
+/* ------------------------------------------------------------------
+   BUTTONS
+------------------------------------------------------------------ */
 document.getElementById("addBtn").addEventListener("click", addClass);
 document.getElementById("clearBtn").addEventListener("click", clearForm);
 document.getElementById("resetBtn").addEventListener("click", resetAll);
+document.getElementById("exportBtn").addEventListener("click", exportCSV);
 
-/* LOAD */
+/* ------------------------------------------------------------------
+   KEYBOARD SHORTCUTS
+------------------------------------------------------------------ */
+document.addEventListener("keydown", (e) => {
+  const tag = (e.target.tagName || "").toLowerCase();
+  if (tag === "input" || tag === "textarea" || tag === "select") return;
 
-loadData();
+  if (e.key === "v" || e.key === "V") setMode("view");
+  else if (e.key === "e" || e.key === "E") setMode("edit");
+  else if (e.key === "Escape") closeSubjectSuggestions();
+});
 
+/* ------------------------------------------------------------------
+   INIT
+------------------------------------------------------------------ */
+initSubjectPicker();
+setMode(currentMode, false);
+updatePendingBadge();
+loadData(true).then(() => {
+  if (queue.length > 0) flushQueue();
+});
 </script>
 
 </body>
