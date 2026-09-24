@@ -559,21 +559,11 @@ input::placeholder {
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
     color: var(--primary);
     margin-bottom: 12px;
-    animation: spin 2s linear infinite;
+    animation: none;
 }
 
 .stat:hover .stat-icon {
-    animation: bounce 0.6s ease;
-}
-
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    animation: none;
 }
 
 .stat-label {
@@ -608,6 +598,7 @@ input::placeholder {
 .stat-sub {
     font-size: 12px;
     color: var(--text-secondary);
+    display: none;
 }
 
 /* SUBJECT ATTENDANCE CARDS */
@@ -1423,17 +1414,9 @@ input::placeholder {
         </div>
 
         <div class="stat">
-            <div class="stat-icon">✓</div>
-            <div class="stat-label">Classes Present</div>
-            <div class="stat-number" id="presentCount">0</div>
-            <div class="stat-sub" id="presentPercent">0%</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-icon">✗</div>
-            <div class="stat-label">Classes Absent</div>
-            <div class="stat-number" id="absentCount">0</div>
-            <div class="stat-sub" id="absentPercent">0%</div>
+            <div class="stat-icon">✖</div>
+            <div class="stat-label">Classes Cancelled</div>
+            <div class="stat-number" id="cancelledCount">0</div>
         </div>
     </div>
 </section>
@@ -1675,17 +1658,11 @@ function clearForm() {
 function renderOverview() {
     const weeks = new Set(classes.map(item => getWeek(item.date)));
     const held = classes.filter(item => item.status === "HELD").length;
-    const present = classes.filter(item => item.attendance === "PRESENT").length;
-    const absent = classes.filter(item => item.attendance === "ABSENT").length;
-    const presentPercent = held > 0 ? Math.round((present / held) * 100) : 0;
-    const absentPercent = held > 0 ? Math.round((absent / held) * 100) : 0;
+    const cancelled = classes.filter(item => item.status === "CANCELLED").length;
 
     document.getElementById("weekCount").textContent = weeks.size;
     document.getElementById("heldCount").textContent = held;
-    document.getElementById("presentCount").textContent = present;
-    document.getElementById("presentPercent").textContent = presentPercent + "%";
-    document.getElementById("absentCount").textContent = absent;
-    document.getElementById("absentPercent").textContent = absentPercent + "%";
+    document.getElementById("cancelledCount").textContent = cancelled;
 }
 
 /* SUBJECTS */
@@ -1738,16 +1715,16 @@ function renderSubjects() {
             </div>
             <div class="subject-stats-card">
                 <div class="stat-item">
+                    <span class="stat-item-number">${total}</span>
+                    <span class="stat-item-label">Total</span>
+                </div>
+                <div class="stat-item">
                     <span class="stat-item-number">${data.present}</span>
                     <span class="stat-item-label">Present</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-item-number">${data.absent}</span>
                     <span class="stat-item-label">Absent</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-item-number">${total}</span>
-                    <span class="stat-item-label">Total</span>
                 </div>
             </div>
             <div class="progress-card">
