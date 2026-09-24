@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Tracker</title>
+<link rel="icon"  type="image/x-icon" href="/icons8-attendance-stickers-96.png">
+
+<style>
+:root {
+    --bg: #f5f7fa;
+    --bg-secondary: #eef2f7;
+    --card: #ffffff;
+    --card-alt: #f9fafb;
+    --text: #1a202c;
+    --text-secondary: #718096;
+    --border: #e2e8f0;
+    --primary: #6366f1;
+    --primary-light: #818cf8;
+    --primary-dark: #4f46e5;
+    --green: #10b981;
+    --green-light: #d1fae5;
+    --green-dark: #047857;
+    --red: #ef4444;
+    --red-light: #fee2e2;
+    --red-dark: #991b1b;
+    --orange: #f97316;
+    --orange-light: #fed7aa;
+    --blue: #3b82f6;
+    --blue-light: #dbeafe;
+    --purple: #a855f7;
+    --purple-light: #f3e8ff;
+    --pink: #ec4899;
+    --pink-light: #fce7f3;
+    --cyan: #06b6d4;
+    --cyan-light: #cffafe;
+    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+    --shadow: 0 4px 12px 0 rgba(0,0,0,0.08);
+    --shadow-lg: 0 10px 25px 0 rgba(0,0,0,0.1);
+}
+
+html[data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-secondary: #1e293b;
+    --card: #1e293b;
+    --card-alt: #334155;
+    --text: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border: #475569;
+    --primary: #818cf8;
+    --primary-light: #a5b4fc;
+    --primary-dark: #6366f1;
+    --green: #10b981;
+    --green-light: #86efac;
+    --green-dark: #16a34a;
+    --red: #ef4444;
+    --red-light: #fca5a5;
+    --red-dark: #dc2626;
+    --orange: #fb923c;
+    --orange-light: #fed7aa;
+    --blue: #60a5fa;
+    --blue-light: #93c5fd;
+    --purple: #d8b4fe;
+    --purple-light: #e9d5ff;
+    --pink: #f472b6;
+    --pink-light: #fbcfe8;
+    --cyan: #22d3ee;
+    --cyan-light: #a5f3fc;
+    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.3);
+    --shadow: 0 4px 12px 0 rgba(0,0,0,0.3);
+    --shadow-lg: 0 10px 25px 0 rgba(0,0,0,0.4);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--bg-secondary) 100%);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.container {
+    width: min(1200px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 40px 0 60px;
+}
+
+/* HEADER */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    animation: slideDown 0.6s ease;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 26px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+.brand h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInLeft 0.6s ease 0.2s both;
+}
+
+.brand p {
+    margin: 4px 0 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+    animation: fadeInLeft 0.6s ease 0.3s both;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.connection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--green-dark);
+    font-size: 13px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--green-light), #d1fae5);
+    padding: 9px 14px;
+    border-radius: 20px;
+    animation: fadeInRight 0.6s ease both;
+    border: 1px solid var(--green);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.theme-toggle {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: fadeInRight 0.6s ease 0.1s both;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05) rotate(20deg);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* CARDS */
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 28px;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.card:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.card:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+    transition: border-color 0.3s ease;
+}
+
+.card:hover .card-title {
+    border-bottom-color: var(--primary);
+}
+
+.card-title h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.card-title span {
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* FORM */
+
+.form-section {
+    margin-bottom: 24px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1.5fr 1fr auto;
+    gap: 12px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    animation: fadeInUp 0.6s ease;
+}
+
+.field label {
+    display: block;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input, select {
+    width: 100%;
+    height: 45px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    padding: 0 13px;
+    outline: none;
+    color: var(--text);
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    transform: translateY(-2px);
+}
+
+input::placeholder {
+    color: var(--text-secondary);
+}
+
+.add-button {
+    align-self: end;
+    height: 45px;
+    border: 0;
+    border-radius: 10px;
+    padding: 0 24px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.add-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.3s ease;
+}
+
+.add-button:hover::before {
+    left: 100%;
+}
+
+.add-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+}
+
+.add-button:active {
+    transform: translateY(-1px);
+    animation: click 0.3s ease;
+}
+
+@keyframes click {
+    0%, 100% { transform: translateY(-1px); }
+    50% { transform: translateY(2px); }
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.form-actions button {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text-secondary);
+    padding: 9px 16px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.form-actions button:hover {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.form-actions .danger {
+    color: var(--red);
+}
+
+.form-actions .danger:hover {
+    background: linear-gradient(135deg, var(--red-light), var(--red-light));
+    border-color: var(--red);
+}
+
+.message {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    animation: slideInMessage 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideInMessage {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message.success {
+    display: block;
+    background: linear-gradient(135deg, var(--green-light), #d1fae5);
+    color: var(--green-dark);
+    border: 1px solid var(--green);
+}
+
+.message.error {
+    display: block;
+    background: linear-gradient(135deg, var(--red-light), var(--red-light));
+    color: var(--red-dark);
+    border: 1px solid var(--red);
+}
+
+/* STATS GRID */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stat {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: scaleIn 0.6s ease;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.stat:nth-child(1) { animation-delay: 0.1s; }
+.stat:nth-child(2) { animation-delay: 0.2s; }
+.stat:nth-child(3) { animation-delay: 0.3s; }
+.stat:nth-child(4) { animation-delay: 0.4s; }
+
+.stat::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #6366f1, #a855f7);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.stat::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat:hover {
+    border-color: var(--primary);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.15);
+    transform: translateY(-4px);
+}
+
+.stat:hover::before {
+    transform: scaleX(1);
+}
+
+.stat:hover::after {
+    opacity: 1;
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+    color: var(--primary);
+    margin-bottom: 12px;
+    animation: spin 2s linear infinite;
+}
+
+.stat:hover .stat-icon {
+    animation: bounce 0.6s ease;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 8px;
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+    animation: countUp 0.8s ease-out;
+}
+
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stat-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* SUBJECT ATTENDANCE CARDS */
+
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 18px;
+}
+
+.subject-card {
+    background: linear-gradient(135deg, var(--card), var(--card-alt));
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    animation: slideIn 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.subject-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--color-accent, var(--primary));
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.subject-card:hover::before {
+    transform: scaleX(1);
+}
+
+.subject-card:hover {
+    border-color: var(--color-accent, var(--primary));
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15);
+}
+
+.subject-header-card {
+    margin-bottom: 16px;
+}
+
+.subject-name-card {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.subject-badge-card {
+    display: inline-block;
+    background: var(--color-light, var(--primary-light));
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.subject-stats-card {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.stat-item {
+    flex: 1;
+    text-align: center;
+}
+
+.stat-item-number {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    display: block;
+}
+
+.stat-item-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.progress-card {
+    margin-bottom: 12px;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+
+.progress-label-text {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.progress-percentage {
+    background: var(--color-light, var(--blue-light));
+    color: var(--text);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 11px;
+}
+
+.progress {
+    height: 10px;
+    background: var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, var(--color-accent, var(--primary)), var(--color-light, var(--primary-light)));
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: expandWidth 0.8s ease-out;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+}
+
+@keyframes expandWidth {
+    from { width: 0%; }
+}
+
+.subject-colors {
+    display: none;
+}
+
+.subject-card:nth-child(1) { --color-accent: #6366f1; --color-light: #818cf8; }
+.subject-card:nth-child(2) { --color-accent: #a855f7; --color-light: #d8b4fe; }
+.subject-card:nth-child(3) { --color-accent: #ec4899; --color-light: #f472b6; }
+.subject-card:nth-child(4) { --color-accent: #06b6d4; --color-light: #22d3ee; }
+.subject-card:nth-child(5) { --color-accent: #10b981; --color-light: #6ee7b7; }
+.subject-card:nth-child(6) { --color-accent: #f59e0b; --color-light: #fbbf24; }
+.subject-card:nth-child(7) { --color-accent: #ef4444; --color-light: #f87171; }
+.subject-card:nth-child(8) { --color-accent: #3b82f6; --color-light: #60a5fa; }
+
+/* SCHEDULE IMPROVED */
+
+.week-section {
+    margin-bottom: 32px;
+    animation: fadeInUp 0.6s ease;
+}
+
+.week-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+    border-radius: 12px;
+    border-left: 5px solid var(--primary);
+}
+
+.week-number {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.week-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.week-label-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.week-label-days {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.week-divider {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+    border-radius: 1px;
+}
+
+.class-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
+}
+
+.class-card {
+    background: linear-gradient(135deg, var(--card), var(--card-alt));
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    transition: all 0.3s ease;
+    animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.class-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--card-color, #6366f1), rgba(99, 102, 241, 0));
+    transition: width 0.3s ease;
+}
+
+.class-card:hover::before {
+    width: 100%;
+    opacity: 0.05;
+}
+
+.class-card:hover {
+    border-color: var(--card-color, #6366f1);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15);
+}
+
+.class-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.class-date-day {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.class-date {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.class-day {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.class-status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid;
+    display: inline-block;
+}
+
+.class-status-badge.held {
+    background: linear-gradient(135deg, var(--green-light), #d1fae5);
+    color: var(--green-dark);
+    border-color: var(--green);
+}
+
+.class-status-badge.cancelled {
+    background: linear-gradient(135deg, var(--red-light), var(--red-light));
+    color: var(--red-dark);
+    border-color: var(--red);
+}
+
+.class-subject {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+.class-subject-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.class-subject-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--card-color, #6366f1);
+}
+
+.class-attendance {
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+.class-attendance-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.class-attendance-status {
+    font-size: 16px;
+    font-weight: 800;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.class-attendance-status.present {
+    color: var(--green);
+    background: linear-gradient(135deg, var(--green-light), rgba(16, 185, 129, 0.1));
+    border: 1px solid var(--green);
+}
+
+.class-attendance-status.absent {
+    color: var(--red);
+    background: linear-gradient(135deg, var(--red-light), rgba(239, 68, 68, 0.1));
+    border: 1px solid var(--red);
+}
+
+.class-attendance-status.unmarked {
+    color: var(--orange);
+    background: linear-gradient(135deg, var(--orange-light), rgba(249, 115, 22, 0.1));
+    border: 1px solid var(--orange);
+}
+
+.class-cancelled-text {
+    color: var(--red);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.class-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.class-actions-full {
+    grid-column: 1 / -1;
+}
+
+.class-action-btn {
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 10px;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.class-action-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.2);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.class-action-btn:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.class-action-btn.present {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.class-action-btn.present:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.class-action-btn.absent {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.class-action-btn.absent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+}
+
+.class-action-btn.delete {
+    background: linear-gradient(135deg, #9ca3af, #6b7280);
+    grid-column: 1 / -1;
+}
+
+.class-action-btn.delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(107, 114, 128, 0.4);
+}
+
+.empty, .loading {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 40px 20px;
+    font-size: 14px;
+    animation: fadeInUp 0.6s ease;
+}
+
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-left: 4px;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: blink 1.4s infinite;
+}
+
+@keyframes blink {
+    0%, 60%, 100% { opacity: 0; }
+    30% { opacity: 1; }
+}
+
+/* Color coding for cards */
+.class-card:nth-child(1) { --card-color: #6366f1; }
+.class-card:nth-child(2) { --card-color: #a855f7; }
+.class-card:nth-child(3) { --card-color: #ec4899; }
+.class-card:nth-child(4) { --card-color: #06b6d4; }
+.class-card:nth-child(5) { --card-color: #10b981; }
+.class-card:nth-child(6) { --card-color: #f59e0b; }
+.class-card:nth-child(7) { --card-color: #ef4444; }
+.class-card:nth-child(8) { --card-color: #3b82f6; }
+
+/* MOBILE */
+
+@media (max-width: 1000px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .add-button {
+        width: 100%;
+    }
+
+    .subject-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .class-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .container {
+        width: calc(100% - 20px);
+        padding-top: 20px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 28px;
+    }
+
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .brand h1 {
+        font-size: 24px;
+    }
+
+    .connection {
+        align-self: flex-start;
+    }
+
+    .card {
+        padding: 20px;
+        border-radius: 14px;
+    }
+
+    .card-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .stat {
+        padding: 16px;
+    }
+
+    .stat-number {
+        font-size: 26px;
+    }
+
+    .stat-label {
+        font-size: 11px;
+    }
+
+    .subject-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .week-header {
+        padding: 12px 16px;
+    }
+
+    .week-number {
+        font-size: 18px;
+    }
+
+    .week-label-text {
+        font-size: 10px;
+    }
+
+    .week-label-days {
+        font-size: 12px;
+    }
+
+    .class-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .class-actions {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="header">
+    <div class="brand">
+        <div class="logo">✓</div>
+        <div>
+            <h1>Attendance</h1>
+            <p>Track your classes effortlessly</p>
+        </div>
+    </div>
+    <div class="header-right">
+        <div class="connection">
+            <span class="dot"></span>
+            Cloud synced
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+    </div>
+</header>
+
+<!-- ADD CLASS -->
+
+<section class="card">
+    <div class="card-title">
+        <h2>Add New Class</h2>
+        <span>Record a class session</span>
+    </div>
+
+    <div class="form-section">
+        <div class="form-grid">
+            <div class="field">
+                <label>Date</label>
+                <input type="date" id="date">
+            </div>
+
+            <div class="field">
+                <label>Subject</label>
+                <input type="text" id="subject" placeholder="e.g. Data Structures">
+            </div>
+
+            <div class="field">
+                <label>Status</label>
+                <select id="classStatus">
+                    <option value="HELD">Class Held</option>
+                    <option value="CANCELLED">Class Cancelled</option>
+                </select>
+            </div>
+
+            <button class="add-button" id="addBtn">+ Add Class</button>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button id="clearBtn">Clear Form</button>
+        <button id="resetBtn" class="danger">Reset All</button>
+    </div>
+
+    <div id="message" class="message"></div>
+</section>
+
+<!-- OVERVIEW -->
+
+<section class="card">
+    <div class="card-title">
+        <h2>Overview</h2>
+        <span>Your attendance summary</span>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-icon">📅</div>
+            <div class="stat-label">Total Weeks</div>
+            <div class="stat-number" id="weekCount">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">📍</div>
+            <div class="stat-label">Classes Held</div>
+            <div class="stat-number" id="heldCount">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">✓</div>
+            <div class="stat-label">Classes Present</div>
+            <div class="stat-number" id="presentCount">0</div>
+            <div class="stat-sub" id="presentPercent">0%</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">✗</div>
+            <div class="stat-label">Classes Absent</div>
+            <div class="stat-number" id="absentCount">0</div>
+            <div class="stat-sub" id="absentPercent">0%</div>
+        </div>
+    </div>
+</section>
+
+<!-- SUBJECT ATTENDANCE -->
+
+<section class="card">
+    <div class="card-title">
+        <h2>Subject Attendance</h2>
+        <span>Attendance breakdown by subject</span>
+    </div>
+
+    <div id="subjectStats" class="subject-grid">
+        <div class="loading">Loading</div>
+    </div>
+</section>
+
+<!-- SCHEDULE -->
+
+<section class="card">
+    <div class="card-title">
+        <h2>Class Schedule</h2>
+        <span>Mark your attendance</span>
+    </div>
+
+    <div id="schedule">
+        <div class="loading">Loading</div>
+    </div>
+</section>
+
+</div>
+
+<script>
+
+const API_URL = "https://script.google.com/macros/s/AKfycbxryV1UhZClPxP8m95HerdLGEZOV_T1Gp-YLy7-2KUBn_6H__LlMP-KgCzzoVB91aZIcA/exec";
+
+let classes = [];
+
+/* THEME TOGGLE */
+
+const themeToggle = document.getElementById("themeToggle");
+const htmlElement = document.documentElement;
+
+function initTheme() {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    htmlElement.setAttribute("data-theme", savedTheme);
+    updateThemeIcon(savedTheme);
+}
+
+function updateThemeIcon(theme) {
+    themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+}
+
+function toggleTheme() {
+    const currentTheme = htmlElement.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    htmlElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+    updateThemeIcon(newTheme);
+}
+
+themeToggle.addEventListener("click", toggleTheme);
+initTheme();
+
+/* MESSAGE */
+
+function showMessage(text, type) {
+    const box = document.getElementById("message");
+    box.textContent = text;
+    box.className = "message " + type;
+
+    setTimeout(() => {
+        box.className = "message";
+    }, 3000);
+}
+
+/* DAY */
+
+function getDay(date) {
+    return new Date(date + "T00:00:00").toLocaleDateString("en-US", { weekday: "long" });
+}
+
+/* DATE */
+
+function formatDate(date) {
+    return new Date(date + "T00:00:00").toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+/* WEEK */
+
+function getWeek(date) {
+    const start = new Date("2026-09-07T00:00:00");
+    const current = new Date(date + "T00:00:00");
+    const difference = Math.floor((current - start) / (1000 * 60 * 60 * 24));
+
+    if (difference < 0) return 0;
+    return Math.floor(difference / 7) + 1;
+}
+
+/* LOAD */
+
+async function loadData() {
+    try {
+        const response = await fetch(API_URL + "?t=" + Date.now());
+        classes = await response.json();
+
+        if (!Array.isArray(classes)) {
+            classes = [];
+        }
+
+        render();
+    } catch (error) {
+        console.error(error);
+        showMessage("Unable to connect to Google Sheets.", "error");
+    }
+}
+
+/* SEND */
+
+async function sendToSheet(data) {
+    await fetch(API_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(data)
+    });
+}
+
+/* ADD CLASS */
+
+async function addClass() {
+    const date = document.getElementById("date").value;
+    const subject = document.getElementById("subject").value.trim();
+    const status = document.getElementById("classStatus").value;
+
+    if (!date) {
+        showMessage("Please select a date.", "error");
+        return;
+    }
+
+    if (!subject) {
+        showMessage("Please enter a subject.", "error");
+        return;
+    }
+
+    const duplicate = classes.some(
+        item => item.date === date && item.subject.toLowerCase() === subject.toLowerCase()
+    );
+
+    if (duplicate) {
+        showMessage("This class already exists.", "error");
+        return;
+    }
+
+    const item = {
+        id: Date.now().toString(),
+        date,
+        day: getDay(date),
+        subject,
+        status,
+        attendance: ""
+    };
+
+    try {
+        await sendToSheet({ action: "add", ...item });
+        classes.push(item);
+        render();
+        clearForm();
+        showMessage("Class added successfully.", "success");
+    } catch (error) {
+        showMessage("Could not save class.", "error");
+    }
+}
+
+/* ATTENDANCE */
+
+async function markAttendance(id, attendance) {
+    const item = classes.find(x => x.id === id);
+
+    if (!item) return;
+
+    try {
+        await sendToSheet({ action: "update", id, attendance });
+        item.attendance = attendance;
+        render();
+    } catch (error) {
+        showMessage("Could not update attendance.", "error");
+    }
+}
+
+/* DELETE */
+
+async function deleteClass(id) {
+    const item = classes.find(x => x.id === id);
+
+    if (!item) return;
+
+    if (!confirm("Delete " + item.subject + " on " + formatDate(item.date) + "?")) {
+        return;
+    }
+
+    await sendToSheet({ action: "delete", id });
+    classes = classes.filter(x => x.id !== id);
+    render();
+}
+
+/* RESET */
+
+async function resetAll() {
+    if (!classes.length) {
+        showMessage("Nothing to reset.", "error");
+        return;
+    }
+
+    if (!confirm("Delete all attendance records? This cannot be undone.")) {
+        return;
+    }
+
+    await sendToSheet({ action: "reset" });
+    classes = [];
+    render();
+    showMessage("All records deleted.", "success");
+}
+
+/* CLEAR */
+
+function clearForm() {
+    document.getElementById("date").value = "";
+    document.getElementById("subject").value = "";
+    document.getElementById("classStatus").value = "HELD";
+}
+
+/* OVERVIEW */
+
+function renderOverview() {
+    const weeks = new Set(classes.map(item => getWeek(item.date)));
+    const held = classes.filter(item => item.status === "HELD").length;
+    const present = classes.filter(item => item.attendance === "PRESENT").length;
+    const absent = classes.filter(item => item.attendance === "ABSENT").length;
+    const presentPercent = held > 0 ? Math.round((present / held) * 100) : 0;
+    const absentPercent = held > 0 ? Math.round((absent / held) * 100) : 0;
+
+    document.getElementById("weekCount").textContent = weeks.size;
+    document.getElementById("heldCount").textContent = held;
+    document.getElementById("presentCount").textContent = present;
+    document.getElementById("presentPercent").textContent = presentPercent + "%";
+    document.getElementById("absentCount").textContent = absent;
+    document.getElementById("absentPercent").textContent = absentPercent + "%";
+}
+
+/* SUBJECTS */
+
+function renderSubjects() {
+    const container = document.getElementById("subjectStats");
+    container.innerHTML = "";
+
+    const subjects = {};
+
+    classes.forEach(item => {
+        if (item.status !== "HELD") return;
+
+        if (!subjects[item.subject]) {
+            subjects[item.subject] = { present: 0, absent: 0 };
+        }
+
+        if (item.attendance === "PRESENT") {
+            subjects[item.subject].present++;
+        }
+
+        if (item.attendance === "ABSENT") {
+            subjects[item.subject].absent++;
+        }
+    });
+
+    const names = Object.keys(subjects);
+
+    if (!names.length) {
+        container.innerHTML = '<div class="empty">No attendance marked yet.</div>';
+        return;
+    }
+
+    names.sort();
+
+    container.className = "subject-grid";
+
+    names.forEach((subject, index) => {
+        const data = subjects[subject];
+        const total = data.present + data.absent;
+        const percentage = total ? Math.round((data.present / total) * 100) : 0;
+
+        const card = document.createElement("div");
+        card.className = "subject-card";
+        card.style.animationDelay = (index * 0.1) + "s";
+        card.innerHTML = `
+            <div class="subject-header-card">
+                <div class="subject-name-card">${escapeHTML(subject)}</div>
+                <span class="subject-badge-card">Subject</span>
+            </div>
+            <div class="subject-stats-card">
+                <div class="stat-item">
+                    <span class="stat-item-number">${data.present}</span>
+                    <span class="stat-item-label">Present</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-item-number">${data.absent}</span>
+                    <span class="stat-item-label">Absent</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-item-number">${total}</span>
+                    <span class="stat-item-label">Total</span>
+                </div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-label">
+                    <span class="progress-label-text">Attendance Rate</span>
+                    <span class="progress-percentage">${percentage}%</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" style="width:${percentage}%"></div>
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+/* SCHEDULE */
+
+function renderSchedule() {
+    const container = document.getElementById("schedule");
+    container.innerHTML = "";
+
+    if (!classes.length) {
+        container.innerHTML = '<div class="empty">No classes added yet.</div>';
+        return;
+    }
+
+    const sorted = [...classes].sort((a, b) => a.date.localeCompare(b.date));
+
+    const weeks = {};
+
+    sorted.forEach(item => {
+        const week = getWeek(item.date);
+        if (!weeks[week]) {
+            weeks[week] = [];
+        }
+        weeks[week].push(item);
+    });
+
+    let rowIndex = 0;
+
+    Object.keys(weeks)
+        .sort((a, b) => Number(a) - Number(b))
+        .forEach(week => {
+            const weekSection = document.createElement("div");
+            weekSection.className = "week-section";
+            weekSection.style.animationDelay = (rowIndex * 0.1) + "s";
+
+            const weekHeader = document.createElement("div");
+            weekHeader.className = "week-header";
+            weekHeader.innerHTML = `
+                <div class="week-number">${week}</div>
+                <div class="week-label">
+                    <div class="week-label-text">Week</div>
+                    <div class="week-label-days">${weeks[week].length} class${weeks[week].length !== 1 ? 'es' : ''}</div>
+                </div>
+                <div class="week-divider"></div>
+            `;
+            weekSection.appendChild(weekHeader);
+
+            const classGrid = document.createElement("div");
+            classGrid.className = "class-grid";
+
+            weeks[week].forEach((item, classIndex) => {
+                let attendance = "Unmarked";
+                let attendanceClass = "unmarked";
+
+                if (item.attendance === "PRESENT") {
+                    attendance = "Present";
+                    attendanceClass = "present";
+                }
+
+                if (item.attendance === "ABSENT") {
+                    attendance = "Absent";
+                    attendanceClass = "absent";
+                }
+
+                const card = document.createElement("div");
+                card.className = "class-card";
+                card.style.animationDelay = (classIndex * 0.08) + "s";
+
+                let attendanceSection = '';
+                let actionsHtml = '';
+
+                if (item.status === "HELD") {
+                    attendanceSection = `
+                        <div class="class-attendance">
+                            <label class="class-attendance-label">Attendance</label>
+                            <div class="class-attendance-status ${attendanceClass}">${attendance}</div>
+                        </div>
+                    `;
+                    actionsHtml = `
+                        <button class="class-action-btn present" onclick="markAttendance('${item.id}', 'PRESENT')">Present</button>
+                        <button class="class-action-btn absent" onclick="markAttendance('${item.id}', 'ABSENT')">Absent</button>
+                        <button class="class-action-btn delete class-actions-full" onclick="deleteClass('${item.id}')">Delete Class</button>
+                    `;
+                } else {
+                    attendanceSection = `
+                        <div class="class-attendance">
+                            <div class="class-cancelled-text">Class Cancelled</div>
+                        </div>
+                    `;
+                    actionsHtml = `
+                        <button class="class-action-btn delete class-actions-full" onclick="deleteClass('${item.id}')">Delete Class</button>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="class-card-header">
+                        <div class="class-date-day">
+                            <div class="class-date">${formatDate(item.date)}</div>
+                            <div class="class-day">${item.day}</div>
+                        </div>
+                        <span class="class-status-badge ${item.status === "HELD" ? "held" : "cancelled"}">
+                            ${item.status === "HELD" ? "HELD" : "CANCELLED"}
+                        </span>
+                    </div>
+
+                    <div class="class-subject">
+                        <div class="class-subject-name">
+                            <span class="class-subject-dot"></span>
+                            ${escapeHTML(item.subject)}
+                        </div>
+                    </div>
+
+                    ${attendanceSection}
+
+                    <div class="class-actions">
+                        ${actionsHtml}
+                    </div>
+                `;
+                classGrid.appendChild(card);
+            });
+
+            weekSection.appendChild(classGrid);
+            container.appendChild(weekSection);
+        });
+}
+
+/* ESCAPE */
+
+function escapeHTML(value) {
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+/* RENDER */
+
+function render() {
+    renderOverview();
+    renderSubjects();
+    renderSchedule();
+}
+
+/* BUTTONS */
+
+document.getElementById("addBtn").addEventListener("click", addClass);
+document.getElementById("clearBtn").addEventListener("click", clearForm);
+document.getElementById("resetBtn").addEventListener("click", resetAll);
+
+/* LOAD */
+
+loadData();
+
+</script>
+
+</body>
+</html>
