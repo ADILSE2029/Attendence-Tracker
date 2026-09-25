@@ -3,1468 +3,1333 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0a0b10">
-<title>Presence — attendance tracker</title>
+<meta name="theme-color" content="#4263eb">
+<title>Attendance Tracker</title>
 <link rel="icon" type="image/x-icon" href="/icons8-attendance-stickers-96.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* ═══════════════════════════════════════════════════════════════
-   PRESENCE — design system
-   Dark-first editorial dashboard
-   ═══════════════════════════════════════════════════════════════ */
-
 :root {
-  /* surfaces — dark is the default state */
-  --bg:        #0a0b10;
-  --bg-2:      #0f1118;
-  --panel:     #131620;
-  --panel-2:   #1a1e2b;
-  --panel-3:   #232838;
-  --ink:       #f4f5f8;
-  --ink-2:     #b4b8c6;
-  --ink-3:     #787d92;
-  --ink-4:     #4a4f63;
-  --rule:      #232838;
-  --rule-2:    #2d3346;
-  --rule-3:    #3d4459;
-
-  /* accent — lime signal color */
-  --lime:      #d4ff4d;
-  --lime-2:    #e8ff8a;
-  --lime-dim:  #8fa829;
-  --lime-glow: rgba(212, 255, 77, 0.35);
-
-  /* status */
-  --present:   #4ade80;
-  --present-b: rgba(74, 222, 128, 0.14);
-  --absent:    #f87171;
-  --absent-b:  rgba(248, 113, 113, 0.14);
-  --cancel:    #fbbf24;
-  --cancel-b:  rgba(251, 191, 36, 0.14);
-  --neutral-b: rgba(120, 125, 146, 0.14);
-
-  --radius:    14px;
-  --radius-lg: 22px;
-  --radius-xl: 30px;
-  --rule-w:    1px;
-
-  --ease:      cubic-bezier(0.32, 0.72, 0, 1);
-  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+  --bg: #f2f5f9;
+  --bg-elevated: #ffffff;
+  --card: #ffffff;
+  --card-soft: #f8fafc;
+  --text: #0b1b2f;
+  --text-muted: #4b5e77;
+  --text-soft: #6b7c94;
+  --border: #dce4ec;
+  --border-light: #eaf0f6;
+  --primary: #4263eb;
+  --primary-soft: #e1e9ff;
+  --primary-dim: #cdd9fc;
+  --green: #0e9f6e;
+  --green-soft: #e0f5ea;
+  --red: #e13d3d;
+  --red-soft: #ffe3e3;
+  --orange: #d97706;
+  --orange-soft: #fff3e0;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* light mode — inverted, warm paper feel */
-html[data-theme="light"] {
-  --bg:        #f4f2ec;
-  --bg-2:      #ebe8e0;
-  --panel:     #ffffff;
-  --panel-2:   #f8f6f0;
-  --panel-3:   #efece4;
-  --ink:       #0f1118;
-  --ink-2:     #40444f;
-  --ink-3:     #737682;
-  --ink-4:     #a5a8b3;
-  --rule:      #e5e1d6;
-  --rule-2:    #d6d1c2;
-  --rule-3:    #b8b2a0;
-
-  --lime:      #7d9e1a;
-  --lime-2:    #a5c935;
-  --lime-dim:  #5c7414;
-  --lime-glow: rgba(125, 158, 26, 0.30);
-
-  --present:   #16a34a;
-  --present-b: rgba(22, 163, 74, 0.12);
-  --absent:    #dc2626;
-  --absent-b:  rgba(220, 38, 38, 0.12);
-  --cancel:    #ca8a04;
-  --cancel-b:  rgba(202, 138, 4, 0.12);
-  --neutral-b: rgba(115, 118, 130, 0.12);
+html[data-theme="dark"] {
+  --bg: #0d1421;
+  --bg-elevated: #141e2e;
+  --card: #141e2e;
+  --card-soft: #1b2638;
+  --text: #eef4ff;
+  --text-muted: #a2b6d0;
+  --text-soft: #7a8fa9;
+  --border: #2b3b52;
+  --border-light: #202e42;
+  --primary: #7d97ff;
+  --primary-soft: #1e2b4a;
+  --primary-dim: #33477a;
+  --green: #3dd99a;
+  --green-soft: #103a2c;
+  --red: #ff8a8a;
+  --red-soft: #3a1c1c;
+  --orange: #fcc859;
+  --orange-soft: #332812;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body {
-  overscroll-behavior-y: contain;
-  -webkit-text-size-adjust: 100%;
-}
+html, body { overscroll-behavior-y: contain; }
 
 body {
-  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg);
-  color: var(--ink);
+  color: var(--text);
   min-height: 100vh;
   line-height: 1.5;
-  font-feature-settings: "ss01", "tnum";
+  transition: background 0.2s ease, color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  transition: background 0.5s var(--ease), color 0.5s var(--ease);
-  overflow-x: hidden;
+  font-feature-settings: "cv11", "ss01";
 }
 
-/* subtle noise texture overlay */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.028;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   LAYOUT
-   ═══════════════════════════════════════════════════════════════ */
-
-.wrap {
-  position: relative;
-  z-index: 2;
-  width: min(1280px, calc(100% - 40px));
+.app {
+  width: min(1240px, calc(100% - 40px));
   margin: 0 auto;
-  padding: 24px 0 96px;
+  padding: 32px 0 64px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   MASTHEAD
-   ═══════════════════════════════════════════════════════════════ */
-
-.masthead {
+/* ---------- header ---------- */
+.header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 24px;
-  padding: 8px 0 32px;
-  border-bottom: var(--rule-w) solid var(--rule);
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-}
-
-.masthead-brand {
-  display: flex;
-  align-items: baseline;
-  gap: 18px;
-  flex-wrap: wrap;
-}
-
-.masthead-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: 40px;
-  font-weight: 400;
-  letter-spacing: -0.028em;
-  line-height: 1;
-  margin: 0;
-}
-
-.masthead-title em {
-  font-style: italic;
-  color: var(--lime);
-}
-
-.masthead-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  padding: 4px 10px;
-  border: var(--rule-w) solid var(--rule-2);
-  border-radius: 4px;
-}
-
-.masthead-controls {
-  display: flex;
   align-items: center;
-  gap: 8px;
+  margin-bottom: 32px;
   flex-wrap: wrap;
+  gap: 16px;
 }
 
-/* Mode toggle — a hard, mechanical switch */
-.mode-toggle {
-  display: inline-flex;
-  border: var(--rule-w) solid var(--rule-2);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--panel);
-}
+.brand { display: flex; align-items: center; gap: 12px; }
 
-.mode-toggle button {
-  border: 0;
-  background: transparent;
-  padding: 8px 14px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  cursor: pointer;
-  transition: all 0.2s var(--ease);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.mode-toggle button + button {
-  border-left: var(--rule-w) solid var(--rule-2);
-}
-
-.mode-toggle button.active {
-  background: var(--lime);
-  color: var(--bg);
-}
-
-.mode-toggle button:not(.active):hover {
-  background: var(--panel-2);
-  color: var(--ink);
-}
-
-/* status chip */
-.status-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border: var(--rule-w) solid var(--rule-2);
-  border-radius: 8px;
-  background: var(--panel);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--ink-2);
-  transition: all 0.3s var(--ease);
-  white-space: nowrap;
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--present);
-  position: relative;
+.logo {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  display: grid; place-items: center;
+  font-size: 22px; font-weight: 700;
+  color: #fff;
+  background: linear-gradient(145deg, #4263eb, #7b4dff);
+  box-shadow: 0 6px 16px rgba(66, 99, 235, 0.25);
   flex-shrink: 0;
 }
 
-.status-dot::before {
-  content: '';
-  position: absolute;
-  inset: -3px;
+.brand h1 {
+  font-size: 22px; font-weight: 800;
+  letter-spacing: -0.02em; margin: 0;
+  background: linear-gradient(145deg, #4263eb, #7b4dff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand p { font-size: 13px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
+
+.header-actions {
+  display: flex; align-items: center;
+  gap: 12px; flex-wrap: wrap;
+}
+
+.cloud-status {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600;
+  color: var(--green);
+  background: var(--green-soft);
+  padding: 8px 14px;
+  border-radius: 40px;
+  border: 1px solid rgba(14, 159, 110, 0.2);
+  transition: all var(--transition);
+  cursor: default;
+}
+
+.cloud-status.syncing {
+  color: var(--orange);
+  background: var(--orange-soft);
+  border-color: rgba(217, 119, 6, 0.2);
+}
+
+.cloud-status.offline {
+  color: var(--red);
+  background: var(--red-soft);
+  border-color: rgba(225, 61, 61, 0.2);
+}
+
+.cloud-dot {
+  width: 6px; height: 6px;
+  background: currentColor;
   border-radius: 50%;
-  background: var(--present);
-  opacity: 0.35;
-  animation: radar 2s ease-out infinite;
+  animation: soft-pulse 2s infinite;
 }
 
-@keyframes radar {
-  0% { transform: scale(1); opacity: 0.5; }
-  100% { transform: scale(2.2); opacity: 0; }
+.cloud-status.offline .cloud-dot { animation: none; }
+
+@keyframes soft-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
-.status-chip.syncing { color: var(--cancel); border-color: var(--cancel); }
-.status-chip.syncing .status-dot { background: var(--cancel); }
-.status-chip.syncing .status-dot::before { background: var(--cancel); }
+.mode-switch {
+  display: flex;
+  background: var(--card-soft);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  padding: 4px;
+  gap: 2px;
+  box-shadow: var(--shadow-sm);
+}
 
-.status-chip.offline { color: var(--absent); border-color: var(--absent); }
-.status-chip.offline .status-dot { background: var(--absent); }
-.status-chip.offline .status-dot::before { display: none; }
+.mode-btn {
+  padding: 8px 20px;
+  border-radius: 40px;
+  border: none;
+  background: transparent;
+  font-size: 13px; font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+  letter-spacing: 0.01em;
+}
 
-.status-chip .qcount {
-  background: var(--lime);
-  color: var(--bg);
+.mode-btn.active {
+  background: var(--card);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
   font-weight: 700;
-  padding: 1px 6px;
-  border-radius: 3px;
-  font-size: 10px;
-  margin-left: 2px;
 }
 
 .icon-btn {
-  width: 38px;
-  height: 38px;
-  border: var(--rule-w) solid var(--rule-2);
-  border-radius: 8px;
-  background: var(--panel);
-  color: var(--ink-2);
-  display: grid;
-  place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  display: grid; place-items: center;
+  font-size: 16px;
   cursor: pointer;
-  transition: all 0.25s var(--ease);
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-muted);
   font-family: inherit;
-  font-size: 15px;
 }
 
 .icon-btn:hover {
-  border-color: var(--lime);
-  color: var(--lime);
-  transform: translateY(-1px);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: scale(1.02);
 }
 
-.icon-btn:active { transform: translateY(0) scale(0.95); }
-.icon-btn.spin svg { animation: spin 0.9s linear infinite; }
+.icon-btn:active { transform: scale(0.98); }
+
+.icon-btn.spinning { animation: spin 0.8s linear infinite; }
+
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ═══════════════════════════════════════════════════════════════
-   BANNERS
-   ═══════════════════════════════════════════════════════════════ */
-
-.banner {
+.pending-badge {
   display: none;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 18px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 40px;
+  margin-left: 2px;
+}
+
+.cloud-status.has-pending .pending-badge { display: inline-block; }
+
+/* ---------- cards ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border-light);
   border-radius: var(--radius);
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 20px;
-  border: var(--rule-w) solid;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.02em;
-}
-
-.banner.show { display: flex; }
-
-.banner.offline {
-  background: var(--absent-b);
-  color: var(--absent);
-  border-color: var(--absent);
-}
-
-.banner.queue {
-  background: var(--cancel-b);
-  color: var(--cancel);
-  border-color: var(--cancel);
-}
-
-.banner .ghost {
-  margin-left: auto;
-  padding: 6px 12px;
-  font-size: 11px;
-  color: inherit;
-  border-color: currentColor;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   DASHBOARD GRID
-   ═══════════════════════════════════════════════════════════════ */
-
-.dashboard {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 32px;
-  align-items: start;
-}
-
-.col-main { min-width: 0; display: flex; flex-direction: column; gap: 32px; }
-.col-side { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 24px; }
-
-/* ═══════════════════════════════════════════════════════════════
-   SECTION HEADS
-   ═══════════════════════════════════════════════════════════════ */
-
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.section-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 12px;
-  border-bottom: var(--rule-w) solid var(--rule);
-  flex-wrap: wrap;
-}
-
-.section-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: 30px;
-  font-weight: 400;
-  letter-spacing: -0.025em;
-  line-height: 1;
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-}
-
-.section-title em {
-  font-style: italic;
-  color: var(--lime);
-}
-
-.section-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--ink-4);
-  letter-spacing: 0.08em;
-  padding-bottom: 4px;
-}
-
-.section-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   STATS — big numbers, editorial style
-   ═══════════════════════════════════════════════════════════════ */
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--rule);
-  border: var(--rule-w) solid var(--rule);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-
-.stat {
-  background: var(--panel);
-  padding: 24px 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  position: relative;
-  transition: background 0.3s var(--ease);
-}
-
-.stat:hover { background: var(--panel-2); }
-
-.stat-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.stat-label::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  background: var(--lime);
-  border-radius: 1px;
-}
-
-.stat:nth-child(2) .stat-label::before { background: var(--ink-3); }
-.stat:nth-child(3) .stat-label::before { background: var(--cancel); }
-
-.stat-value {
-  font-family: 'Instrument Serif', serif;
-  font-size: 56px;
-  font-weight: 400;
-  line-height: 0.95;
-  letter-spacing: -0.035em;
-  font-variant-numeric: tabular-nums;
-  color: var(--ink);
-}
-
-.stat:nth-child(1) .stat-value { color: var(--lime); }
-.stat:nth-child(3) .stat-value { color: var(--cancel); }
-
-/* ═══════════════════════════════════════════════════════════════
-   SCHEDULE — timeline style, not cards
-   ═══════════════════════════════════════════════════════════════ */
-
-.week {
-  border-bottom: var(--rule-w) solid var(--rule);
-}
-
-.week:last-child { border-bottom: 0; }
-
-.week-head {
-  display: grid;
-  grid-template-columns: 80px 1fr auto;
-  align-items: center;
-  gap: 20px;
-  padding: 18px 4px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.25s var(--ease);
-  position: relative;
-}
-
-.week-head::before {
-  content: '';
-  position: absolute;
-  left: 40px;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--lime);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.week-head:hover::before { opacity: 1; }
-
-.week-head:hover { padding-left: 12px; }
-
-.week-num {
-  font-family: 'Instrument Serif', serif;
-  font-size: 40px;
-  font-weight: 400;
-  line-height: 1;
-  color: var(--ink-4);
-  transition: color 0.25s var(--ease);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
-}
-
-.week-head:hover .week-num { color: var(--lime); }
-
-.week-meta { display: flex; flex-direction: column; gap: 4px; }
-
-.week-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-4);
-}
-
-.week-desc {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink-2);
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.week-desc span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.week-desc .pip {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
-.week-desc .p { background: var(--present); }
-.week-desc .a { background: var(--absent); }
-.week-desc .c { background: var(--cancel); }
-
-.week-open {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: var(--rule-w) solid var(--rule-2);
-  background: transparent;
-  color: var(--ink-3);
-  display: grid;
-  place-items: center;
-  transition: all 0.3s var(--ease-spring);
-  font-family: inherit;
-  font-size: 14px;
-}
-
-.week.open .week-open {
-  transform: rotate(45deg);
-  background: var(--lime);
-  color: var(--bg);
-  border-color: var(--lime);
-}
-
-.week-body {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.4s var(--ease);
-}
-
-.week-body > div { overflow: hidden; }
-
-.week.open .week-body { grid-template-rows: 1fr; }
-
-/* ═══════════════════════════════════════════════════════════════
-   CLASS ROWS — list-based, editorial
-   ═══════════════════════════════════════════════════════════════ */
-
-.classes {
-  display: flex;
-  flex-direction: column;
-  padding-left: 40px;
-  padding-bottom: 12px;
-  position: relative;
-}
-
-.classes::before {
-  content: '';
-  position: absolute;
-  left: 40px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--rule-2);
-}
-
-.cls {
-  display: grid;
-  grid-template-columns: 140px 1fr auto auto;
-  align-items: center;
-  gap: 20px;
-  padding: 16px 8px 16px 28px;
-  position: relative;
-  transition: all 0.25s var(--ease);
-  border-bottom: var(--rule-w) solid var(--rule);
-}
-
-.cls:last-child { border-bottom: 0; }
-
-.cls::before {
-  content: '';
-  position: absolute;
-  left: 40px;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--rule-3);
-  border: 2px solid var(--bg);
-  transition: all 0.3s var(--ease);
-}
-
-.cls:hover::before {
-  background: var(--lime);
-  transform: translate(-50%, -50%) scale(1.4);
-}
-
-.cls.is-cancelled::before { background: var(--cancel); }
-.cls.is-present::before { background: var(--present); }
-.cls.is-absent::before { background: var(--absent); }
-
-.cls:hover {
-  background: var(--panel);
-  padding-left: 32px;
-  border-radius: var(--radius);
-}
-
-.cls-date {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ink-2);
-  letter-spacing: 0.02em;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.cls-date .dow {
-  font-size: 10px;
-  color: var(--ink-4);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.cls-subject {
-  font-family: 'Instrument Serif', serif;
-  font-size: 22px;
-  font-weight: 400;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  line-height: 1.15;
-  word-break: break-word;
-}
-
-.cls.is-cancelled .cls-subject {
-  text-decoration: line-through;
-  text-decoration-thickness: 1.5px;
-  text-decoration-color: var(--ink-4);
-  color: var(--ink-3);
-}
-
-.cls-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 4px 9px;
-  border-radius: 4px;
-  border: var(--rule-w) solid;
-  white-space: nowrap;
-}
-
-.cls-tag.present {
-  color: var(--present);
-  background: var(--present-b);
-  border-color: var(--present);
-}
-
-.cls-tag.absent {
-  color: var(--absent);
-  background: var(--absent-b);
-  border-color: var(--absent);
-}
-
-.cls-tag.cancelled {
-  color: var(--cancel);
-  background: var(--cancel-b);
-  border-color: var(--cancel);
-}
-
-.cls-tag.unmarked {
-  color: var(--ink-3);
-  background: var(--neutral-b);
-  border-color: var(--rule-2);
-}
-
-.cls-actions {
-  display: flex;
-  gap: 6px;
-  opacity: 0;
-  transition: opacity 0.25s var(--ease);
-}
-
-.cls:hover .cls-actions { opacity: 1; }
-
-@media (hover: none) {
-  .cls-actions { opacity: 1; }
-}
-
-.cls-btn {
-  padding: 7px 12px;
-  border: var(--rule-w) solid var(--rule-2);
-  background: var(--panel);
-  color: var(--ink-2);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: all 0.2s var(--ease);
-  white-space: nowrap;
-}
-
-.cls-btn:hover:not(:disabled) { transform: translateY(-1px); }
-.cls-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-.cls-btn.p { border-color: var(--present); color: var(--present); }
-.cls-btn.p:hover:not(:disabled) { background: var(--present); color: var(--bg); }
-
-.cls-btn.a { border-color: var(--absent); color: var(--absent); }
-.cls-btn.a:hover:not(:disabled) { background: var(--absent); color: var(--bg); }
-
-.cls-btn.c { border-color: var(--cancel); color: var(--cancel); }
-.cls-btn.c:hover:not(:disabled) { background: var(--cancel); color: var(--bg); }
-
-.cls-btn.u { border-color: var(--lime); color: var(--lime); }
-.cls-btn.u:hover:not(:disabled) { background: var(--lime); color: var(--bg); }
-
-.cls-btn.d:hover:not(:disabled) { background: var(--absent); color: var(--bg); border-color: var(--absent); }
-
-/* view mode hides edit actions */
-.mode-view .cls-actions { display: none; }
-.mode-view .add-panel { display: none; }
-
-/* ═══════════════════════════════════════════════════════════════
-   SIDE PANEL — add form, compact
-   ═══════════════════════════════════════════════════════════════ */
-
-.add-panel {
-  border: var(--rule-w) solid var(--rule-2);
-  border-radius: var(--radius-xl);
-  background: var(--panel);
   padding: 24px;
-  position: relative;
-  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition), border-color var(--transition);
 }
 
-.add-panel::before {
-  content: '';
-  position: absolute;
-  top: -80px;
-  right: -80px;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, var(--lime-glow), transparent 70%);
-  pointer-events: none;
-  opacity: 0.5;
+.card:hover {
+  box-shadow: var(--shadow), 0 0 0 1px rgba(66, 99, 235, 0.04);
+  border-color: var(--border);
 }
 
-.add-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+.card-header {
+  display: flex; justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
-  position: relative;
+  flex-wrap: wrap; gap: 8px;
 }
 
-.add-header h3 {
-  font-family: 'Instrument Serif', serif;
-  font-size: 26px;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1;
+.card-header h2 {
+  font-size: 16px; font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  display: flex; align-items: center; gap: 8px;
 }
 
-.add-header h3 em { font-style: italic; color: var(--lime); }
-
-.add-header .idx {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--ink-4);
-  padding: 4px 8px;
-  border: var(--rule-w) solid var(--rule-2);
-  border-radius: 4px;
+.card-header-right {
+  display: flex; align-items: center; gap: 8px;
 }
 
-.add-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  position: relative;
+.card-header .hint {
+  font-size: 12px; font-weight: 600;
+  color: var(--text-soft);
+  background: var(--card-soft);
+  padding: 4px 12px;
+  border-radius: 40px;
+  border: 1px solid var(--border-light);
+}
+
+.section-toggle {
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  border: 1px solid var(--border-light);
+  background: var(--card-soft);
+  color: var(--text-muted);
+  font-size: 15px;
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: all var(--transition);
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.section-toggle:hover {
+  background: var(--card);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.section-toggle.collapsed {
+  transform: rotate(-90deg);
+}
+
+.section-body {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.section-body-inner { overflow: hidden; }
+
+.section-body.collapsed { grid-template-rows: 0fr; }
+
+/* ---------- form ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1.6fr 1fr auto;
+  gap: 12px;
+  align-items: end;
 }
 
 .field { display: flex; flex-direction: column; gap: 6px; }
 
 .field label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-size: 11px; font-weight: 800;
   text-transform: uppercase;
-  color: var(--ink-3);
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
 }
 
-.input {
+input, select {
   width: 100%;
-  height: 48px;
-  border: var(--rule-w) solid var(--rule-2);
-  border-radius: var(--radius);
-  background: var(--bg-2);
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
   padding: 0 14px;
-  font-family: inherit;
   font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
+  color: var(--text);
   outline: none;
-  transition: all 0.2s var(--ease);
-}
-
-.input:focus {
-  border-color: var(--lime);
-  background: var(--panel-2);
-  box-shadow: 0 0 0 3px var(--lime-glow);
-}
-
-.input::placeholder { color: var(--ink-4); font-weight: 400; }
-
-.subject-wrap { position: relative; }
-.subject-wrap .input { padding-right: 44px; }
-
-.subject-arrow {
-  position: absolute;
-  top: 50%;
-  right: 6px;
-  transform: translateY(-50%);
-  width: 34px;
-  height: 34px;
-  border: 0;
-  background: transparent;
-  color: var(--ink-3);
-  border-radius: 8px;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: all 0.2s var(--ease);
+  transition: border var(--transition), box-shadow var(--transition);
   font-family: inherit;
-  font-size: 15px;
+  font-weight: 500;
 }
 
-.subject-arrow:hover { background: var(--panel-3); color: var(--lime); }
+input:focus, select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(66, 99, 235, 0.12);
+}
 
-.suggest {
+.subject-picker { position: relative; }
+
+.subject-picker input { padding-right: 44px; }
+
+.picker-arrow {
   position: absolute;
+  top: 50%; right: 6px;
+  transform: translateY(-50%);
+  width: 32px; height: 32px;
+  border: none; background: transparent;
+  border-radius: 8px;
+  font-size: 18px;
+  color: var(--text-soft);
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: background var(--transition);
+  font-family: inherit;
+}
+
+.picker-arrow:hover { background: var(--card-soft); color: var(--primary); }
+
+.subject-suggestions {
+  position: absolute;
+  left: 0; right: 0;
   top: calc(100% + 6px);
-  left: 0;
-  right: 0;
-  background: var(--panel);
-  border: var(--rule-w) solid var(--rule-2);
-  border-radius: var(--radius);
-  max-height: 240px;
+  z-index: 50;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-hover);
+  max-height: 220px;
   overflow-y: auto;
   padding: 6px;
-  z-index: 60;
   display: none;
-  box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.5);
 }
 
-.suggest.show { display: block; animation: dropIn 0.2s var(--ease); }
+.subject-suggestions.show {
+  display: block;
+  animation: fadeSlide 0.12s ease-out;
+}
 
-@keyframes dropIn {
-  from { opacity: 0; transform: translateY(-6px); }
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.sug-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.suggestion-item {
+  display: flex; align-items: center; gap: 10px;
   width: 100%;
-  padding: 9px 10px;
-  border: 0;
-  background: transparent;
+  padding: 10px 12px;
+  border: none; background: transparent;
   border-radius: 8px;
-  font-family: inherit;
   font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
+  color: var(--text);
   text-align: left;
   cursor: pointer;
-  transition: background 0.15s var(--ease);
+  transition: background var(--transition);
+  font-family: inherit;
+  font-weight: 500;
 }
 
-.sug-item:hover { background: var(--panel-2); color: var(--lime); }
+.suggestion-item:hover { background: var(--card-soft); color: var(--primary); }
 
-.sug-item .em {
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
-  background: var(--panel-2);
-  display: grid;
-  place-items: center;
-  font-size: 14px;
+.suggestion-emoji {
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  display: grid; place-items: center;
+  font-size: 15px;
+  background: var(--primary-soft);
   flex-shrink: 0;
 }
 
-.sug-item .nm { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-.sug-item .ed {
-  width: 24px;
-  height: 24px;
-  border: 0;
-  background: transparent;
-  color: var(--ink-3);
-  border-radius: 6px;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.15s;
-  font-family: inherit;
-}
-
-.sug-item:hover .ed { opacity: 1; }
-.sug-item .ed:hover { background: var(--panel-3); color: var(--lime); }
-
-.sug-empty {
-  padding: 14px;
-  text-align: center;
-  color: var(--ink-4);
-  font-size: 12px;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.btn-primary {
-  height: 48px;
-  width: 100%;
-  border: 0;
-  border-radius: var(--radius);
-  background: var(--lime);
-  color: var(--bg);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  transition: all 0.25s var(--ease-spring);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 4px;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-primary::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-  transform: translateX(-100%);
-  transition: transform 0.6s var(--ease);
-}
-
-.btn-primary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px -8px var(--lime-glow);
-}
-
-.btn-primary:hover:not(:disabled)::after { transform: translateX(100%); }
-.btn-primary:active:not(:disabled) { transform: translateY(0); }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
-.add-footer {
-  display: flex;
-  gap: 6px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: var(--rule-w) solid var(--rule);
-  position: relative;
-}
-
-.btn-text {
+.suggestion-text {
   flex: 1;
-  padding: 9px 12px;
-  border: var(--rule-w) solid var(--rule-2);
-  background: transparent;
-  color: var(--ink-2);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: all 0.2s var(--ease);
-  white-space: nowrap;
-}
-
-.btn-text:hover {
-  background: var(--panel-2);
-  border-color: var(--lime);
-  color: var(--lime);
-}
-
-.btn-text.danger:hover {
-  background: var(--absent-b);
-  border-color: var(--absent);
-  color: var(--absent);
-}
-
-.flash {
-  margin-top: 14px;
-  padding: 12px 16px;
-  border-radius: var(--radius);
-  font-size: 12px;
-  font-weight: 600;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.02em;
-  display: none;
-  position: relative;
-}
-
-.flash.success { display: block; background: var(--present-b); color: var(--present); }
-.flash.error { display: block; background: var(--absent-b); color: var(--absent); }
-.flash.info { display: block; background: var(--neutral-b); color: var(--ink-2); }
-
-/* ═══════════════════════════════════════════════════════════════
-   SUBJECT PANEL
-   ═══════════════════════════════════════════════════════════════ */
-
-.subject-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.subj {
-  border-bottom: var(--rule-w) solid var(--rule);
-}
-
-.subj:last-child { border-bottom: 0; }
-
-.subj-head {
-  display: grid;
-  grid-template-columns: 46px 1fr auto 24px;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 6px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.25s var(--ease);
-  position: relative;
-}
-
-.subj-head:hover { padding-left: 12px; }
-
-.subj-em {
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  font-size: 22px;
-  background: var(--panel-2);
-  border-radius: 12px;
-  transition: transform 0.35s var(--ease-spring);
-}
-
-.subj-head:hover .subj-em { transform: scale(1.08) rotate(-5deg); }
-
-.subj-nm {
-  font-family: 'Instrument Serif', serif;
-  font-size: 22px;
-  font-weight: 400;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  line-height: 1.15;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.subj-metrics {
-  display: flex;
-  align-items: center;
+.suggestion-edit {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  color: var(--text-soft);
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.suggestion-item:hover .suggestion-edit { opacity: 1; }
+
+.no-suggestions {
+  padding: 12px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.btn-primary {
+  height: 44px;
+  padding: 0 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: 0 4px 12px rgba(66, 99, 235, 0.25);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #3451d1;
+  box-shadow: 0 6px 16px rgba(66, 99, 235, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) { transform: translateY(0); }
+.btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.form-actions {
+  display: flex; justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-ghost {
+  padding: 8px 18px;
+  border-radius: 40px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+
+.btn-ghost:hover {
+  background: var(--card-soft);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-ghost.danger:hover {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* ---------- message ---------- */
+.message {
+  margin-top: 16px;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  display: none;
+}
+
+.message.success {
+  display: block;
+  background: var(--green-soft);
+  color: var(--green);
+  border: 1px solid rgba(14, 159, 110, 0.25);
+}
+
+.message.error {
+  display: block;
+  background: var(--red-soft);
+  color: var(--red);
+  border: 1px solid rgba(225, 61, 61, 0.25);
+}
+
+.message.info {
+  display: block;
+  background: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid rgba(66, 99, 235, 0.25);
+}
+
+/* ---------- stats ---------- */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
-.subj-track {
-  width: 120px;
-  height: 4px;
-  background: var(--panel-3);
-  border-radius: 999px;
+.stat-tile {
+  background: var(--card-soft);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  display: flex; align-items: center; gap: 14px;
+  transition: all var(--transition);
+}
+
+.stat-tile:hover {
+  background: var(--card);
+  border-color: var(--border);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.stat-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: var(--primary-soft);
+  display: grid; place-items: center;
+  font-size: 20px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.stat-content { display: flex; flex-direction: column; }
+
+.stat-label {
+  font-size: 12px; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-soft);
+}
+
+.stat-value {
+  font-size: 26px; font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- subject attendance ---------- */
+.subject-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subject-block {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  background: var(--card-soft);
+  transition: border-color var(--transition);
+}
+
+.subject-block.expanded {
+  border-color: var(--border);
+}
+
+.subject-header {
+  display: grid;
+  grid-template-columns: 44px 1fr 220px 28px;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition);
+  position: relative;
+  min-height: 72px;
+}
+
+.subject-header:hover { background: var(--card); }
+
+.subject-header::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent, var(--primary));
+  opacity: 0.8;
+}
+
+.subject-emoji {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 22px;
+  background: color-mix(in srgb, var(--accent, var(--primary)) 14%, transparent);
+  flex-shrink: 0;
+}
+
+.subject-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subject-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.subject-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--border-light);
+  border-radius: 20px;
   overflow: hidden;
   position: relative;
 }
 
-.subj-fill {
+.subject-bar-fill {
   height: 100%;
-  background: var(--lime);
-  border-radius: 999px;
-  transition: width 0.9s var(--ease);
+  background: var(--accent, var(--primary));
+  border-radius: 20px;
+  transition: width 0.8s cubic-bezier(0.2, 0, 0, 1);
 }
 
-.subj-fill.low { background: var(--absent); }
-
-.subj-pct {
-  font-family: 'Instrument Serif', serif;
-  font-size: 22px;
-  font-weight: 400;
+.subject-pct {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
   font-variant-numeric: tabular-nums;
-  color: var(--ink);
-  min-width: 56px;
+  min-width: 46px;
   text-align: right;
-  line-height: 1;
 }
 
-.subj-pct.low { color: var(--absent); }
+.subject-pct.low { color: var(--red); }
 
-.subj-op {
-  width: 24px;
-  height: 24px;
-  display: grid;
-  place-items: center;
-  color: var(--ink-3);
-  transition: transform 0.3s var(--ease);
-  font-size: 13px;
+.subject-chevron {
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text-muted);
+  font-size: 16px;
+  transition: transform var(--transition), background var(--transition);
+  border: 1px solid var(--border-light);
+  flex-shrink: 0;
 }
 
-.subj.open .subj-op { transform: rotate(180deg); color: var(--lime); }
+.subject-block.expanded .subject-chevron {
+  transform: rotate(180deg);
+}
 
-.subj-body {
+.subject-body {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.4s var(--ease);
+  transition: grid-template-rows 0.28s cubic-bezier(0.2, 0, 0, 1);
 }
 
-.subj-body > div { overflow: hidden; }
+.subject-body-inner { overflow: hidden; }
 
-.subj.open .subj-body { grid-template-rows: 1fr; }
+.subject-block.expanded .subject-body { grid-template-rows: 1fr; }
 
-.subj-rows {
-  padding: 4px 6px 16px;
+.subject-detail-list {
+  padding: 12px 18px 16px 18px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
+  border-top: 1px solid var(--border-light);
 }
 
-.subj-row {
+.subject-detail-row {
   display: grid;
   grid-template-columns: 110px 1fr auto;
   align-items: center;
-  gap: 14px;
-  padding: 9px 12px;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--card);
   border-radius: 8px;
-  font-size: 12px;
-  transition: background 0.2s var(--ease);
-}
-
-.subj-row:hover { background: var(--panel-2); }
-
-.subj-row-date {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--ink-2);
-  letter-spacing: 0.02em;
-}
-
-.subj-row-dow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--ink-4);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-
-.subj-row-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 3px 8px;
-  border-radius: 4px;
-  justify-self: end;
-  border: var(--rule-w) solid;
-}
-
-.subj-row-tag.present { color: var(--present); border-color: var(--present); background: var(--present-b); }
-.subj-row-tag.absent { color: var(--absent); border-color: var(--absent); background: var(--absent-b); }
-.subj-row-tag.cancelled { color: var(--cancel); border-color: var(--cancel); background: var(--cancel-b); }
-.subj-row-tag.unmarked { color: var(--ink-3); border-color: var(--rule-2); }
-
-/* ═══════════════════════════════════════════════════════════════
-   EMPTY / LOADING
-   ═══════════════════════════════════════════════════════════════ */
-
-.empty {
-  text-align: center;
-  padding: 56px 24px;
-  border: var(--rule-w) dashed var(--rule-2);
-  border-radius: var(--radius-lg);
-  background: var(--panel);
-}
-
-.empty-icon {
-  font-size: 40px;
-  display: block;
-  margin-bottom: 16px;
-  opacity: 0.4;
-}
-
-.empty-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: 24px;
-  font-weight: 400;
-  margin-bottom: 8px;
-  color: var(--ink);
-}
-
-.empty-desc {
+  border: 1px solid var(--border-light);
   font-size: 13px;
-  color: var(--ink-3);
-  margin-bottom: 20px;
+  transition: border-color var(--transition);
 }
 
-.skeleton {
-  height: 64px;
-  background: var(--panel);
-  border: var(--rule-w) solid var(--rule);
-  border-radius: var(--radius);
+.subject-detail-row:hover {
+  border-color: var(--accent, var(--primary));
+}
+
+.subject-detail-date {
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+
+.subject-detail-day {
+  font-size: 11px;
+  color: var(--text-soft);
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+.subject-detail-status {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 40px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.subject-detail-status.present {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.subject-detail-status.absent {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.subject-detail-status.unmarked {
+  background: var(--orange-soft);
+  color: var(--orange);
+}
+
+.subject-detail-status.cancelled {
+  background: var(--red-soft);
+  color: var(--red);
+  opacity: 0.7;
+}
+
+.subject-detail-empty {
+  padding: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+@media (max-width: 800px) {
+  .subject-header {
+    grid-template-columns: 44px 1fr 28px;
+    grid-template-rows: auto auto;
+    gap: 8px 12px;
+    padding: 14px 16px;
+  }
+  .subject-emoji { grid-row: 1 / 3; align-self: start; }
+  .subject-name { grid-column: 2; grid-row: 1; }
+  .subject-chevron { grid-column: 3; grid-row: 1; }
+  .subject-bar { grid-column: 2 / 4; grid-row: 2; }
+}
+
+@media (max-width: 500px) {
+  .subject-header {
+    grid-template-columns: 40px 1fr 28px;
+    gap: 8px 10px;
+    padding: 12px 14px;
+    min-height: 68px;
+  }
+  .subject-emoji {
+    width: 40px; height: 40px;
+    font-size: 20px;
+  }
+  .subject-name { font-size: 14px; }
+  .subject-pct { font-size: 13px; min-width: 40px; }
+  .subject-detail-row {
+    grid-template-columns: 1fr auto;
+    gap: 6px 10px;
+    padding: 10px 12px;
+  }
+  .subject-detail-date { font-size: 13px; }
+  .subject-detail-day { grid-column: 1 / -1; }
+}
+
+/* ---------- schedule ---------- */
+.week-block {
+  margin-bottom: 24px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  background: var(--card-soft);
+}
+
+.week-block:last-child { margin-bottom: 0; }
+
+.week-header {
+  display: flex; align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: var(--card-soft);
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition);
+  min-height: 56px;
+}
+
+.week-header:hover { background: var(--card); }
+
+.week-number {
+  font-size: 16px; font-weight: 800;
+  color: var(--primary);
+  background: var(--primary-soft);
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+
+.week-meta {
+  display: flex; flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.week-title {
+  font-size: 14px; font-weight: 800;
+  color: var(--text);
+}
+
+.week-count {
+  font-size: 12px;
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+.week-chevron {
+  margin-left: auto;
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text-muted);
+  font-size: 16px;
+  transition: transform var(--transition), background var(--transition);
+  border: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.week-block.collapsed .week-chevron { transform: rotate(-90deg); }
+
+.week-body {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.28s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.week-body-inner { overflow: hidden; }
+
+.week-block.collapsed .week-body { grid-template-rows: 0fr; }
+
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  padding: 0 16px 16px 16px;
+}
+
+.class-card {
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+  animation: fadeInUp 0.35s ease-out backwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.class-card:hover {
+  border-color: var(--card-accent, var(--primary));
+  box-shadow: 0 6px 20px rgba(66, 99, 235, 0.08);
+  transform: translateY(-2px);
+}
+
+.class-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--card-accent, var(--primary));
+  border-radius: 0 3px 3px 0;
+  opacity: 0.7;
+}
+
+.class-card.swiping { transition: transform 0.1s ease-out; }
+
+.class-top {
+  display: flex; justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  padding-left: 8px;
+  gap: 8px;
+}
+
+.class-date {
+  font-size: 13px; font-weight: 800;
+  color: var(--text);
+}
+
+.class-day {
+  font-size: 11px;
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+.status-badge {
+  font-size: 10px; font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 40px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.status-badge.held {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.status-badge.cancelled {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.class-subject {
+  font-size: 14px; font-weight: 800;
+  color: var(--text);
+  margin-bottom: 14px;
+  padding-left: 8px;
+  display: flex; align-items: center; gap: 8px;
+  word-break: break-word;
+}
+
+.class-card.is-cancelled .class-subject {
+  margin-bottom: 0;
+}
+
+.subject-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--card-accent, var(--primary));
+  flex-shrink: 0;
+}
+
+.attendance-pill {
+  display: inline-block;
+  font-size: 12px; font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 40px;
+  margin-bottom: 14px;
+  margin-left: 8px;
+}
+
+.attendance-pill.present {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.attendance-pill.absent {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.attendance-pill.unmarked {
+  background: var(--orange-soft);
+  color: var(--orange);
+}
+
+.class-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-left: 8px;
+}
+
+.class-actions .full-width { grid-column: 1 / -1; }
+
+.action-btn {
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px; font-weight: 800;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex; align-items: center; justify-content: center;
+  gap: 4px;
+  background: var(--card-soft);
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+  font-family: inherit;
+  min-height: 40px;
+}
+
+.action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.action-btn.present {
+  background: var(--green-soft);
+  color: var(--green);
+  border-color: transparent;
+}
+
+.action-btn.present:hover:not(:disabled) { background: var(--green); color: #fff; }
+
+.action-btn.absent {
+  background: var(--red-soft);
+  color: var(--red);
+  border-color: transparent;
+}
+
+.action-btn.absent:hover:not(:disabled) { background: var(--red); color: #fff; }
+
+.action-btn.delete {
+  background: transparent;
+  color: var(--text-soft);
+  border: 1px solid var(--border-light);
+}
+
+.action-btn.delete:hover:not(:disabled) {
+  background: var(--red-soft);
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.mode-view .class-actions,
+.mode-view .form-section,
+.mode-view .form-actions {
+  display: none !important;
+}
+
+.mode-view .attendance-pill { margin-bottom: 0; }
+.mode-view .class-card { padding-bottom: 16px; }
+
+/* ---------- empty / loading ---------- */
+.empty-state, .loading-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-soft);
+  font-size: 14px;
+  background: var(--card-soft);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border);
+}
+
+.empty-state .empty-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+  display: block;
+  opacity: 0.6;
+}
+
+.empty-state .empty-title {
+  font-size: 15px; font-weight: 800;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.empty-state .empty-desc {
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-bottom: 16px;
+}
+
+.empty-state .btn-ghost { margin-top: 8px; }
+
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-row {
+  height: 72px;
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
   position: relative;
   overflow: hidden;
 }
 
-.skeleton::after {
+.skeleton-row::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
-  animation: shimmer 1.8s infinite;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--text) 4%, transparent) 50%,
+    transparent 100%);
+  animation: shimmer 1.4s infinite;
 }
 
 @keyframes shimmer {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(100%); }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
-.skel-stack { display: flex; flex-direction: column; gap: 8px; }
-
-/* ═══════════════════════════════════════════════════════════════
-   EMOJI GRID
-   ═══════════════════════════════════════════════════════════════ */
-
-.emoji-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 3px;
-  padding: 8px;
-  background: var(--panel-2);
-  border-radius: var(--radius);
-  margin-top: 6px;
+/* ---------- banners ---------- */
+.offline-banner, .queue-banner {
+  display: none;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600;
+  margin-bottom: 20px;
+  align-items: center;
+  gap: 10px;
 }
 
-.emoji-btn {
-  width: 34px;
-  height: 34px;
-  border: 0;
-  background: transparent;
-  border-radius: 8px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: all 0.15s var(--ease);
-  display: grid;
-  place-items: center;
+.offline-banner {
+  background: var(--red-soft);
+  color: var(--red);
+  border: 1px solid rgba(225, 61, 61, 0.25);
 }
 
-.emoji-btn:hover { background: var(--panel-3); transform: scale(1.15); }
-.emoji-btn.active { background: var(--lime); }
+.offline-banner.show { display: flex; }
 
-.emoji-title {
-  padding: 10px 12px 4px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-3);
+.queue-banner {
+  background: var(--orange-soft);
+  color: var(--orange);
+  border: 1px solid rgba(217, 119, 6, 0.25);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   CONFETTI
-   ═══════════════════════════════════════════════════════════════ */
+.queue-banner.show { display: flex; }
 
-.confetti {
+.queue-banner .btn-ghost {
+  margin-left: auto;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--orange);
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+.queue-banner .btn-ghost:hover {
+  background: var(--orange);
+  color: #fff;
+  border-color: var(--orange);
+}
+
+/* ---------- confetti ---------- */
+.confetti-piece {
   position: fixed;
   width: 8px;
   height: 8px;
   pointer-events: none;
   z-index: 9999;
-  animation: fall 2s cubic-bezier(0.2, 0.6, 0.4, 1) forwards;
+  border-radius: 2px;
+  animation: confetti-fall 1.6s cubic-bezier(0.2, 0.6, 0.4, 1) forwards;
 }
 
-@keyframes fall {
-  0% { transform: translateY(0) rotate(0); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(900deg); opacity: 0; }
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   SCROLLBAR
-   ═══════════════════════════════════════════════════════════════ */
-
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb {
-  background: var(--rule-2);
-  border-radius: 999px;
-  border: 3px solid var(--bg);
-}
-::-webkit-scrollbar-thumb:hover { background: var(--rule-3); }
-
-/* ═══════════════════════════════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════════════════════════════ */
-
-@media (max-width: 1080px) {
-  .dashboard { grid-template-columns: 1fr; gap: 32px; }
-  .col-side { position: static; }
-  .add-panel {
-    position: sticky;
-    bottom: 12px;
-    box-shadow: 0 -12px 40px -8px rgba(0, 0, 0, 0.3);
-  }
+/* ---------- emoji picker ---------- */
+.emoji-picker {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  padding: 8px;
+  margin-top: 6px;
+  background: var(--card-soft);
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
 }
 
-@media (max-width: 720px) {
-  .wrap { width: calc(100% - 24px); padding: 12px 0 72px; }
+.emoji-opt {
+  width: 32px; height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+  display: grid; place-items: center;
+}
 
-  .masthead {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    background: var(--bg);
-    margin: 0 -12px 24px;
-    padding: 12px 12px 16px;
-    gap: 12px;
+.emoji-opt:hover {
+  background: var(--card);
+  transform: scale(1.15);
+}
+
+.emoji-opt.active {
+  background: var(--primary-soft);
+  box-shadow: inset 0 0 0 2px var(--primary);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .form-grid { grid-template-columns: 1fr 1fr; }
+  .btn-primary { width: 100%; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .app { width: calc(100% - 24px); padding: 16px 0 40px; }
+
+  .header {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 20;
+    padding: 12px 0 14px;
+    margin-left: -12px;
+    margin-right: -12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-bottom: 1px solid var(--border-light);
   }
 
-  .masthead-title { font-size: 32px; }
-  .masthead-tag { display: none; }
+  .brand { justify-content: flex-start; }
+  .brand h1 { font-size: 20px; }
+  .logo { width: 42px; height: 42px; font-size: 20px; }
 
-  .masthead-controls {
+  .header-actions {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr auto auto auto;
-    gap: 6px;
+    gap: 8px;
+    align-items: center;
   }
+  .mode-switch { grid-column: 1; }
+  .mode-btn { flex: 1; padding: 10px 12px; font-size: 13px; }
 
-  .mode-toggle { grid-column: 1; }
-  .mode-toggle button { flex: 1; padding: 8px 10px; }
-
-  .status-chip {
+  .cloud-status {
     grid-column: 1 / -1;
-    order: -1;
     justify-content: center;
     padding: 8px 12px;
+    font-size: 12px;
+    order: -1;
   }
 
-  .icon-btn { width: 40px; height: 40px; }
+  .icon-btn { width: 44px; height: 44px; font-size: 17px; }
 
-  .stats { grid-template-columns: 1fr 1fr; gap: 1px; border-radius: var(--radius); }
-  .stats .stat:last-child { grid-column: 1 / -1; }
-  .stat { padding: 18px 20px; }
-  .stat-value { font-size: 44px; }
+  .form-grid { grid-template-columns: 1fr; gap: 14px; }
+  input, select { height: 48px; font-size: 16px; }
+  .btn-primary { height: 48px; font-size: 15px; width: 100%; }
 
-  .section-title { font-size: 24px; }
-  .section-num { display: none; }
+  .stats-row { grid-template-columns: 1fr; gap: 10px; }
+  .stat-tile { padding: 14px 16px; }
+  .stat-value { font-size: 22px; }
 
-  .week-head {
-    grid-template-columns: 56px 1fr auto;
-    gap: 12px;
-    padding: 14px 4px;
-  }
-  .week-num { font-size: 32px; }
-  .week-desc { font-size: 12px; gap: 10px; }
-
-  .classes { padding-left: 28px; }
-  .classes::before { left: 28px; }
-  .cls::before { left: 28px; }
-
-  .cls {
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
-    gap: 6px 12px;
-    padding: 14px 4px 14px 20px;
+  .class-grid {
+    grid-template-columns: 1fr;
+    padding: 0 12px 12px 12px;
   }
 
-  .cls-date { grid-column: 1; grid-row: 1; flex-direction: row; gap: 8px; align-items: baseline; }
-  .cls-subject { grid-column: 1; grid-row: 2; font-size: 18px; }
-  .cls-tag { grid-column: 2; grid-row: 1; }
-  .cls-actions { grid-column: 1 / -1; grid-row: 3; justify-content: flex-start; flex-wrap: wrap; margin-top: 4px; }
-  .cls:hover { padding-left: 24px; }
+  .action-btn { min-height: 44px; padding: 12px 14px; font-size: 13px; }
+  .class-actions { gap: 10px; padding-left: 6px; }
 
-  .cls-btn { padding: 8px 12px; }
+  .week-header { padding: 14px 16px; }
+  .week-number { width: 40px; height: 40px; font-size: 15px; }
 
-  .add-panel { padding: 20px; }
+  .card { padding: 16px; }
+  .attendance-pill { font-size: 13px; padding: 7px 16px; }
 
-  .subj-head { grid-template-columns: 40px 1fr 24px; grid-template-rows: auto auto; gap: 8px 12px; padding: 14px 4px; }
-  .subj-em { width: 40px; height: 40px; font-size: 20px; grid-row: 1 / 3; }
-  .subj-nm { grid-column: 2; grid-row: 1; font-size: 20px; }
-  .subj-metrics { grid-column: 2 / 4; grid-row: 2; }
-  .subj-op { grid-column: 3; grid-row: 1; }
-  .subj-track { width: 100px; }
+  .form-actions { flex-direction: column-reverse; }
+  .form-actions .btn-ghost { width: 100%; padding: 12px; font-size: 14px; }
+  .card-header .hint { font-size: 11px; padding: 3px 10px; }
+}
 
-  .subj-row { grid-template-columns: 1fr auto; padding: 8px 10px; }
-  .subj-row-dow { display: none; }
+@media (max-width: 640px) and (hover: none) {
+  .mode-edit .class-card::after {
+    content: '⇆ swipe';
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--text-soft);
+    opacity: 0.35;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+  .class-card.is-cancelled::after { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1472,290 +1337,298 @@ body::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+  .week-body, .subject-body, .section-body { transition: none; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
+<div class="app" id="app">
 
-  <!-- MASTHEAD -->
-  <header class="masthead">
-    <div class="masthead-brand">
-      <h1 class="masthead-title">Presence <em>/</em></h1>
-      <span class="masthead-tag">attendance · studio</span>
+<header class="header">
+  <div class="brand">
+    <div class="logo">✓</div>
+    <div>
+      <h1>Attendance</h1>
+      <p>Track your classes effortlessly</p>
     </div>
-    <div class="masthead-controls">
-      <div class="mode-toggle" id="modeToggle">
-        <button id="modeViewBtn" class="active">◐ View</button>
-        <button id="modeEditBtn">◉ Edit</button>
-      </div>
-      <button class="status-chip" id="cloudStatus" title="Sync status">
-        <span class="status-dot"></span>
-        <span id="cloudText">synced</span>
-        <span class="qcount" id="pendingBadge" style="display:none">0</span>
-      </button>
-      <button class="icon-btn" id="refreshBtn" aria-label="Refresh">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12a9 9 0 1 1-3-6.7L21 8"/>
-          <path d="M21 3v5h-5"/>
-        </svg>
-      </button>
-      <button class="icon-btn" id="themeToggle" aria-label="Theme">☾</button>
-    </div>
-  </header>
-
-  <!-- BANNERS -->
-  <div class="banner offline" id="offlineBanner">// offline — changes will queue</div>
-  <div class="banner queue" id="queueBanner">
-    <span id="queueText">// changes waiting</span>
-    <button class="btn-text" id="flushQueueBtn" style="flex:0;padding:6px 12px;border-color:currentColor;color:inherit;">sync</button>
   </div>
-
-  <!-- DASHBOARD -->
-  <div class="dashboard">
-
-    <!-- MAIN COLUMN -->
-    <div class="col-main">
-
-      <!-- STATS -->
-      <section class="stats">
-        <div class="stat">
-          <div class="stat-label">Weeks tracked</div>
-          <div class="stat-value" id="weekCount" data-count="0">0</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Total classes</div>
-          <div class="stat-value" id="totalCount" data-count="0">0</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Cancelled</div>
-          <div class="stat-value" id="cancelledCount" data-count="0">0</div>
-        </div>
-      </section>
-
-      <!-- SCHEDULE -->
-      <section class="section">
-        <div class="section-head">
-          <h2 class="section-title">Timeline <em>—</em> <span class="section-num">01</span></h2>
-        </div>
-        <div id="schedule">
-          <div class="empty">
-            <span class="empty-icon">◌</span>
-            <div class="empty-title">Loading…</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SUBJECTS -->
-      <section class="section">
-        <div class="section-head">
-          <h2 class="section-title">Subjects <em>—</em> <span class="section-num">02</span></h2>
-          <div class="section-actions">
-            <button class="icon-btn" id="subjectSectionToggle" aria-label="Collapse" style="width:32px;height:32px;font-size:13px;">⌄</button>
-          </div>
-        </div>
-        <div class="collapse" id="subjectSectionBody" style="display:grid;grid-template-rows:1fr;transition:grid-template-rows 0.4s var(--ease);">
-          <div style="overflow:hidden;">
-            <div id="subjectStats" class="subject-list">
-              <div class="skel-stack">
-                <div class="skeleton"></div>
-                <div class="skeleton"></div>
-                <div class="skeleton"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+  <div class="header-actions">
+    <div class="mode-switch" role="group" aria-label="View or Edit mode">
+      <button class="mode-btn active" id="modeViewBtn" data-mode="view">👁️ View</button>
+      <button class="mode-btn" id="modeEditBtn" data-mode="edit">✏️ Edit</button>
     </div>
-
-    <!-- SIDE COLUMN -->
-    <aside class="col-side">
-
-      <!-- ADD CLASS -->
-      <div class="add-panel">
-        <div class="add-header">
-          <h3>Record <em>/</em></h3>
-          <span class="idx">+ NEW</span>
-        </div>
-        <div class="add-fields">
-          <div class="field">
-            <label>Date</label>
-            <input type="date" id="date" class="input">
-          </div>
-          <div class="field">
-            <label>Subject</label>
-            <div class="subject-wrap">
-              <input type="text" id="subject" class="input" placeholder="e.g. Data Structures" autocomplete="off">
-              <button type="button" class="subject-arrow" id="subjectPickerArrow" aria-label="Saved subjects">⌄</button>
-              <div class="suggest" id="subjectSuggestions"></div>
-            </div>
-          </div>
-          <button class="btn-primary" id="addBtn">
-            <span>Add class</span>
-            <span>→</span>
-          </button>
-        </div>
-        <div class="add-footer">
-          <button class="btn-text" id="exportBtn">csv</button>
-          <button class="btn-text" id="clearBtn">clear</button>
-          <button class="btn-text danger" id="resetBtn">reset</button>
-        </div>
-        <div id="message" class="flash"></div>
-      </div>
-
-    </aside>
-
+    <div class="cloud-status" id="cloudStatus" title="Sync status">
+      <span class="cloud-dot"></span>
+      <span id="cloudText">Cloud synced</span>
+      <span class="pending-badge" id="pendingBadge">0</span>
+    </div>
+    <button class="icon-btn" id="refreshBtn" aria-label="Refresh from sheet" title="Refresh from sheet">🔄</button>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">🌙</button>
   </div>
+</header>
+
+<div class="offline-banner" id="offlineBanner">
+  ⚠️ You are offline. Changes are being queued and will sync automatically.
+</div>
+
+<div class="queue-banner" id="queueBanner">
+  <span id="queueText">⏳ 3 changes waiting to sync</span>
+  <button class="btn-ghost" id="flushQueueBtn">Sync now</button>
+</div>
+
+<!-- ADD CLASS (edit mode only) -->
+<section class="card form-section" id="addClassSection">
+  <div class="card-header">
+    <h2>➕ Add New Class</h2>
+    <span class="hint">Record a session</span>
+  </div>
+  <div class="form-grid">
+    <div class="field">
+      <label>Date</label>
+      <input type="date" id="date">
+    </div>
+    <div class="field">
+      <label>Subject</label>
+      <div class="subject-picker">
+        <input type="text" id="subject" placeholder="e.g. Data Structures" autocomplete="off">
+        <button type="button" class="picker-arrow" id="subjectPickerArrow" aria-label="Show saved subjects">⌄</button>
+        <div class="subject-suggestions" id="subjectSuggestions"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Status</label>
+      <select id="classStatus">
+        <option value="HELD">Class Held</option>
+        <option value="CANCELLED">Class Cancelled</option>
+      </select>
+    </div>
+    <button class="btn-primary" id="addBtn">+ Add Class</button>
+  </div>
+  <div class="form-actions">
+    <button class="btn-ghost" id="exportBtn">⬇️ Export CSV</button>
+    <button class="btn-ghost" id="clearBtn">Clear Form</button>
+    <button class="btn-ghost danger" id="resetBtn">Reset All</button>
+  </div>
+  <div id="message" class="message"></div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="card">
+  <div class="card-header">
+    <h2>📊 Overview</h2>
+    <span class="hint">Summary</span>
+  </div>
+  <div class="stats-row">
+    <div class="stat-tile">
+      <div class="stat-icon">📅</div>
+      <div class="stat-content">
+        <span class="stat-label">Total Weeks</span>
+        <span class="stat-value" id="weekCount" data-count="0">0</span>
+      </div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-icon">📍</div>
+      <div class="stat-content">
+        <span class="stat-label">Classes Held</span>
+        <span class="stat-value" id="heldCount" data-count="0">0</span>
+      </div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-icon">✖</div>
+      <div class="stat-content">
+        <span class="stat-label">Cancelled</span>
+        <span class="stat-value" id="cancelledCount" data-count="0">0</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECT ATTENDANCE -->
+<section class="card">
+  <div class="card-header">
+    <h2>📚 Subject Attendance</h2>
+    <div class="card-header-right">
+      <span class="hint">Click a subject to expand</span>
+      <button class="section-toggle" id="subjectSectionToggle" aria-label="Collapse section" title="Collapse section">⌄</button>
+    </div>
+  </div>
+  <div class="section-body" id="subjectSectionBody">
+    <div class="section-body-inner">
+      <div id="subjectStats" class="subject-blocks">
+        <div class="skeleton-list">
+          <div class="skeleton-row"></div>
+          <div class="skeleton-row"></div>
+          <div class="skeleton-row"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="card">
+  <div class="card-header">
+    <h2>🗓️ Class Schedule</h2>
+    <span class="hint">Weekly view</span>
+  </div>
+  <div id="schedule">
+    <div class="loading-state">Loading…</div>
+  </div>
+</section>
 
 </div>
 
 <script>
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    CONFIG
-   ══════════════════════════════════════════════════════════════ */
+------------------------------------------------------------------ */
 const API_URL = "https://script.google.com/macros/s/AKfycbxryV1UhZClPxP8m95HerdLGEZOV_T1Gp-YLy7-2KUBn_6H__LlMP-KgCzzoVB91aZIcA/exec";
-const QUEUE_KEY = "presence_queue_v1";
-const EMOJI_KEY = "presence_subject_emojis";
-const EXPANDED_SUBJECTS_KEY = "presence_expanded_subjects";
-const SUBJECT_SECTION_KEY = "presence_subject_section_collapsed";
-const REQ_TIMEOUT = 15000;
+const QUEUE_KEY = "attendance_queue_v1";
+const EMOJI_KEY = "attendance_subject_emojis";
+const EXPANDED_SUBJECTS_KEY = "attendance_expanded_subjects";
+const SUBJECT_SECTION_COLLAPSED_KEY = "attendance_subject_section_collapsed";
+const REQUEST_TIMEOUT_MS = 8000;
 
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    STATE
-   ══════════════════════════════════════════════════════════════ */
+------------------------------------------------------------------ */
 let classes = [];
-let mode = localStorage.getItem("presence_mode") || "view";
-let lastSync = null;
+let currentMode = localStorage.getItem("mode") || "view";
+let lastSyncTime = null;
 let queue = loadQueue();
-let emojis = loadEmojis();
-let expanded = loadExpanded();
-let loading = false;
+let subjectEmojis = loadEmojis();
+let expandedSubjects = loadExpandedSubjects();
 
 let syncLocks = 0;
-let lastFlush = 0;
+let lastFlushAt = 0;
 let syncingSince = 0;
-let lastQ = 0;
+let lastQueueLength = 0;
 
-const EMOJI_OPTIONS = ["📚","🧪","📐","💻","🎨","🌍","🧠","📖","🔬","🎵","💡","📊","🏛️","🧬","⚙️","🎯","🔭","🗺️","📝","🧮"];
+const EMOJI_OPTIONS = ["📚","🧪","📐","💻","🎨","🌍","⚗️","🧠","📖","🔬","🎵","💡","📊","🏛️","🧬","⚙️"];
 
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    THEME
-   ══════════════════════════════════════════════════════════════ */
+------------------------------------------------------------------ */
 const themeToggle = document.getElementById("themeToggle");
-const html = document.documentElement;
-
-function setTheme(t) {
-  html.setAttribute("data-theme", t);
-  themeToggle.textContent = t === "dark" ? "☾" : "☀";
-  localStorage.setItem("presence_theme", t);
-}
+const htmlElement = document.documentElement;
 
 function initTheme() {
-  const saved = localStorage.getItem("presence_theme") || "dark";
-  setTheme(saved);
+  const saved = localStorage.getItem("theme") || "light";
+  htmlElement.setAttribute("data-theme", saved);
+  themeToggle.textContent = saved === "dark" ? "☀️" : "🌙";
 }
 
-themeToggle.addEventListener("click", () => {
-  const next = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
-  setTheme(next);
-});
+function toggleTheme() {
+  const current = htmlElement.getAttribute("data-theme");
+  const next = current === "dark" ? "light" : "dark";
+  htmlElement.setAttribute("data-theme", next);
+  localStorage.setItem("theme", next);
+  themeToggle.textContent = next === "dark" ? "☀️" : "🌙";
+}
 
+themeToggle.addEventListener("click", toggleTheme);
 initTheme();
 
-/* ══════════════════════════════════════════════════════════════
-   EMOJI + EXPANDED
-   ══════════════════════════════════════════════════════════════ */
+/* ------------------------------------------------------------------
+   EMOJI + EXPANDED STORE
+------------------------------------------------------------------ */
 function loadEmojis() {
   try { return JSON.parse(localStorage.getItem(EMOJI_KEY) || "{}"); }
   catch { return {}; }
 }
 function saveEmojis() {
-  try { localStorage.setItem(EMOJI_KEY, JSON.stringify(emojis)); } catch {}
+  try { localStorage.setItem(EMOJI_KEY, JSON.stringify(subjectEmojis)); } catch {}
 }
-function getEmoji(s) { return emojis[s] || "📚"; }
-function setEmoji(s, e) { emojis[s] = e; saveEmojis(); }
+function getEmoji(subject) { return subjectEmojis[subject] || "📚"; }
+function setEmoji(subject, emoji) { subjectEmojis[subject] = emoji; saveEmojis(); }
 
-function loadExpanded() {
+function loadExpandedSubjects() {
   try { return new Set(JSON.parse(localStorage.getItem(EXPANDED_SUBJECTS_KEY) || "[]")); }
   catch { return new Set(); }
 }
-function saveExpanded() {
-  try { localStorage.setItem(EXPANDED_SUBJECTS_KEY, JSON.stringify([...expanded])); } catch {}
+function saveExpandedSubjects() {
+  try { localStorage.setItem(EXPANDED_SUBJECTS_KEY, JSON.stringify([...expandedSubjects])); }
+  catch {}
 }
-function toggleExpanded(s) {
-  if (expanded.has(s)) expanded.delete(s);
-  else expanded.add(s);
-  saveExpanded();
+function toggleExpandedSubject(subject) {
+  if (expandedSubjects.has(subject)) expandedSubjects.delete(subject);
+  else expandedSubjects.add(subject);
+  saveExpandedSubjects();
 }
 
 function initSubjectSection() {
   const body = document.getElementById("subjectSectionBody");
   const btn = document.getElementById("subjectSectionToggle");
-  if (!body || !btn) return;
-  const c = localStorage.getItem(SUBJECT_SECTION_KEY) === "1";
-  body.style.gridTemplateRows = c ? "0fr" : "1fr";
-  btn.style.transform = c ? "rotate(-90deg)" : "";
+  const collapsed = localStorage.getItem(SUBJECT_SECTION_COLLAPSED_KEY) === "1";
+  body.classList.toggle("collapsed", collapsed);
+  btn.classList.toggle("collapsed", collapsed);
+  btn.setAttribute("aria-label", collapsed ? "Expand section" : "Collapse section");
+  btn.setAttribute("title", collapsed ? "Expand section" : "Collapse section");
 
   btn.addEventListener("click", () => {
-    const nowC = body.style.gridTemplateRows !== "0fr";
-    body.style.gridTemplateRows = nowC ? "0fr" : "1fr";
-    btn.style.transform = nowC ? "rotate(-90deg)" : "";
-    localStorage.setItem(SUBJECT_SECTION_KEY, nowC ? "1" : "0");
+    const nowCollapsed = !body.classList.contains("collapsed");
+    body.classList.toggle("collapsed", nowCollapsed);
+    btn.classList.toggle("collapsed", nowCollapsed);
+    localStorage.setItem(SUBJECT_SECTION_COLLAPSED_KEY, nowCollapsed ? "1" : "0");
+    btn.setAttribute("aria-label", nowCollapsed ? "Expand section" : "Collapse section");
+    btn.setAttribute("title", nowCollapsed ? "Expand section" : "Collapse section");
   });
 }
 
-/* ══════════════════════════════════════════════════════════════
-   MODE
-   ══════════════════════════════════════════════════════════════ */
+/* ------------------------------------------------------------------
+   MODE SWITCH
+------------------------------------------------------------------ */
+const app = document.getElementById("app");
 const modeViewBtn = document.getElementById("modeViewBtn");
 const modeEditBtn = document.getElementById("modeEditBtn");
 
-function setMode(m, persist = true) {
-  mode = m;
-  modeViewBtn.classList.toggle("active", m === "view");
-  modeEditBtn.classList.toggle("active", m === "edit");
-  document.body.classList.toggle("mode-view", m === "view");
-  document.body.classList.toggle("mode-edit", m === "edit");
-  if (persist) localStorage.setItem("presence_mode", m);
-  render();
+function setMode(mode, persist = true) {
+  currentMode = mode;
+  modeViewBtn.classList.toggle("active", mode === "view");
+  modeEditBtn.classList.toggle("active", mode === "edit");
+  app.classList.toggle("mode-view", mode === "view");
+  app.classList.toggle("mode-edit", mode === "edit");
+  if (persist) localStorage.setItem("mode", mode);
+  renderSchedule();
 }
 
 modeViewBtn.addEventListener("click", () => setMode("view"));
 modeEditBtn.addEventListener("click", () => setMode("edit"));
 
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    SYNC LOCK
-   ══════════════════════════════════════════════════════════════ */
+------------------------------------------------------------------ */
 function lockSync() {
   syncLocks++;
   if (syncLocks === 1) {
     syncingSince = Date.now();
-    lastQ = queue.length;
-    setStatus("syncing");
+    lastQueueLength = queue.length;
+    setCloudStatus("syncing");
   }
 }
 function unlockSync() {
   syncLocks = Math.max(0, syncLocks - 1);
-  if (syncLocks === 0) { syncingSince = 0; updateOnline(); }
+  if (syncLocks === 0) { syncingSince = 0; updateOnlineState(); }
 }
 
 setInterval(() => {
   if (syncLocks > 0 && syncingSince > 0) {
-    const el = Date.now() - syncingSince;
-    if (el > 20000 && queue.length === lastQ) {
-      syncLocks = 0; syncingSince = 0; updateOnline();
-    } else if (queue.length !== lastQ) {
-      syncingSince = Date.now(); lastQ = queue.length;
+    const elapsed = Date.now() - syncingSince;
+    if (elapsed > 15000 && queue.length === lastQueueLength) {
+      console.warn("Sync watchdog: forcing reset after 15s stall");
+      syncLocks = 0; syncingSince = 0; updateOnlineState();
+    } else if (queue.length !== lastQueueLength) {
+      syncingSince = Date.now();
+      lastQueueLength = queue.length;
     }
   }
 }, 3000);
 
-/* ══════════════════════════════════════════════════════════════
-   STATUS
-   ══════════════════════════════════════════════════════════════ */
+/* ------------------------------------------------------------------
+   CLOUD STATUS
+------------------------------------------------------------------ */
 const cloudStatus = document.getElementById("cloudStatus");
 const cloudText = document.getElementById("cloudText");
 const pendingBadge = document.getElementById("pendingBadge");
@@ -1763,64 +1636,64 @@ const offlineBanner = document.getElementById("offlineBanner");
 const queueBanner = document.getElementById("queueBanner");
 const queueText = document.getElementById("queueText");
 
-function setStatus(s) {
+function setCloudStatus(state) {
   cloudStatus.classList.remove("synced", "syncing", "offline");
-  cloudStatus.classList.add(s);
-  if (s === "syncing") {
-    cloudText.textContent = "syncing…";
-  } else if (s === "offline") {
-    cloudText.textContent = navigator.onLine ? "retrying…" : "offline";
+  cloudStatus.classList.add(state);
+  if (state === "syncing") {
+    cloudText.textContent = "Syncing…";
+  } else if (state === "offline") {
+    cloudText.textContent = navigator.onLine ? "Retrying…" : "Offline";
   } else {
-    if (lastSync) {
-      const sec = Math.floor((Date.now() - lastSync) / 1000);
-      let label = "now";
-      if (sec >= 60) label = Math.floor(sec / 60) + "m";
-      else if (sec > 5) label = sec + "s";
-      cloudText.textContent = "synced · " + label;
+    if (lastSyncTime) {
+      const sec = Math.floor((Date.now() - lastSyncTime) / 1000);
+      let label = "just now";
+      if (sec >= 60) label = Math.floor(sec / 60) + " min ago";
+      else if (sec > 5) label = sec + "s ago";
+      cloudText.textContent = "Synced · " + label;
     } else {
-      cloudText.textContent = "synced";
+      cloudText.textContent = "Cloud synced";
     }
   }
 }
 
-function updatePending() {
+function updatePendingBadge() {
   if (queue.length > 0) {
-    pendingBadge.style.display = "inline-block";
+    cloudStatus.classList.add("has-pending");
     pendingBadge.textContent = queue.length;
     queueBanner.classList.add("show");
-    queueText.textContent = "// " + queue.length + " change" + (queue.length !== 1 ? "s" : "") + " queued";
+    queueText.textContent = "⏳ " + queue.length + " change" + (queue.length !== 1 ? "s" : "") + " waiting to sync";
   } else {
-    pendingBadge.style.display = "none";
+    cloudStatus.classList.remove("has-pending");
     queueBanner.classList.remove("show");
   }
 }
 
-function updateOnline() {
+function updateOnlineState() {
   if (!navigator.onLine) {
-    setStatus("offline");
+    setCloudStatus("offline");
     offlineBanner.classList.add("show");
   } else {
     offlineBanner.classList.remove("show");
-    if (syncLocks === 0) setStatus("synced");
+    if (syncLocks === 0) setCloudStatus("synced");
   }
 }
 
 window.addEventListener("online", () => {
-  updateOnline();
+  updateOnlineState();
   if (queue.length > 0) flushQueue();
   else loadData(true);
 });
 
-window.addEventListener("offline", updateOnline);
-updateOnline();
+window.addEventListener("offline", updateOnlineState);
+updateOnlineState();
 
 setInterval(() => {
-  if (syncLocks === 0 && navigator.onLine && lastSync) setStatus("synced");
+  if (syncLocks === 0 && navigator.onLine && lastSyncTime) setCloudStatus("synced");
 }, 30000);
 
-/* ══════════════════════════════════════════════════════════════
-   QUEUE
-   ══════════════════════════════════════════════════════════════ */
+/* ------------------------------------------------------------------
+   OFFLINE QUEUE
+------------------------------------------------------------------ */
 function loadQueue() {
   try {
     const raw = localStorage.getItem(QUEUE_KEY);
@@ -1828,21 +1701,24 @@ function loadQueue() {
   } catch { return []; }
 }
 function saveQueue() {
-  try { localStorage.setItem(QUEUE_KEY, JSON.stringify(queue)); } catch {}
-  updatePending();
+  try { localStorage.setItem(QUEUE_KEY, JSON.stringify(queue)); }
+  catch (e) { console.warn("Could not save queue", e); }
+  updatePendingBadge();
 }
-function enqueue(p) {
-  if (p.action === "update") {
-    const i = queue.findIndex(q => q.action === "update" && q.id === p.id);
-    if (i >= 0) queue[i] = p; else queue.push(p);
-  } else if (p.action === "delete") {
-    queue = queue.filter(q => q.id !== p.id);
-    queue.push(p);
-  } else if (p.action === "add") {
-    const i = queue.findIndex(q => q.action === "add" && q.id === p.id);
-    if (i >= 0) queue[i] = p; else queue.push(p);
+function enqueue(payload) {
+  if (payload.action === "update") {
+    const idx = queue.findIndex(q => q.action === "update" && q.id === payload.id);
+    if (idx >= 0) queue[idx] = payload;
+    else queue.push(payload);
+  } else if (payload.action === "delete") {
+    queue = queue.filter(q => q.id !== payload.id);
+    queue.push(payload);
+  } else if (payload.action === "add") {
+    const idx = queue.findIndex(q => q.action === "add" && q.id === payload.id);
+    if (idx >= 0) queue[idx] = payload;
+    else queue.push(payload);
   } else {
-    queue.push(p);
+    queue.push(payload);
   }
   saveQueue();
 }
@@ -1852,18 +1728,21 @@ async function flushQueue() {
   if (queue.length === 0 || !navigator.onLine) return;
 
   lockSync();
-  const total = queue.length;
-  let ok = 0;
+  const totalAtStart = queue.length;
+  let processed = 0;
   try {
     while (queue.length > 0 && navigator.onLine) {
-      const p = queue[0];
+      const payload = queue[0];
       try {
-        await sendToSheet(p);
+        await sendToSheet(payload);
         queue.shift();
         saveQueue();
-        ok++;
-        if (queue.length > 0) queueText.textContent = "// syncing " + ok + " of " + total;
-      } catch (e) {
+        processed++;
+        if (queue.length > 0) {
+          queueText.textContent = "⏳ Syncing " + processed + " of " + totalAtStart + "…";
+        }
+      } catch (err) {
+        console.warn("Queue flush failed, stopping", err);
         break;
       }
     }
@@ -1871,198 +1750,191 @@ async function flushQueue() {
     unlockSync();
   }
 
-  if (ok > 0) {
-    lastSync = Date.now();
+  if (processed > 0) {
+    lastSyncTime = Date.now();
     if (queue.length === 0) {
-      showMsg("synced " + ok + " change" + (ok !== 1 ? "s" : ""), "success");
-      const reload = ok >= 5 || (Date.now() - lastFlush > 30000);
-      lastFlush = Date.now();
-      if (reload) await loadData(true);
+      showMessage("Synced " + processed + " pending change" + (processed !== 1 ? "s" : "") + ".", "success");
+      const shouldReload = processed >= 5 || (Date.now() - lastFlushAt > 30000);
+      lastFlushAt = Date.now();
+      if (shouldReload) await loadData(true);
     } else {
-      updateOnline();
+      updateOnlineState();
     }
   }
-  updatePending();
+  updatePendingBadge();
 }
 
 document.getElementById("flushQueueBtn").addEventListener("click", flushQueue);
 
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    MESSAGE
-   ══════════════════════════════════════════════════════════════ */
-let msgTimer = null;
-function showMsg(text, type) {
+------------------------------------------------------------------ */
+let messageTimer = null;
+function showMessage(text, type) {
   const box = document.getElementById("message");
-  if (!box) return;
-  box.textContent = "// " + text;
-  box.className = "flash " + type;
-  clearTimeout(msgTimer);
-  msgTimer = setTimeout(() => { box.className = "flash"; }, 3500);
+  box.textContent = text;
+  box.className = "message " + type;
+  clearTimeout(messageTimer);
+  messageTimer = setTimeout(() => { box.className = "message"; }, 3500);
 }
 
-/* ══════════════════════════════════════════════════════════════
-   DATE
-   ══════════════════════════════════════════════════════════════ */
-function getDay(d) {
-  return new Date(d + "T00:00:00").toLocaleDateString("en-US", { weekday: "long" });
+/* ------------------------------------------------------------------
+   DATE HELPERS
+------------------------------------------------------------------ */
+function getDay(date) {
+  return new Date(date + "T00:00:00").toLocaleDateString("en-US", { weekday: "long" });
 }
-function fmtDate(d) {
-  return new Date(d + "T00:00:00").toLocaleDateString("en-GB", {
+
+function formatDate(date) {
+  return new Date(date + "T00:00:00").toLocaleDateString("en-GB", {
     weekday: "short", day: "2-digit", month: "short"
   });
 }
-function fmtShort(d) {
-  return new Date(d + "T00:00:00").toLocaleDateString("en-GB", {
+
+function formatDateShort(date) {
+  return new Date(date + "T00:00:00").toLocaleDateString("en-GB", {
     day: "2-digit", month: "short"
   });
 }
-function fmtDow(d) {
-  return new Date(d + "T00:00:00").toLocaleDateString("en-US", { weekday: "short" });
-}
-function getWeek(d) {
+
+function getWeek(date) {
   const start = new Date("2026-09-07T00:00:00");
-  const cur = new Date(d + "T00:00:00");
-  const diff = Math.floor((cur - start) / 86400000);
+  const current = new Date(date + "T00:00:00");
+  const diff = Math.floor((current - start) / (1000 * 60 * 60 * 24));
   if (diff < 0) return 0;
   return Math.floor(diff / 7) + 1;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   STATUS HELPERS
-   ══════════════════════════════════════════════════════════════ */
-function isCancelled(i) {
-  if (typeof i.cancelled === "boolean") return i.cancelled;
-  return i.status === "CANCELLED";
+/* ------------------------------------------------------------------
+   SUBJECT COLOR
+------------------------------------------------------------------ */
+const SUBJECT_PALETTE = [
+  "#4263eb", "#7b4dff", "#d946ef", "#06b6d4",
+  "#0e9f6e", "#f59e0b", "#e13d3d", "#3b82f6"
+];
+
+function subjectColor(name) {
+  let h = 0;
+  const s = String(name || "");
+  for (let i = 0; i < s.length; i++) {
+    h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  }
+  return SUBJECT_PALETTE[h % SUBJECT_PALETTE.length];
 }
 
-function statusOf(i) {
-  if (isCancelled(i)) return "cancelled";
-  if (i.attendance === "PRESENT") return "present";
-  if (i.attendance === "ABSENT") return "absent";
-  return "unmarked";
-}
-
-function tagHTML(i, cls = "cls-tag") {
-  const s = statusOf(i);
-  const labels = { present: "Present", absent: "Absent", cancelled: "Cancelled", unmarked: "Unmarked" };
-  return `<span class="${cls} ${s}">${labels[s]}</span>`;
-}
-
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    API
-   ══════════════════════════════════════════════════════════════ */
+------------------------------------------------------------------ */
 async function loadData(silent = false) {
-  if (!navigator.onLine) { setStatus("offline"); return; }
-  if (loading) return;
-  loading = true;
+  if (!navigator.onLine) { setCloudStatus("offline"); return; }
   if (!silent) lockSync();
   try {
-    const res = await fetchTO(API_URL + "?t=" + Date.now(), { method: "GET" }, REQ_TIMEOUT);
+    const res = await fetchWithTimeout(API_URL + "?t=" + Date.now(), { method: "GET" }, REQUEST_TIMEOUT_MS);
     const data = await res.json();
     classes = Array.isArray(data) ? data : [];
-    lastSync = Date.now();
+    lastSyncTime = Date.now();
     if (!silent) unlockSync();
-    updateOnline();
+    updateOnlineState();
     render();
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.error(err);
     if (!silent) unlockSync();
-    setStatus("offline");
-    if (!silent) showMsg("couldn't reach sheets", "error");
-  } finally {
-    loading = false;
+    setCloudStatus("offline");
+    if (!silent) showMessage("Unable to connect to Google Sheets.", "error");
   }
 }
 
-async function fetchTO(url, opts = {}, ms) {
-  const c = new AbortController();
-  const t = setTimeout(() => c.abort(), ms);
+async function fetchWithTimeout(url, options = {}, timeoutMs = REQUEST_TIMEOUT_MS) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    return await fetch(url, { ...opts, signal: c.signal });
+    return await fetch(url, { ...options, signal: controller.signal });
   } finally {
-    clearTimeout(t);
+    clearTimeout(timer);
   }
 }
 
-async function sendToSheet(p) {
-  await fetchTO(API_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(p) }, REQ_TIMEOUT);
+async function sendToSheet(payload) {
+  await fetchWithTimeout(API_URL, {
+    method: "POST", mode: "no-cors",
+    body: JSON.stringify(payload)
+  }, REQUEST_TIMEOUT_MS);
 }
 
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    REFRESH
-   ══════════════════════════════════════════════════════════════ */
+------------------------------------------------------------------ */
 const refreshBtn = document.getElementById("refreshBtn");
 refreshBtn.addEventListener("click", async () => {
   if (queue.length > 0) { flushQueue(); return; }
-  refreshBtn.classList.add("spin");
+  refreshBtn.classList.add("spinning");
   await loadData();
-  refreshBtn.classList.remove("spin");
-  showMsg("refreshed", "info");
+  refreshBtn.classList.remove("spinning");
+  showMessage("Refreshed from sheet.", "info");
 });
 
-/* ══════════════════════════════════════════════════════════════
-   ADD
-   ══════════════════════════════════════════════════════════════ */
+/* ------------------------------------------------------------------
+   ADD CLASS
+------------------------------------------------------------------ */
 async function addClass() {
-  if (mode !== "edit") return;
+  if (currentMode !== "edit") return;
 
-  const dateEl = document.getElementById("date");
-  const subjEl = document.getElementById("subject");
-  const date = dateEl.value;
-  const subj = subjEl.value.trim();
+  const date = document.getElementById("date").value;
+  const subject = document.getElementById("subject").value.trim();
+  const status = document.getElementById("classStatus").value;
 
-  if (!date) { showMsg("pick a date", "error"); return; }
-  if (!subj) { showMsg("add a subject", "error"); return; }
+  if (!date) { showMessage("Please select a date.", "error"); return; }
+  if (!subject) { showMessage("Please enter a subject.", "error"); return; }
 
-  const dup = classes.some(i => i.date === date && i.subject.toLowerCase() === subj.toLowerCase());
-  if (dup) { showMsg("already exists", "error"); return; }
+  const duplicate = classes.some(
+    item => item.date === date && item.subject.toLowerCase() === subject.toLowerCase()
+  );
+  if (duplicate) { showMessage("This class already exists.", "error"); return; }
 
   const item = {
     id: Date.now().toString() + Math.random().toString(36).slice(2, 7),
-    date, day: getDay(date), subject: subj, cancelled: false, attendance: ""
+    date, day: getDay(date), subject, status, attendance: ""
   };
 
-  const btn = document.getElementById("addBtn");
-  btn.disabled = true;
-  btn.querySelector("span").textContent = "saving…";
+  const addBtn = document.getElementById("addBtn");
+  addBtn.disabled = true;
+  addBtn.textContent = "Saving…";
 
   classes.push(item);
   render();
-  dateEl.value = "";
-  subjEl.value = "";
+  clearForm();
   if (navigator.vibrate) navigator.vibrate(8);
 
-  const p = { action: "add", ...item };
+  const payload = { action: "add", ...item };
 
   if (!navigator.onLine) {
-    enqueue(p);
-    showMsg("offline — queued", "info");
-    btn.disabled = false; btn.querySelector("span").textContent = "Add class";
-    updateOnline();
+    enqueue(payload);
+    showMessage("Offline — will sync when back online.", "info");
+    addBtn.disabled = false; addBtn.textContent = "+ Add Class";
+    updateOnlineState();
     return;
   }
 
   lockSync();
   try {
-    await sendToSheet(p);
-    lastSync = Date.now();
-    showMsg("class added", "success");
-  } catch (e) {
-    enqueue(p);
-    showMsg("saved locally", "info");
+    await sendToSheet(payload);
+    lastSyncTime = Date.now();
+    showMessage("Class added.", "success");
+  } catch (err) {
+    enqueue(payload);
+    showMessage("Saved locally, will retry sync.", "info");
   } finally {
     unlockSync();
-    btn.disabled = false;
-    btn.querySelector("span").textContent = "Add class";
+    addBtn.disabled = false; addBtn.textContent = "+ Add Class";
   }
 }
 
-/* ══════════════════════════════════════════════════════════════
-   MARK
-   ══════════════════════════════════════════════════════════════ */
-async function mark(id, attendance, btn) {
+/* ------------------------------------------------------------------
+   MARK ATTENDANCE
+------------------------------------------------------------------ */
+async function markAttendance(id, attendance, btn) {
   const item = classes.find(x => x.id === id);
-  if (!item || isCancelled(item)) return;
+  if (!item) return;
 
   if (navigator.vibrate) navigator.vibrate(6);
   if (btn) { btn.disabled = true; btn.textContent = "…"; }
@@ -2070,223 +1942,346 @@ async function mark(id, attendance, btn) {
   item.attendance = attendance;
   render();
 
-  const p = { action: "update", id, attendance };
-
-  if (!navigator.onLine) { enqueue(p); updateOnline(); return; }
-
-  lockSync();
-  try {
-    await sendToSheet(p);
-    lastSync = Date.now();
-    checkPerfect(item.subject);
-  } catch (e) {
-    enqueue(p);
-  } finally {
-    unlockSync();
-  }
-}
-
-/* ══════════════════════════════════════════════════════════════
-   TOGGLE CANCELLED
-   ══════════════════════════════════════════════════════════════ */
-async function toggleCancel(id, btn) {
-  const item = classes.find(x => x.id === id);
-  if (!item) return;
-
-  if (navigator.vibrate) navigator.vibrate(6);
-
-  const newVal = !isCancelled(item);
-  item.cancelled = newVal;
-  item.attendance = "";
-
-  render();
-
-  const p = { action: "update", id, cancelled: newVal, attendance: "" };
+  const payload = { action: "update", id, attendance };
 
   if (!navigator.onLine) {
-    enqueue(p); updateOnline();
-    showMsg(newVal ? "cancelled (offline)" : "restored (offline)", "info");
-    return;
+    enqueue(payload); updateOnlineState(); return;
   }
 
   lockSync();
   try {
-    await sendToSheet(p);
-    lastSync = Date.now();
-    showMsg(newVal ? "marked cancelled" : "marked as class", "success");
-  } catch (e) {
-    enqueue(p);
+    await sendToSheet(payload);
+    lastSyncTime = Date.now();
+    checkPerfectAttendance(item.subject);
+  } catch (err) {
+    enqueue(payload);
   } finally {
     unlockSync();
   }
 }
 
-/* ══════════════════════════════════════════════════════════════
-   PERFECT
-   ══════════════════════════════════════════════════════════════ */
-function checkPerfect(subj) {
-  const items = classes.filter(c => c.subject === subj && !isCancelled(c));
+function checkPerfectAttendance(subject) {
+  const items = classes.filter(c => c.subject === subject && c.status === "HELD");
   if (items.length < 5) return;
   const marked = items.filter(c => c.attendance);
   if (marked.length !== items.length) return;
-  if (items.every(c => c.attendance === "PRESENT")) confetti();
+  const allPresent = items.every(c => c.attendance === "PRESENT");
+  if (allPresent) fireConfetti();
 }
 
-function confetti() {
-  const colors = ["#d4ff4d", "#4ade80", "#fbbf24", "#f87171", "#a78bfa"];
-  for (let i = 0; i < 50; i++) {
-    const p = document.createElement("div");
-    p.className = "confetti";
-    p.style.left = Math.random() * 100 + "vw";
-    p.style.top = "-20px";
-    p.style.background = colors[Math.floor(Math.random() * colors.length)];
-    p.style.animationDelay = Math.random() * 0.4 + "s";
-    p.style.animationDuration = (1.4 + Math.random() * 1) + "s";
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 2800);
+function fireConfetti() {
+  const colors = ["#4263eb", "#7b4dff", "#d946ef", "#06b6d4", "#0e9f6e", "#f59e0b"];
+  for (let i = 0; i < 40; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    piece.style.left = Math.random() * 100 + "vw";
+    piece.style.top = "-20px";
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = Math.random() * 0.3 + "s";
+    piece.style.animationDuration = (1.2 + Math.random() * 0.8) + "s";
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 2500);
   }
 }
 
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    DELETE
-   ══════════════════════════════════════════════════════════════ */
-async function del(id) {
+------------------------------------------------------------------ */
+async function deleteClass(id) {
   const item = classes.find(x => x.id === id);
   if (!item) return;
-  if (!confirm("Delete " + item.subject + " on " + fmtDate(item.date) + "?")) return;
+  if (!confirm("Delete " + item.subject + " on " + formatDate(item.date) + "?")) return;
   if (navigator.vibrate) navigator.vibrate([10, 30, 10]);
 
   classes = classes.filter(x => x.id !== id);
   render();
 
-  const p = { action: "delete", id };
+  const payload = { action: "delete", id };
 
-  if (!navigator.onLine) { enqueue(p); updateOnline(); return; }
+  if (!navigator.onLine) { enqueue(payload); updateOnlineState(); return; }
 
   lockSync();
   try {
-    await sendToSheet(p);
-    lastSync = Date.now();
-    showMsg("deleted", "success");
-  } catch (e) {
-    enqueue(p);
-    showMsg("deleted locally", "info");
+    await sendToSheet(payload);
+    lastSyncTime = Date.now();
+    showMessage("Class deleted.", "success");
+  } catch (err) {
+    enqueue(payload);
+    showMessage("Deleted locally, will sync later.", "info");
   } finally {
     unlockSync();
   }
 }
 
-/* ══════════════════════════════════════════════════════════════
-   RESET
-   ══════════════════════════════════════════════════════════════ */
+/* ------------------------------------------------------------------
+   RESET ALL
+------------------------------------------------------------------ */
 async function resetAll() {
-  if (!classes.length) { showMsg("nothing to reset", "error"); return; }
-  const a = prompt("Delete ALL " + classes.length + " records.\n\nType DELETE to confirm:");
-  if (a !== "DELETE") { if (a !== null) showMsg("cancelled", "info"); return; }
-
+  if (!classes.length) { showMessage("Nothing to reset.", "error"); return; }
+  const answer = prompt(
+    "This will delete ALL " + classes.length + " records from the sheet.\n\nType DELETE to confirm:"
+  );
+  if (answer !== "DELETE") {
+    if (answer !== null) showMessage("Reset cancelled.", "info");
+    return;
+  }
   classes = []; queue = []; saveQueue(); render();
 
-  const p = { action: "reset" };
-  if (!navigator.onLine) { enqueue(p); showMsg("offline — queued", "info"); return; }
-
+  const payload = { action: "reset" };
+  if (!navigator.onLine) {
+    enqueue(payload);
+    showMessage("Offline — reset will sync later.", "info");
+    return;
+  }
   lockSync();
   try {
-    await sendToSheet(p);
-    lastSync = Date.now();
-    showMsg("all records deleted", "success");
-  } catch (e) {
-    enqueue(p);
-    showMsg("queued", "info");
+    await sendToSheet(payload);
+    lastSyncTime = Date.now();
+    showMessage("All records deleted.", "success");
+  } catch (err) {
+    enqueue(payload);
+    showMessage("Reset queued, will retry sync.", "info");
   } finally { unlockSync(); }
 }
 
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    CLEAR FORM
-   ══════════════════════════════════════════════════════════════ */
+------------------------------------------------------------------ */
 function clearForm() {
   document.getElementById("date").value = "";
   document.getElementById("subject").value = "";
+  document.getElementById("classStatus").value = "HELD";
 }
 
-/* ══════════════════════════════════════════════════════════════
-   CSV
-   ══════════════════════════════════════════════════════════════ */
+/* ------------------------------------------------------------------
+   EXPORT CSV
+------------------------------------------------------------------ */
 function exportCSV() {
-  if (!classes.length) { showMsg("no data", "error"); return; }
-  const headers = ["id", "date", "day", "subject", "cancelled", "attendance"];
+  if (!classes.length) { showMessage("No data to export.", "error"); return; }
+  const headers = ["id", "date", "day", "subject", "status", "attendance"];
   const rows = [headers.join(",")];
-  [...classes].sort((a, b) => a.date.localeCompare(b.date)).forEach(it => {
-    const n = {
-      id: it.id, date: it.date, day: it.day, subject: it.subject,
-      cancelled: isCancelled(it) ? "TRUE" : "FALSE",
-      attendance: it.attendance || ""
-    };
-    const row = headers.map(h => {
-      const v = String(n[h] ?? "");
-      return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  [...classes]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .forEach(item => {
+      const row = headers.map(h => {
+        const val = String(item[h] ?? "");
+        return /[",\n]/.test(val) ? '"' + val.replace(/"/g, '""') + '"' : val;
+      });
+      rows.push(row.join(","));
     });
-    rows.push(row.join(","));
-  });
   const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "presence-" + new Date().toISOString().slice(0, 10) + ".csv";
+  a.download = "attendance-" + new Date().toISOString().slice(0, 10) + ".csv";
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  showMsg("exported " + classes.length + " records", "success");
+  showMessage("Exported " + classes.length + " records.", "success");
 }
 
-/* ══════════════════════════════════════════════════════════════
-   COUNT ANIM
-   ══════════════════════════════════════════════════════════════ */
-function animCount(el, target) {
-  if (!el) return;
-  const cur = parseInt(el.getAttribute("data-count") || "0", 10);
-  if (cur === target) { el.textContent = target; return; }
+/* ------------------------------------------------------------------
+   COUNT-UP
+------------------------------------------------------------------ */
+function animateCount(el, target) {
+  const current = parseInt(el.getAttribute("data-count") || "0", 10);
+  if (current === target) { el.textContent = target; return; }
   el.setAttribute("data-count", target);
+  const duration = 500;
   const start = performance.now();
-  const dur = 700;
-  const from = cur;
+  const from = current;
   function step(now) {
-    const t = Math.min(1, (now - start) / dur);
-    const e = 1 - Math.pow(1 - t, 4);
-    el.textContent = Math.round(from + (target - from) * e);
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(from + (target - from) * eased);
     if (t < 1) requestAnimationFrame(step);
     else el.textContent = target;
   }
   requestAnimationFrame(step);
 }
 
-/* ══════════════════════════════════════════════════════════════
-   RENDER: OVERVIEW
-   ══════════════════════════════════════════════════════════════ */
+/* ------------------------------------------------------------------
+   OVERVIEW
+------------------------------------------------------------------ */
 function renderOverview() {
-  const weeks = new Set(classes.map(i => getWeek(i.date)));
-  const total = classes.length;
-  const cancelled = classes.filter(i => isCancelled(i)).length;
+  const weeks = new Set(classes.map(item => getWeek(item.date)));
+  const held = classes.filter(item => item.status === "HELD").length;
+  const cancelled = classes.filter(item => item.status === "CANCELLED").length;
 
-  animCount(document.getElementById("weekCount"), weeks.size);
-  animCount(document.getElementById("totalCount"), total);
-  animCount(document.getElementById("cancelledCount"), cancelled);
+  animateCount(document.getElementById("weekCount"), weeks.size);
+  animateCount(document.getElementById("heldCount"), held);
+  animateCount(document.getElementById("cancelledCount"), cancelled);
 }
 
-/* ══════════════════════════════════════════════════════════════
-   RENDER: SCHEDULE
-   ══════════════════════════════════════════════════════════════ */
+/* ------------------------------------------------------------------
+   SUBJECTS
+------------------------------------------------------------------ */
+function renderSubjects() {
+  const container = document.getElementById("subjectStats");
+  container.innerHTML = "";
+  container.className = "subject-blocks";
+
+  const bySubject = {};
+  classes.forEach(item => {
+    if (!bySubject[item.subject]) bySubject[item.subject] = [];
+    bySubject[item.subject].push(item);
+  });
+
+  const names = Object.keys(bySubject).sort();
+  if (!names.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">📚</span>
+        <div class="empty-title">No subjects yet</div>
+        <div class="empty-desc">Add a class to start tracking attendance.</div>
+      </div>
+    `;
+    return;
+  }
+
+  names.forEach((subject, index) => {
+    const items = bySubject[subject];
+    const held = items.filter(c => c.status === "HELD");
+    const present = held.filter(c => c.attendance === "PRESENT").length;
+    const absent = held.filter(c => c.attendance === "ABSENT").length;
+    const total = present + absent;
+    const pct = total ? Math.round((present / total) * 100) : 0;
+    const emoji = getEmoji(subject);
+    const lowClass = pct < 75 && total > 0 ? "low" : "";
+    const isExpanded = expandedSubjects.has(subject);
+
+    const block = document.createElement("div");
+    block.className = "subject-block" + (isExpanded ? " expanded" : "");
+    block.style.setProperty("--accent", subjectColor(subject));
+    block.style.animationDelay = (index * 0.04) + "s";
+
+    const sortedItems = [...items].sort((a, b) => b.date.localeCompare(a.date));
+    const detailRows = sortedItems.map(c => {
+      let statusClass = "unmarked";
+      let statusText = "Unmarked";
+      if (c.status === "CANCELLED") {
+        statusClass = "cancelled";
+        statusText = "Cancelled";
+      } else if (c.attendance === "PRESENT") {
+        statusClass = "present";
+        statusText = "Present";
+      } else if (c.attendance === "ABSENT") {
+        statusClass = "absent";
+        statusText = "Absent";
+      }
+      return `
+        <div class="subject-detail-row">
+          <div>
+            <div class="subject-detail-date">${formatDateShort(c.date)}</div>
+            <div class="subject-detail-day">${c.day}</div>
+          </div>
+          <div></div>
+          <div class="subject-detail-status ${statusClass}">${statusText}</div>
+        </div>
+      `;
+    }).join("");
+
+    block.innerHTML = `
+      <div class="subject-header">
+        <div class="subject-emoji">${emoji}</div>
+        <div>
+          <div class="subject-name">${escapeHTML(subject)}</div>
+        </div>
+        <div class="subject-bar">
+          <div class="subject-bar-track">
+            <div class="subject-bar-fill" style="width:${pct}%"></div>
+          </div>
+          <div class="subject-pct ${lowClass}">${pct}%</div>
+        </div>
+        <div class="subject-chevron">⌄</div>
+      </div>
+      <div class="subject-body">
+        <div class="subject-body-inner">
+          <div class="subject-detail-list">
+            ${detailRows || '<div class="subject-detail-empty">No classes yet.</div>'}
+          </div>
+        </div>
+      </div>
+    `;
+
+    block.querySelector(".subject-header").addEventListener("click", () => {
+      const nowExpanded = !expandedSubjects.has(subject);
+      toggleExpandedSubject(subject);
+      block.classList.toggle("expanded", nowExpanded);
+    });
+
+    container.appendChild(block);
+  });
+}
+
+/* ------------------------------------------------------------------
+   SWIPE
+------------------------------------------------------------------ */
+let touchStartX = 0, touchStartY = 0;
+let touchCurrentCard = null, touchStartTime = 0;
+
+function attachSwipe(card, item) {
+  if (currentMode !== "edit") return;
+  if (!("ontouchstart" in window)) return;
+
+  card.addEventListener("touchstart", (e) => {
+    if (e.touches.length !== 1) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchStartTime = Date.now();
+    touchCurrentCard = card;
+    card.classList.add("swiping");
+  }, { passive: true });
+
+  card.addEventListener("touchmove", (e) => {
+    if (!touchCurrentCard || e.touches.length !== 1) return;
+    const dx = e.touches[0].clientX - touchStartX;
+    const dy = e.touches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) {
+      const translate = Math.max(-120, Math.min(120, dx));
+      touchCurrentCard.style.transform = `translateX(${translate}px)`;
+    }
+  }, { passive: true });
+
+  card.addEventListener("touchend", (e) => {
+    if (!touchCurrentCard) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    const dt = Date.now() - touchStartTime;
+    touchCurrentCard.classList.remove("swiping");
+    touchCurrentCard.style.transform = "";
+    if (dx > 80 && Math.abs(dy) < 50 && dt < 600) {
+      if (item.status === "HELD") markAttendance(item.id, "PRESENT");
+    } else if (dx < -80 && Math.abs(dy) < 50 && dt < 600) {
+      deleteClass(item.id);
+    }
+    touchCurrentCard = null;
+  }, { passive: true });
+
+  card.addEventListener("touchcancel", () => {
+    if (touchCurrentCard) {
+      touchCurrentCard.classList.remove("swiping");
+      touchCurrentCard.style.transform = "";
+    }
+    touchCurrentCard = null;
+  }, { passive: true });
+}
+
+/* ------------------------------------------------------------------
+   SCHEDULE
+------------------------------------------------------------------ */
 function renderSchedule() {
-  const c = document.getElementById("schedule");
-  c.innerHTML = "";
+  const container = document.getElementById("schedule");
+  container.innerHTML = "";
 
   if (!classes.length) {
-    c.innerHTML = `
-      <div class="empty">
-        <span class="empty-icon">◌</span>
+    container.innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">🗓️</span>
         <div class="empty-title">No classes yet</div>
-        <div class="empty-desc">${mode === "view" ? "Switch to Edit mode to add your first class." : "Add your first class using the panel."}</div>
-        ${mode === "view" ? '<button class="btn-text" onclick="document.getElementById(\'modeEditBtn\').click()" style="flex:0;padding:10px 20px;">switch to edit</button>' : ''}
+        <div class="empty-desc">Switch to Edit mode to add your first class.</div>
+        ${currentMode === "view" ? '<button class="btn-ghost" onclick="document.getElementById(\'modeEditBtn\').click()">Switch to Edit mode</button>' : ''}
       </div>
     `;
     return;
@@ -2294,194 +2289,121 @@ function renderSchedule() {
 
   const sorted = [...classes].sort((a, b) => a.date.localeCompare(b.date));
   const weeks = {};
-  sorted.forEach(i => {
-    const w = getWeek(i.date);
-    if (!weeks[w]) weeks[w] = [];
-    weeks[w].push(i);
+  sorted.forEach(item => {
+    const week = getWeek(item.date);
+    if (!weeks[week]) weeks[week] = [];
+    weeks[week].push(item);
   });
 
-  const openWeeks = new Set(
-    [...c.querySelectorAll(".week.open")].map(el => el.getAttribute("data-week"))
+  const expandedWeeks = new Set(
+    [...container.querySelectorAll(".week-block:not(.collapsed)")]
+      .map(el => el.getAttribute("data-week"))
   );
 
-  // auto-open the latest week if nothing is open
-  const allWeeks = Object.keys(weeks).sort((a, b) => +a - +b);
-  const autoOpen = allWeeks.length ? allWeeks[allWeeks.length - 1] : null;
+  Object.keys(weeks)
+    .sort((a, b) => Number(a) - Number(b))
+    .forEach(week => {
+      const weekBlock = document.createElement("div");
+      const wasExpanded = expandedWeeks.has(week);
+      weekBlock.className = "week-block" + (wasExpanded ? "" : " collapsed");
+      weekBlock.setAttribute("data-week", week);
 
-  allWeeks.forEach(week => {
-    const wb = document.createElement("div");
-    const isOpen = openWeeks.has(week) || (openWeeks.size === 0 && week === autoOpen);
-    wb.className = "week" + (isOpen ? " open" : "");
-    wb.setAttribute("data-week", week);
-
-    const items = weeks[week];
-    const pC = items.filter(i => !isCancelled(i) && i.attendance === "PRESENT").length;
-    const aC = items.filter(i => !isCancelled(i) && i.attendance === "ABSENT").length;
-    const cC = items.filter(i => isCancelled(i)).length;
-
-    const desc = [];
-    if (pC) desc.push(`<span><span class="pip p"></span>${pC} present</span>`);
-    if (aC) desc.push(`<span><span class="pip a"></span>${aC} absent</span>`);
-    if (cC) desc.push(`<span><span class="pip c"></span>${cC} cancelled</span>`);
-    if (!desc.length) desc.push(`<span>${items.length} class${items.length !== 1 ? "es" : ""}</span>`);
-
-    const head = document.createElement("div");
-    head.className = "week-head";
-    head.innerHTML = `
-      <div class="week-num">${week}</div>
-      <div class="week-meta">
-        <div class="week-label">Week ${week}</div>
-        <div class="week-desc">${desc.join("")}</div>
-      </div>
-      <div class="week-open">+</div>
-    `;
-    head.addEventListener("click", () => wb.classList.toggle("open"));
-    wb.appendChild(head);
-
-    const body = document.createElement("div");
-    body.className = "week-body";
-    const inner = document.createElement("div");
-
-    const list = document.createElement("div");
-    list.className = "classes";
-
-    items.forEach(item => {
-      const s = statusOf(item);
-      const row = document.createElement("div");
-      row.className = "cls is-" + s;
-
-      let actions = '';
-      if (mode === "edit") {
-        if (s === "cancelled") {
-          actions = `
-            <button class="cls-btn u" data-a="unmark" data-id="${item.id}">restore</button>
-            <button class="cls-btn d" data-a="delete" data-id="${item.id}">delete</button>
-          `;
-        } else {
-          actions = `
-            <button class="cls-btn p" data-a="present" data-id="${item.id}">present</button>
-            <button class="cls-btn a" data-a="absent" data-id="${item.id}">absent</button>
-            <button class="cls-btn c" data-a="cancel" data-id="${item.id}">cancel</button>
-            <button class="cls-btn d" data-a="delete" data-id="${item.id}">delete</button>
-          `;
-        }
-      }
-
-      row.innerHTML = `
-        <div class="cls-date">
-          <span>${fmtShort(item.date)}</span>
-          <span class="dow">${fmtDow(item.date)}</span>
+      const header = document.createElement("div");
+      header.className = "week-header";
+      header.innerHTML = `
+        <div class="week-number">${week}</div>
+        <div class="week-meta">
+          <span class="week-title">Week ${week}</span>
+          <span class="week-count">${weeks[week].length} class${weeks[week].length !== 1 ? 'es' : ''}</span>
         </div>
-        <div class="cls-subject">${escapeHTML(item.subject)}</div>
-        ${tagHTML(item)}
-        <div class="cls-actions">${actions}</div>
+        <div class="week-chevron">⌄</div>
       `;
+      header.addEventListener("click", () => weekBlock.classList.toggle("collapsed"));
+      weekBlock.appendChild(header);
 
-      if (mode === "edit") {
-        row.querySelectorAll(".cls-btn").forEach(b => {
-          b.addEventListener("click", e => {
-            e.stopPropagation();
-            const a = b.getAttribute("data-a");
-            const id = b.getAttribute("data-id");
-            if (a === "present") mark(id, "PRESENT", b);
-            else if (a === "absent") mark(id, "ABSENT", b);
-            else if (a === "cancel" || a === "unmark") toggleCancel(id, b);
-            else if (a === "delete") del(id);
+      const body = document.createElement("div");
+      body.className = "week-body";
+      const bodyInner = document.createElement("div");
+      bodyInner.className = "week-body-inner";
+
+      const grid = document.createElement("div");
+      grid.className = "class-grid";
+
+      weeks[week].forEach((item, idx) => {
+        const isCancelled = item.status === "CANCELLED";
+        const card = document.createElement("div");
+        card.className = "class-card" + (isCancelled ? " is-cancelled" : "");
+        card.style.setProperty("--card-accent", subjectColor(item.subject));
+        card.style.animationDelay = (idx * 0.04) + "s";
+
+        let attendanceText = "Unmarked";
+        let attendanceClass = "unmarked";
+        if (item.attendance === "PRESENT") { attendanceText = "Present"; attendanceClass = "present"; }
+        if (item.attendance === "ABSENT") { attendanceText = "Absent"; attendanceClass = "absent"; }
+
+        const actionsHTML = currentMode === "edit" ? `
+          <div class="class-actions">
+            ${item.status === "HELD" ? `
+              <button class="action-btn present" data-action="present" data-id="${item.id}">Present</button>
+              <button class="action-btn absent" data-action="absent" data-id="${item.id}">Absent</button>
+              <button class="action-btn delete full-width" data-action="delete" data-id="${item.id}">Delete</button>
+            ` : `
+              <button class="action-btn delete full-width" data-action="delete" data-id="${item.id}">Delete</button>
+            `}
+          </div>
+        ` : '';
+
+        const attendanceBlock = item.status === "HELD"
+          ? `<div class="attendance-pill ${attendanceClass}">${attendanceText}</div>`
+          : '';
+
+        card.innerHTML = `
+          <div class="class-top">
+            <div>
+              <div class="class-date">${formatDate(item.date)}</div>
+              <div class="class-day">${item.day}</div>
+            </div>
+            <span class="status-badge ${item.status === "HELD" ? "held" : "cancelled"}">
+              ${item.status === "HELD" ? "HELD" : "CANCELLED"}
+            </span>
+          </div>
+          <div class="class-subject">
+            <span class="subject-dot"></span>
+            ${escapeHTML(item.subject)}
+          </div>
+          ${attendanceBlock}
+          ${actionsHTML}
+        `;
+
+        if (currentMode === "edit") {
+          card.querySelectorAll(".action-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              const action = btn.getAttribute("data-action");
+              const id = btn.getAttribute("data-id");
+              if (action === "present") markAttendance(id, "PRESENT", btn);
+              else if (action === "absent") markAttendance(id, "ABSENT", btn);
+              else if (action === "delete") deleteClass(id);
+            });
           });
-        });
-      }
+          attachSwipe(card, item);
+        }
 
-      list.appendChild(row);
+        grid.appendChild(card);
+      });
+
+      bodyInner.appendChild(grid);
+      body.appendChild(bodyInner);
+      weekBlock.appendChild(body);
+      container.appendChild(weekBlock);
     });
-
-    inner.appendChild(list);
-    body.appendChild(inner);
-    wb.appendChild(body);
-    c.appendChild(wb);
-  });
 }
 
-/* ══════════════════════════════════════════════════════════════
-   RENDER: SUBJECTS
-   ══════════════════════════════════════════════════════════════ */
-function renderSubjects() {
-  const c = document.getElementById("subjectStats");
-  c.innerHTML = "";
-
-  const bySubj = {};
-  classes.forEach(i => {
-    if (!bySubj[i.subject]) bySubj[i.subject] = [];
-    bySubj[i.subject].push(i);
-  });
-
-  const names = Object.keys(bySubj).sort();
-  if (!names.length) {
-    c.innerHTML = `
-      <div class="empty">
-        <span class="empty-icon">◌</span>
-        <div class="empty-title">No subjects</div>
-        <div class="empty-desc">Subjects appear here once you add classes.</div>
-      </div>
-    `;
-    return;
-  }
-
-  names.forEach(subject => {
-    const items = bySubj[subject];
-    const active = items.filter(x => !isCancelled(x));
-    const p = active.filter(x => x.attendance === "PRESENT").length;
-    const a = active.filter(x => x.attendance === "ABSENT").length;
-    const tot = p + a;
-    const pct = tot ? Math.round((p / tot) * 100) : 0;
-    const low = pct < 75 && tot > 0;
-
-    const sorted = [...items].sort((x, y) => y.date.localeCompare(x.date));
-    const rows = sorted.map(x => `
-      <div class="subj-row">
-        <div>
-          <div class="subj-row-date">${fmtShort(x.date)}</div>
-          <div class="subj-row-dow">${x.day}</div>
-        </div>
-        <div></div>
-        ${tagHTML(x, "subj-row-tag")}
-      </div>
-    `).join("");
-
-    const isOpen = expanded.has(subject);
-    const block = document.createElement("div");
-    block.className = "subj" + (isOpen ? " open" : "");
-    block.innerHTML = `
-      <div class="subj-head">
-        <div class="subj-em">${getEmoji(subject)}</div>
-        <div class="subj-nm">${escapeHTML(subject)}</div>
-        <div class="subj-metrics">
-          <div class="subj-track"><div class="subj-fill ${low ? 'low' : ''}" style="width:${pct}%"></div></div>
-          <div class="subj-pct ${low ? 'low' : ''}">${pct}%</div>
-        </div>
-        <div class="subj-op">⌄</div>
-      </div>
-      <div class="subj-body">
-        <div>
-          <div class="subj-rows">${rows}</div>
-        </div>
-      </div>
-    `;
-
-    block.querySelector(".subj-head").addEventListener("click", () => {
-      const nowOpen = !expanded.has(subject);
-      toggleExpanded(subject);
-      block.classList.toggle("open", nowOpen);
-    });
-
-    c.appendChild(block);
-  });
-}
-
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    ESCAPE
-   ══════════════════════════════════════════════════════════════ */
-function escapeHTML(v) {
-  return String(v)
+------------------------------------------------------------------ */
+function escapeHTML(value) {
+  return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -2489,140 +2411,151 @@ function escapeHTML(v) {
     .replaceAll("'", "&#039;");
 }
 
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    SUBJECT PICKER
-   ══════════════════════════════════════════════════════════════ */
-function savedSubjects() {
-  return [...new Set(classes.map(i => String(i.subject || "").trim()).filter(Boolean))]
-    .sort((a, b) => a.localeCompare(b));
+------------------------------------------------------------------ */
+function getSavedSubjects() {
+  return [...new Set(
+    classes.map(item => String(item.subject || "").trim()).filter(Boolean)
+  )].sort((a, b) => a.localeCompare(b));
 }
 
-function renderSuggest(filter = "") {
+function renderSubjectSuggestions(filter = "") {
   const box = document.getElementById("subjectSuggestions");
   if (!box) return;
-  const q = filter.trim().toLowerCase();
-  const subs = savedSubjects().filter(n => !q || n.toLowerCase().includes(q));
+  const query = filter.trim().toLowerCase();
+  const subjects = getSavedSubjects().filter(
+    name => !query || name.toLowerCase().includes(query)
+  );
 
-  if (!subs.length) {
-    box.innerHTML = `<div class="sug-empty">${q ? "// no matches" : "// no saved subjects"}</div>`;
+  if (!subjects.length) {
+    box.innerHTML = query
+      ? '<div class="no-suggestions">No saved subject found</div>'
+      : '<div class="no-suggestions">No saved subjects yet</div>';
     return;
   }
 
-  box.innerHTML = subs.map(n => `
-    <button type="button" class="sug-item" data-s="${escapeHTML(n)}">
-      <span class="em">${getEmoji(n)}</span>
-      <span class="nm">${escapeHTML(n)}</span>
-      <span class="ed" data-e="${escapeHTML(n)}">✎</span>
+  box.innerHTML = subjects.map(name => `
+    <button type="button" class="suggestion-item" data-subject="${escapeHTML(name)}">
+      <span class="suggestion-emoji">${getEmoji(name)}</span>
+      <span class="suggestion-text">${escapeHTML(name)}</span>
+      <span class="suggestion-edit" data-edit="${escapeHTML(name)}" title="Change emoji">✎</span>
     </button>
   `).join("");
 
-  box.querySelectorAll(".sug-item").forEach(b => {
-    const pick = e => {
+  box.querySelectorAll(".suggestion-item").forEach(btn => {
+    const pick = (e) => {
       e.preventDefault();
-      document.getElementById("subject").value = b.getAttribute("data-s");
-      closeSuggest();
+      document.getElementById("subject").value = btn.getAttribute("data-subject");
+      closeSubjectSuggestions();
     };
-    b.addEventListener("mousedown", pick);
-    b.addEventListener("touchstart", pick, { passive: false });
+    btn.addEventListener("mousedown", pick);
+    btn.addEventListener("touchstart", pick, { passive: false });
   });
 
-  box.querySelectorAll(".ed").forEach(ed => {
-    const open = e => {
+  box.querySelectorAll(".suggestion-edit").forEach(edit => {
+    const openEmoji = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      openEmoji(ed.getAttribute("data-e"));
+      openEmojiPicker(edit.getAttribute("data-edit"));
     };
-    ed.addEventListener("mousedown", open);
-    ed.addEventListener("touchstart", open, { passive: false });
+    edit.addEventListener("mousedown", openEmoji);
+    edit.addEventListener("touchstart", openEmoji, { passive: false });
   });
 }
 
-function openEmoji(subject) {
+function openEmojiPicker(subject) {
   const box = document.getElementById("subjectSuggestions");
   if (!box) return;
   box.innerHTML = `
-    <div class="emoji-title">pick emoji · "${escapeHTML(subject)}"</div>
-    <div class="emoji-grid">
+    <div style="padding: 10px 12px 4px; font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">
+      Pick emoji for "${escapeHTML(subject)}"
+    </div>
+    <div class="emoji-picker">
       ${EMOJI_OPTIONS.map(e => `
-        <button type="button" class="emoji-btn${getEmoji(subject) === e ? ' active' : ''}" data-em="${e}">${e}</button>
+        <button type="button" class="emoji-opt${getEmoji(subject) === e ? ' active' : ''}" data-emoji="${e}">${e}</button>
       `).join("")}
     </div>
   `;
-  box.querySelectorAll(".emoji-btn").forEach(b => {
-    b.addEventListener("click", e => {
+  box.querySelectorAll(".emoji-opt").forEach(btn => {
+    btn.addEventListener("click", (e) => {
       e.preventDefault();
-      setEmoji(subject, b.getAttribute("data-em"));
+      setEmoji(subject, btn.getAttribute("data-emoji"));
       renderSubjects();
-      renderSuggest(document.getElementById("subject").value);
+      renderSubjectSuggestions(document.getElementById("subject").value);
     });
   });
   box.classList.add("show");
 }
 
-function openSuggest() {
+function openSubjectSuggestions() {
   const box = document.getElementById("subjectSuggestions");
   if (!box) return;
-  renderSuggest(document.getElementById("subject").value);
+  renderSubjectSuggestions(document.getElementById("subject").value);
   box.classList.add("show");
 }
-function closeSuggest() {
+
+function closeSubjectSuggestions() {
   const box = document.getElementById("subjectSuggestions");
   if (box) box.classList.remove("show");
 }
 
-function initPicker() {
+function initSubjectPicker() {
   const input = document.getElementById("subject");
   const arrow = document.getElementById("subjectPickerArrow");
   if (!input || !arrow) return;
 
-  input.addEventListener("focus", openSuggest);
-  input.addEventListener("input", openSuggest);
+  input.addEventListener("focus", openSubjectSuggestions);
+  input.addEventListener("input", openSubjectSuggestions);
 
   arrow.addEventListener("mousedown", e => {
     e.preventDefault();
     const box = document.getElementById("subjectSuggestions");
-    if (box.classList.contains("show")) closeSuggest();
-    else { input.focus(); openSuggest(); }
+    if (box.classList.contains("show")) closeSubjectSuggestions();
+    else { input.focus(); openSubjectSuggestions(); }
   });
 
   document.addEventListener("mousedown", e => {
-    const wrap = document.querySelector(".subject-wrap");
-    if (wrap && !wrap.contains(e.target)) closeSuggest();
+    const picker = document.querySelector(".subject-picker");
+    if (picker && !picker.contains(e.target)) closeSubjectSuggestions();
   });
 }
 
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    MASTER RENDER
-   ══════════════════════════════════════════════════════════════ */
+------------------------------------------------------------------ */
 function render() {
   renderOverview();
-  renderSchedule();
   renderSubjects();
+  renderSchedule();
 }
 
-/* ══════════════════════════════════════════════════════════════
-   WIRE
-   ══════════════════════════════════════════════════════════════ */
+/* ------------------------------------------------------------------
+   BUTTONS
+------------------------------------------------------------------ */
 document.getElementById("addBtn").addEventListener("click", addClass);
 document.getElementById("clearBtn").addEventListener("click", clearForm);
 document.getElementById("resetBtn").addEventListener("click", resetAll);
 document.getElementById("exportBtn").addEventListener("click", exportCSV);
 
-document.addEventListener("keydown", e => {
-  const t = (e.target.tagName || "").toLowerCase();
-  if (t === "input" || t === "textarea" || t === "select") return;
+/* ------------------------------------------------------------------
+   KEYBOARD SHORTCUTS
+------------------------------------------------------------------ */
+document.addEventListener("keydown", (e) => {
+  const tag = (e.target.tagName || "").toLowerCase();
+  if (tag === "input" || tag === "textarea" || tag === "select") return;
   if (e.key === "v" || e.key === "V") setMode("view");
   else if (e.key === "e" || e.key === "E") setMode("edit");
-  else if (e.key === "Escape") closeSuggest();
+  else if (e.key === "Escape") closeSubjectSuggestions();
 });
 
-/* ══════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------------
    INIT
-   ══════════════════════════════════════════════════════════════ */
-initPicker();
+------------------------------------------------------------------ */
+initSubjectPicker();
 initSubjectSection();
-setMode(mode, false);
-updatePending();
+setMode(currentMode, false);
+updatePendingBadge();
 loadData(true).then(() => {
   if (queue.length > 0) flushQueue();
 });
